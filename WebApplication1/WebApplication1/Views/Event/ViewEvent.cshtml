@@ -1,0 +1,74 @@
+﻿@model WebApplication1.Controllers.EventController
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewEvent</title>
+</head>
+<body>
+    <div>
+        <h4>Event</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.EventName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EventName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EventDescription)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EventDescription)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EventDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EventLocation)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EventLocation)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EventPicture)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EventPicture)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EventPrice)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EventPrice)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

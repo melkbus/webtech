@@ -40,7 +40,8 @@ namespace WebApplication1
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
-                 "~/Content/Site.css"));
+                 "~/Content/Site.css",
+                 "~/content/layout.css"));
         }
     }
 }

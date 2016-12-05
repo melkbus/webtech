@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="webtechModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="webtechModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="UserId" />
@@ -26,7 +26,7 @@
           <Property Name="EventDescription" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="EventDate" Type="date" />
           <Property Name="EventLocation" Type="geography" />
-          <Property Name="EventPicture" Type="varchar" MaxLength="30" />
+          <Property Name="EventPicture" Type="varbinary(max)" />
           <Property Name="EventPrice" Type="int" />
         </EntityType>
         <EntityType Name="logboek">
@@ -42,8 +42,7 @@
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="logboek" EntityType="Self.logboek" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="webtechModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -68,7 +67,7 @@
           <Property Name="EventDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EventDate" Type="DateTime" Precision="0" />
           <Property Name="EventLocation" Type="Geography" />
-          <Property Name="EventPicture" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EventPicture" Type="String" MaxLength="Max" FixedLength="false" />
           <Property Name="EventPrice" Type="Int32" />
         </EntityType>
         <EntityType Name="logboek">

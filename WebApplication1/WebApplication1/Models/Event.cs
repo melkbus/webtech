@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Linq;
 namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
+
     public partial class Event
     {
         public int EventId { get; set; }
@@ -19,7 +21,7 @@ namespace WebApplication1.Models
         public string EventDescription { get; set; }
         public Nullable<System.DateTime> EventDate { get; set; }
         public System.Data.Entity.Spatial.DbGeography EventLocation { get; set; }
-        public string EventPicture { get; set; }
+        public byte[] EventPicture { get; set;}
         public Nullable<int> EventPrice { get; set; }
     }
 }

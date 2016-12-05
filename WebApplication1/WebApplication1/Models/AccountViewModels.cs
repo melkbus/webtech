@@ -53,6 +53,10 @@ namespace WebApplication1.Models
 
     public class LoginViewModel
     {
+
+
+        public List<WebApplication1.Models.Event> events { get; set; }
+
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]

@@ -32,4 +32,5 @@ namespace WebApplication1.Models
             return new ApplicationDbContext();
         }
     }
+    public partial class webtechEntities : DbContext { };
 }

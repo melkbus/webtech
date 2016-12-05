@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-
+using WebApplication1.Models;
 namespace WebApplication1.Controllers
 {
+    
     [Authorize]
     public class HomeController : Controller
     {
+        private webtechEntities db = new webtechEntities();
         public ActionResult Index()
         {
-            return View();
+            LoginViewModel model = new LoginViewModel();
+            model.events = db.Event.ToList();
+            return View(model);
         }
     }
 }

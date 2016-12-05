@@ -72,9 +72,8 @@ namespace WebApplication1.Controllers
         public ActionResult Login(string returnUrl)
         {
             
-            LoginViewModel model = new LoginViewModel();
-            model.events = db.Event.ToList();
-            return View(model);
+        
+            return View();
         }
 
         //

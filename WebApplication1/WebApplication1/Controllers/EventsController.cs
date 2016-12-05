@@ -28,13 +28,13 @@ namespace WebApplication1.Controllers
         [ResponseType(typeof(Event))]
         public IHttpActionResult GetEvent(int id)
         {
-            Event @event = db.Event.Find(id);
-            if (@event == null)
+            Event ev = db.Event.Find(id);
+            if (ev == null)
             {
                 return NotFound();
             }
 
-            return Ok(@event);
+            return Ok(ev);
         }
 
         // PUT: api/Events/5

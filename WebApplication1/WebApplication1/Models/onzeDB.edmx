@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="webtechModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="webtechModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="UserId" />
@@ -26,7 +26,7 @@
           <Property Name="EventDescription" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="EventDate" Type="date" />
           <Property Name="EventLocation" Type="geography" />
-          <Property Name="EventPicture" Type="varchar" MaxLength="30" />
+          <Property Name="EventPicture" Type="nchar" MaxLength="10" />
           <Property Name="EventPrice" Type="int" />
         </EntityType>
         <EntityType Name="logboek">
@@ -37,13 +37,28 @@
           <Property Name="UserID" Type="int" />
           <Property Name="organises" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'webtech.dbo.Table' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="AccountName" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="AccountName" Type="varchar" MaxLength="24" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="63" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="webtechModelStoreContainer">
           <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="logboek" EntityType="Self.logboek" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Table].[AccountName] AS [AccountName], 
+    [Table].[password] AS [password]
+    FROM [dbo].[Table] AS [Table]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="webtechModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -68,7 +83,7 @@
           <Property Name="EventDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EventDate" Type="DateTime" Precision="0" />
           <Property Name="EventLocation" Type="Geography" />
-          <Property Name="EventPicture" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EventPicture" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="EventPrice" Type="Int32" />
         </EntityType>
         <EntityType Name="logboek">
@@ -83,7 +98,16 @@
           <EntitySet Name="account" EntityType="Self.account" />
           <EntitySet Name="Event" EntityType="Self.Event" />
           <EntitySet Name="logboek" EntityType="Self.logboek" />
+          <EntitySet Name="Table" EntityType="webtechModel.Table" />
         </EntityContainer>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="AccountName" />
+            <PropertyRef Name="password" />
+          </Key>
+          <Property Name="AccountName" Type="String" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -122,6 +146,14 @@
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="organises" ColumnName="organises" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table">
+            <EntityTypeMapping TypeName="webtechModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

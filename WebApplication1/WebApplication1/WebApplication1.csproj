@@ -48,6 +48,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CloudinaryDotNet, Version=1.0.27.0, Culture=neutral, PublicKeyToken=c8234dc617ae7841, processorArchitecture=MSIL">
+      <HintPath>..\packages\CloudinaryDotNet.1.0.27\lib\net40\CloudinaryDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -226,33 +230,36 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\account.cs">
-      <DependentUpon>onzeDB.tt</DependentUpon>
+      <DependentUpon>OnzeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs">
-      <DependentUpon>onzeDB.tt</DependentUpon>
+      <DependentUpon>OnzeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\logboek.cs">
-      <DependentUpon>onzeDB.tt</DependentUpon>
+      <DependentUpon>OnzeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeViewModels.cs" />
-    <Compile Include="Models\onzeDB.Context.cs">
+    <Compile Include="Models\OnzeDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>onzeDB.Context.tt</DependentUpon>
+      <DependentUpon>OnzeDb.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\onzeDB.cs">
+    <Compile Include="Models\OnzeDb.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>onzeDB.tt</DependentUpon>
+      <DependentUpon>OnzeDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\onzeDB.Designer.cs">
+    <Compile Include="Models\OnzeDb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>onzeDB.edmx</DependentUpon>
+      <DependentUpon>OnzeDb.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Table.cs">
+      <DependentUpon>OnzeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -271,16 +278,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\onzeDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>onzeDB.edmx</DependentUpon>
-      <LastGenOutput>onzeDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\onzeDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>onzeDB.edmx</DependentUpon>
-      <LastGenOutput>onzeDB.cs</LastGenOutput>
-    </Content>
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -300,13 +297,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\onzeDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>onzeDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\onzeDB.edmx.diagram">
-      <DependentUpon>onzeDB.edmx</DependentUpon>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -315,8 +305,25 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Models\OnzeDb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OnzeDb.edmx</DependentUpon>
+      <LastGenOutput>OnzeDb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\OnzeDb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OnzeDb.edmx</DependentUpon>
+      <LastGenOutput>OnzeDb.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\OnzeDb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OnzeDb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\OnzeDb.edmx.diagram">
+      <DependentUpon>OnzeDb.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -376,12 +383,12 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Event\CreateEvent.cshtml" />
     <Content Include="Views\Event\SearchEvent.cshtml" />
     <Content Include="Views\Event\EditEvent.cshtml" />
     <Content Include="Views\Event\ViewEvent.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Scripts\knockout.validation.min.js.map" />
+    <Content Include="Views\Event\CreateEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

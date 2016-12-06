@@ -12,14 +12,9 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Event
+    public partial class Table
     {
-        public int EventId { get; set; }
-        public string EventName { get; set; }
-        public string EventDescription { get; set; }
-        public Nullable<System.DateTime> EventDate { get; set; }
-        public System.Data.Entity.Spatial.DbGeography EventLocation { get; set; }
-        public string EventPicture { get; set; }
-        public Nullable<int> EventPrice { get; set; }
+        public string AccountName { get; set; }
+        public string password { get; set; }
     }
 }

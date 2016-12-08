@@ -14,10 +14,13 @@ namespace WebApplication1.Controllers
         static Cloudinary m_cloudinary;
 
         private webtechEntities db = new webtechEntities();
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
+
             LoginViewModel model = new LoginViewModel();
-            model.events = db.Event.ToList();
+            try { model.events = db.Event.ToList(); }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
             return View(model);
         }
 

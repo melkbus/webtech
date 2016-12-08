@@ -14,24 +14,40 @@
         <h4>Events</h4>
         <hr />
         <div class="container">
-@foreach (var item in Model.events)
-{
-                <div class="row">
-                  @*  <div class="col-4-4">
-                    @Html.DisplayFor(model => item.Image)
-                    </div>*@ 
-                    <div class="col-lg-4">
-                        @Html.DisplayFor(model => item.EventName)
-                    </div>
-                    <div class="col-lg-4">
-                        @Html.DisplayFor(model => item.EventDate)
-                    </div>
-                </div>}
-
-
-</div>
-    </div>
-
+                        @foreach (var item in Model.events)
+                        {
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="pic" style="float:left">
+                                                <span>
+                                                    <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R" name="aboutme" width="140" height="140" border="0" class="img-circle">
+                                                </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="event-name&tags">
+                                            <h2><span id="eventName">@item.EventName</span></h2>
+                                            <span><input type="button" value="tag1" style="border-radius:20%; background-color:red" /></span>
+                                            <span><input type="button" value="tag2" style="border-radius:20%; background-color:green" /></span>
+                                            <span><input type="button" value="tag3" style="border-radius:20%; background-color:yellow" /></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2" name="date&time">
+                                        <input type="button" value="Location" style="width:100%; height:100%" />
+                                            <input type="button" value=@item.EventDate style="width:100%; height:100%; margin-top:5px" />
+                                        </div>
+                                    <div class="col-sm-2" name="#visitors">
+                                        <input type="button" value=#vistitors style="width:100%; height:100%"/>
+                                    </div>
+                                    <div class="col-sm-2" name="participating">
+                                        <input type="checkbox" value="participating" />participating
+                                    </div>
+                                    </div>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
 </body>
 </html>
 

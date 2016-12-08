@@ -29,10 +29,14 @@ namespace WebApplication1
                 "~/Scripts/app/home.viewmodel.js",
                 "~/Scripts/app/_run.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                "~/Scripts/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/cload").Include(
+                "~/Scripts/jquery.min.js",
+                "~/Scripts/jquery.ui.widget.js",
+                "~/Scripts/jquery.iframe-transport.js",
+                "~/Scripts/jquery.fileupload.js",
+                "~/Scripts/jquery.cloudinary.js"));
+
+            
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
@@ -40,9 +44,9 @@ namespace WebApplication1
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
-                 "~/Content/Site.css",
                  "~/Content/bootstrap-theme.css",
-                 "~/Content/bootstrap-theme.min.css"));
+                 "~/Content/bootstrap-theme.min.css",
+                 "~/Content/Site.css"));
         }
     }
 }

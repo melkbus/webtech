@@ -267,6 +267,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-WebApplication1-20161204101407.mdf" />
+    <Content Include="App_Data\aspnet-WebApplication1-20161204101407_log.ldf">
+      <DependentUpon>aspnet-WebApplication1-20161204101407.mdf</DependentUpon>
+    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -325,14 +329,23 @@
       <DependentUpon>OnzeDb.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\canvas-to-blob.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery.cloudinary.js" />
+    <Content Include="Scripts\jquery.fileupload-image.js" />
+    <Content Include="Scripts\jquery.fileupload-process.js" />
+    <Content Include="Scripts\jquery.fileupload-validate.js" />
+    <Content Include="Scripts\jquery.fileupload.js" />
+    <Content Include="Scripts\jquery.iframe-transport.js" />
+    <Content Include="Scripts\jquery.ui.widget.js" />
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\knockout.validation.min.js" />
+    <Content Include="Scripts\load-image.all.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -390,9 +403,7 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Event\CreateEvent.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

@@ -403,7 +403,9 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Event\CreateEvent.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

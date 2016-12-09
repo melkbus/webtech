@@ -314,6 +314,7 @@
       <DependentUpon>OnzeDb.edmx</DependentUpon>
       <LastGenOutput>OnzeDb.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\OnzeDb.edmx.sql" />
     <Content Include="Models\OnzeDb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>OnzeDb.edmx</DependentUpon>

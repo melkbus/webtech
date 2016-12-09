@@ -12,14 +12,14 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-   
+
     [Authorize]
     public class AccountController : Controller
     {
         private webtechEntities db = new webtechEntities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        
+
         public AccountController()
         {
         }
@@ -71,8 +71,8 @@ namespace WebApplication1.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            
-        
+
+
             return View();
         }
 

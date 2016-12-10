@@ -5,17 +5,17 @@
 
 @using (Html.BeginForm("FileUpload", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    
+
 
 <div class="form-horizontal">
     <h4>Create your own event!</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.ev.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.ev.EventName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(m => m.ev.EventName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -61,14 +61,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
-<script type="text/javascript">
-
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
+    <script type="text/javascript">
         google.maps.event.addDomListener(window, 'load', function () {
             var input = document.getElementById('ev.EventLocation');
             var places = new google.maps.places.Autocomplete(input);
         });
-</script>
+    </script>
 
 }
 

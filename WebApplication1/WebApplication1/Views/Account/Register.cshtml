@@ -3,13 +3,10 @@
     ViewBag.Title = "Register";
 }
 
-
-<h2>@ViewBag.Title.</h2>
-
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4>Register - Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
@@ -48,7 +45,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk"></script>
     <script type="text/javascript">
-
         google.maps.event.addDomListener(window, 'load', function () {
             var input = document.getElementById('Hometown');
             var places = new google.maps.places.Autocomplete(input);

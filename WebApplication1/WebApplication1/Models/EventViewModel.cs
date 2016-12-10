@@ -35,14 +35,9 @@ namespace WebApplication1.Models
            "nCU9Op7zsyop4KYoZ44hSMaBM08");
         public Cloudinary cloudinary { get; set; }
         public HttpPostedFileBase ImageUpload { get; set; }
+        public Event ev { get; set; }
 
-        public EventCreateViewModel()
-        {
-            ImageUpload = null;
-            cloudinary = new Cloudinary(account);
-        }
-
-    [Required]
+        [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Name")]
         public string EventName { get; set; }
@@ -69,5 +64,13 @@ namespace WebApplication1.Models
         [Required]
         [Display(Name = "Location")]
         public string EventLocation { get; set; }
+
+
+        public EventCreateViewModel()
+        {
+            ImageUpload = null;
+            cloudinary = new Cloudinary(account);
+            ev = new Event();
+        }
     }
 }

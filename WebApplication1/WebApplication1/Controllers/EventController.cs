@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using WebApplication1.Models;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using System.Data.Entity.Validation;
+
 namespace WebApplication1.Controllers
 {
     public class EventController : Controller
@@ -24,15 +26,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult FileUpload(EventCreateViewModel model)
         {
-            Event ev = new Event
-            {
-                EventName = model.EventName,
-                EventDescription = model.EventDiscription,
-                EventDate = model.EventDate,
-                EventLocation = model.EventLocation,
-                EventPrice = model.EventPrice
-
-            };
+            Event ev = model.ev;
             if (model.ImageUpload != null)
             {
                 Cloudinary cloudinary = new Cloudinary(account);
@@ -51,8 +45,30 @@ namespace WebApplication1.Controllers
                 ev.EventPicture = "sample";
             }
 
-            db.Event.Add(ev);
-            db.SaveChanges();
+            System.Diagnostics.Debug.WriteLine("name:  \"{0}\" description   \"{1}\" ", ev.EventName, ev.EventDescription);
+
+    db.Event.Add(ev);
+            try
+            {
+                // Your code...
+                // Could also be before try if you know the exception occurs in SaveChanges
+
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                     eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
             return RedirectToAction("CreateEvent", "Event");
             // after successfully uploading redirect the user
         }

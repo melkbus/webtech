@@ -87,3 +87,22 @@ textarea {
         border-top:0 none;
     }
 }
+
+
+
+
+
+
+@font-face {
+  font-family: 'Logo';
+
+  src: url('../fonts/._Scriber_Bold_Stencil.otf');
+  src: url('../fonts/Scriber_Bold_Stencil.otf') ;
+}
+
+.navbar-brand
+{
+  font-family: 'Logo';
+  font-size: 50px;
+  color:black;
+}

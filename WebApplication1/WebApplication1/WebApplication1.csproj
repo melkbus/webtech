@@ -329,6 +329,8 @@
     <Content Include="Models\OnzeDb.edmx.diagram">
       <DependentUpon>OnzeDb.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\._Scriber_Bold_Stencil.otf" />
+    <Content Include="fonts\Scriber_Bold_Stencil.otf" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\canvas-to-blob.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />

@@ -20,6 +20,6 @@ namespace WebApplication1.Models
         public Nullable<System.DateTime> EventDate { get; set; }
         public string EventLocation { get; set; }
         public string EventPicture { get; set; }
-        public Nullable<int> EventPrice { get; set; }
+        public int EventPrice { get; set; }
     }
 }

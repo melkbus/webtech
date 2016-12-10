@@ -48,27 +48,9 @@ namespace WebApplication1.Controllers
             System.Diagnostics.Debug.WriteLine("name:  \"{0}\" description   \"{1}\" ", ev.EventName, ev.EventDescription);
 
     db.Event.Add(ev);
-            try
-            {
-                // Your code...
-                // Could also be before try if you know the exception occurs in SaveChanges
-
+        
                 db.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                     eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                    }
-                }
-                throw;
-            }
+            
             return RedirectToAction("CreateEvent", "Event");
             // after successfully uploading redirect the user
         }

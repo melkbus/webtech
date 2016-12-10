@@ -14,4 +14,35 @@ namespace WebApplication1.Models
 
         public EventViewModel() { ev = new Event(); ImageUpload = null; }
     }
+
+    public class EventCreateViewModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "EventName")]
+        public string EventName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "EventDiscription")]
+        public string EventDiscription { get; set; }
+
+        [DataType(DataType.ImageUrl)]
+        [Display(Name = "EventImage")]
+        public string EventImage { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "EventPrice")]
+        public string EventPrice { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "EventDate")]
+        public string EventDate { get; set; }
+
+        [Required]
+        [Display(Name = "EventLocation")]
+        public string EventLocation { get; set; }
+    }
 }

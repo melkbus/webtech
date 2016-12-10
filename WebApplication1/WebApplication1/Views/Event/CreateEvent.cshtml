@@ -3,12 +3,12 @@
     ViewBag.Title = "Create Event";
 }
 
-@using (Html.BeginForm("FileUpload", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("FileUpload", "CreateEvent", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Event</h4>
+    <h4>Create your own event!</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">

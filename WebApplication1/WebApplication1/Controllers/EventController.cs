@@ -51,7 +51,7 @@ namespace WebApplication1.Controllers
         // GET: Event
         public ActionResult CreateEvent()
         {
-            return View(new EventViewModel());
+            return View(new EventCreateViewModel());
         }
 
         // GET: /Account/Register

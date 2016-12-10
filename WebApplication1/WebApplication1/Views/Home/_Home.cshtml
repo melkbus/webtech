@@ -1,5 +1,7 @@
 ﻿@using WebApplication1.Models
-@model LoginViewModel
+@using CloudinaryDotNet
+@using CloudinaryDotNet.Actions
+@model WebApplication1.Models.EventViewModel
 @{
 }
 <!DOCTYPE html>
@@ -14,20 +16,28 @@
         <h4>Events</h4>
         <hr />
         <div class="container">
+           
+
             @foreach (var item in Model.events)
             {
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="pic" style="float:left">
                                 <span>
-                                    <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R" name="aboutme" width="140" height="140" border="0" class="img-circle">
+                                   @Model.cloudinary.Api.UrlImgUp.Format("jpg").Transform(
+                                        new Transformation()
+                                            .Width(90)
+                                            .Height(98)
+                                            .Crop("fill")
+                                            .Gravity("face")
+                                            .Radius("max")).BuildImageTag(item.EventPicture)
                                 </span>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="event-name&tags">
-                                <h2><span id="eventName">@item.EventName</span></h2>
+                                <h2><span id="eventName">@Html.DisplayFor(ModelItem => item.EventName)</span></h2>
                                 <span><input type="button" value="tag1" style="border-radius:20%; background-color:red" /></span>
                                 <span><input type="button" value="tag2" style="border-radius:20%; background-color:green" /></span>
                                 <span><input type="button" value="tag3" style="border-radius:20%; background-color:yellow" /></span>
@@ -35,13 +45,17 @@
                         </div>
                         <div class="col-sm-2" name="date&time">
                             <input type="button" value="Location" style="width:100%; height:100%" />
-                            <input type="button" value=@item.EventDate style="width:100%; height:100%; margin-top:5px" />
+                            <input type="button" value=item.EventDate style="width:100%; height:100%; margin-top:5px" />
                         </div>
                         <div class="col-sm-2" name="#visitors">
                             <input type="button" value=#vistitors style="width:100%; height:100%" />
                         </div>
                         <div class="col-sm-2" name="participating">
                             <input type="checkbox" value="participating" />participating
+                        </div>
+                        <div class="col-sm-2" name="participating">
+                            <a href="#" target="_blank">
+                            </a>
                         </div>
                     </div>
                 </div>

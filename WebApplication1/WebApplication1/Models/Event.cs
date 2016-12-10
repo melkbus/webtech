@@ -18,7 +18,7 @@ namespace WebApplication1.Models
         public string EventName { get; set; }
         public string EventDescription { get; set; }
         public Nullable<System.DateTime> EventDate { get; set; }
-        public System.Data.Entity.Spatial.DbGeography EventLocation { get; set; }
+        public string EventLocation { get; set; }
         public string EventPicture { get; set; }
         public Nullable<int> EventPrice { get; set; }
     }

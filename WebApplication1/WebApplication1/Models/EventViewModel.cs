@@ -28,32 +28,46 @@ namespace WebApplication1.Models
 
     public class EventCreateViewModel
     {
-        [Required]
+
+        Account account = new Account(
+           "zomomo",
+           "161964652558563",
+           "nCU9Op7zsyop4KYoZ44hSMaBM08");
+        public Cloudinary cloudinary { get; set; }
+        public HttpPostedFileBase ImageUpload { get; set; }
+
+        public EventCreateViewModel()
+        {
+            ImageUpload = null;
+            cloudinary = new Cloudinary(account);
+        }
+
+    [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "EventName")]
+        [Display(Name = "Name")]
         public string EventName { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "EventDiscription")]
+        [Display(Name = "Discription")]
         public string EventDiscription { get; set; }
 
         [DataType(DataType.ImageUrl)]
-        [Display(Name = "EventImage")]
+        [Display(Name = "Image")]
         public string EventImage { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "EventPrice")]
-        public string EventPrice { get; set; }
+        [DataType(DataType.Currency)]
+        [Display(Name = "Price")]
+        public int EventPrice { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
-        [Display(Name = "EventDate")]
-        public string EventDate { get; set; }
+        [Display(Name = "Date")]
+        public DateTime EventDate { get; set; }
 
         [Required]
-        [Display(Name = "EventLocation")]
+        [Display(Name = "Location")]
         public string EventLocation { get; set; }
     }
 }

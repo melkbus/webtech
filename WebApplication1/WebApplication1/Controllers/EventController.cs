@@ -15,15 +15,24 @@ namespace WebApplication1.Controllers
             "161964652558563",
             "nCU9Op7zsyop4KYoZ44hSMaBM08");
 
-        
+
 
 
         private webtechEntities db = new webtechEntities();
 
 
         [HttpPost]
-        public ActionResult FileUpload(EventViewModel model)
+        public ActionResult FileUpload(EventCreateViewModel model)
         {
+            Event ev = new Event
+            {
+                EventName = model.EventName,
+                EventDescription = model.EventDiscription,
+                EventDate = model.EventDate,
+                EventLocation = model.EventLocation,
+                EventPrice = model.EventPrice
+
+            };
             if (model.ImageUpload != null)
             {
                 Cloudinary cloudinary = new Cloudinary(account);
@@ -33,14 +42,18 @@ namespace WebApplication1.Controllers
                         model.ImageUpload.InputStream)
                 };
                 var uploadResult = cloudinary.Upload(uploadParams);
-               model.ev.EventPicture = uploadResult.PublicId;
-               db.Event.Add(model.ev);
-                db.SaveChanges();
-                return RedirectToAction("CreateEvent", "Event");
+
+                ev.EventPicture = uploadResult.PublicId;
+
             }
-            else {
-               return  RedirectToAction("Index", "Home");
+            else
+            {
+                ev.EventPicture = "sample";
             }
+
+            db.Event.Add(ev);
+            db.SaveChanges();
+            return RedirectToAction("CreateEvent", "Event");
             // after successfully uploading redirect the user
         }
         [HttpGet]
@@ -55,7 +68,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: /Account/Register
-         
+
         [AllowAnonymous]
         public ActionResult ViewEvent(int id)
         {

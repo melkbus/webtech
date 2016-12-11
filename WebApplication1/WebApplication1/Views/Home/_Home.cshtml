@@ -6,6 +6,10 @@
 }
 <!DOCTYPE html>
 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -15,53 +19,41 @@
     <div>
         <h4>Events</h4>
         <hr />
-        <div class="container">
-           
 
-            @foreach (var item in Model.events)
+        <div class="container" style="margin-top:50px;">
+
+            <div class="row">
+                @foreach (var item in Model.events)
             {
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="pic" style="float:left">
-                                <span>
-                                   @Model.cloudinary.Api.UrlImgUp.Format("jpg").Transform(
+
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            @Model.cloudinary.Api.UrlImgUp.Transform(
                                         new Transformation()
-                                            .Width(90)
-                                            .Height(98)
-                                            .Crop("fill")
-                                            .Gravity("face")
-                                            .Radius("max")).BuildImageTag(item.EventPicture)
-                                </span>
+                                            .Width(320)
+                                            .Height(150)
+                                            .Crop("fill")).BuildImageTag(item.EventPicture)
+                            <div class="caption">
+                                <h4 class="pull-right">$@Html.DisplayFor(ModelItem => item.EventPrice)</h4>
+                                <h4>
+                                    <a href="#">@Html.DisplayFor(ModelItem => item.EventName)</a>
+                                </h4>
+                                <p>@Html.DisplayFor(ModelItem => item.EventDescription)</p>
                             </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="event-name&tags">
-                                <h2><span id="eventName">@Html.DisplayFor(ModelItem => item.EventName)</span></h2>
-                                <span><input type="button" value="tag1" style="border-radius:20%; background-color:red" /></span>
-                                <span><input type="button" value="tag2" style="border-radius:20%; background-color:green" /></span>
-                                <span><input type="button" value="tag3" style="border-radius:20%; background-color:yellow" /></span>
+                            <div class="interactio">
+                                <p class="pull-right">Participants: @Html.DisplayFor(ModelItem => item.EventId)</p>
+                                <p>
+                                    <span class="glyphicon glyphicon-plus" title="Participate"></span>
+                                    <span class="glyphicon glyphicon-star" title="Intrested"></span>
+                                    <span class="glyphicon glyphicon-share" title="Share"></span>
+                                </p>
                             </div>
-                        </div>
-                        <div class="col-sm-2" name="date&time">
-                            <input type="button" value="Location" style="width:100%; height:100%" />
-                            <input type="button" value=item.EventDate style="width:100%; height:100%; margin-top:5px" />
-                        </div>
-                        <div class="col-sm-2" name="#visitors">
-                            <input type="button" value=#vistitors style="width:100%; height:100%" />
-                        </div>
-                        <div class="col-sm-2" name="participating">
-                            <input type="checkbox" value="participating" />participating
-                        </div>
-                        <div class="col-sm-2" name="participating">
-                            <a href="#" target="_blank">
-                            </a>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
+
 </body>
 </html>
-

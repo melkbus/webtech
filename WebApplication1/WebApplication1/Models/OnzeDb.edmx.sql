@@ -56,8 +56,12 @@ CREATE TABLE [dbo].[Event] (
     [EventId] int  NOT NULL,
     [EventName] varchar(20)  NOT NULL,
     [EventDescription] varchar(300)  NOT NULL,
-    [EventDate] datetime  NULL,
+    [EventBeginDate] date  NULL,
+    [EventBeginTime] time  NULL,
+    [EventEndDate] date  NULL,
+    [EventEndTime] time  NULL,
     [EventLocation] nvarchar(max)  NULL,
+	[EventParticipants int NULL,
     [EventPicture] nchar(10)  NULL,
     [EventPrice] int  NULL
 );

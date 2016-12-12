@@ -26,7 +26,18 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult FileUpload(EventCreateViewModel model)
         {
-            Event ev = model.ev;
+            Event ev = new Event();
+            //System.Diagnostics.Debug.WriteLine("reached here 1---------------------------------------------");
+            ev.EventName = model.EventName;
+            ev.EventDescription = model.EventDescription;
+            ev.EventBeginDate = model.EventBeginDate;
+            ev.EventBeginTime = model.EventBeginTime;
+            ev.EventEndDate = model.EventEndDate;
+            ev.EventEndTime = model.EventEndTime;
+            ev.EventLocation = model.EventLocation;
+            ev.EventPrice = model.EventPrice;
+            //System.Diagnostics.Debug.WriteLine("reached here 2---------------------------------------------");
+
             if (model.ImageUpload != null)
             {
                 Cloudinary cloudinary = new Cloudinary(account);
@@ -47,10 +58,27 @@ namespace WebApplication1.Controllers
 
             System.Diagnostics.Debug.WriteLine("name:  \"{0}\" description   \"{1}\" ", ev.EventName, ev.EventDescription);
 
-    db.Event.Add(ev);
-        
+            db.Event.Add(ev);
+
+            try
+            {
                 db.SaveChanges();
-            
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
             return RedirectToAction("CreateEvent", "Event");
             // after successfully uploading redirect the user
         }
@@ -59,13 +87,13 @@ namespace WebApplication1.Controllers
         {
             return View("no model found");
         }
-        // GET: Event
+        // GET: /Event/CreateEvent
         public ActionResult CreateEvent()
         {
             return View(new EventCreateViewModel());
         }
 
-        // GET: /Account/Register
+        // GET: /Event/id
 
         [AllowAnonymous]
         public ActionResult ViewEvent(int id)

@@ -43,9 +43,10 @@ namespace WebApplication1.Models
         public string EventName { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Discription")]
-        public string EventDiscription { get; set; }
+        [DataType(DataType.MultilineText)]
+        [StringLength(300, ErrorMessage = "max description-length = 300 characters")]
+        [Display(Name = "Description")]
+        public string EventDescription { get; set; }
 
         [DataType(DataType.ImageUrl)]
         [Display(Name = "Image")]
@@ -56,10 +57,21 @@ namespace WebApplication1.Models
         [Display(Name = "Price")]
         public int EventPrice { get; set; }
 
-        [Required]
-        [DataType(DataType.DateTime)]
-        [Display(Name = "Date")]
-        public DateTime EventDate { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Begin date")]
+        public Nullable<System.DateTime> EventBeginDate { get; set; }
+
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "End date")]
+        public Nullable<System.DateTime> EventEndDate { get; set; }
+
+        [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Begin time")]
+        public Nullable<System.DateTime> EventBeginTime { get; set; }
+
+        [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        [Display(Name = "End time")]
+        public Nullable<System.DateTime> EventEndTime { get; set; }
 
         [Required]
         [Display(Name = "Location")]

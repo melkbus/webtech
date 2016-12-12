@@ -15,19 +15,23 @@
           <Property Name="firstname" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="lastname" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="mail" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="birthday" Type="date" Nullable="false" />
+          <Property Name="birthday" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventId" />
           </Key>
-          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
           <Property Name="EventName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="EventDescription" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="EventDate" Type="datetime" />
-          <Property Name="EventPicture" Type="varchar" MaxLength="300" />
-          <Property Name="EventLocation" Type="varchar" MaxLength="90" />
+          <Property Name="EventBeginDate" Type="datetime" />
+          <Property Name="EventEndDate" Type="datetime" />
+          <Property Name="EventBeginTime" Type="datetime" />
+          <Property Name="EventEndTime" Type="datetime" />
+          <Property Name="EventLocation" Type="nvarchar(max)" />
+          <Property Name="EventPicture" Type="nchar" MaxLength="10" />
           <Property Name="EventPrice" Type="int" />
+          <Property Name="EventParticipants" Type="int" />
         </EntityType>
         <EntityType Name="logboek">
           <Key>
@@ -37,8 +41,6 @@
           <Property Name="UserID" Type="int" />
           <Property Name="organises" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'webtech.dbo.Table' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Table">
           <Key>
             <PropertyRef Name="AccountName" />
@@ -51,12 +53,7 @@ warning 6002: The table/view 'webtech.dbo.Table' does not have a primary key def
           <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="logboek" EntityType="Self.logboek" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table" EntityType="Self.Table" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Table].[AccountName] AS [AccountName], 
-    [Table].[password] AS [password]
-    FROM [dbo].[Table] AS [Table]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -72,7 +69,7 @@ warning 6002: The table/view 'webtech.dbo.Table' does not have a primary key def
           <Property Name="firstname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="lastname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="mail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -81,10 +78,14 @@ warning 6002: The table/view 'webtech.dbo.Table' does not have a primary key def
           <Property Name="EventId" Type="Int32" Nullable="false" />
           <Property Name="EventName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EventDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EventDate" Type="DateTime" Precision="3" />
-          <Property Name="EventLocation" Type="String" MaxLength="90" Unicode="false" FixedLength="false" />
-          <Property Name="EventPicture" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="EventLocation" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="EventPicture" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
           <Property Name="EventPrice" Type="Int32" />
+          <Property Name="EventBeginDate" Type="DateTime" Precision="3" />
+          <Property Name="EventEndDate" Type="DateTime" Precision="3" />
+          <Property Name="EventBeginTime" Type="DateTime" />
+          <Property Name="EventEndTime" Type="DateTime" />
+          <Property Name="EventParticipants" Type="Int32" />
         </EntityType>
         <EntityType Name="logboek">
           <Key>
@@ -130,10 +131,14 @@ warning 6002: The table/view 'webtech.dbo.Table' does not have a primary key def
     <EntitySetMapping Name="Event">
       <EntityTypeMapping TypeName="IsTypeOf(webtechModel.Event)">
         <MappingFragment StoreEntitySet="Event">
-          <ScalarProperty Name="EventId" ColumnName="EventId" />
+          <ScalarProperty Name="EventParticipants" ColumnName="EventParticipants" />
+                <ScalarProperty Name="EventEndTime" ColumnName="EventEndTime" />
+                <ScalarProperty Name="EventBeginTime" ColumnName="EventBeginTime" />
+                <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
+                <ScalarProperty Name="EventBeginDate" ColumnName="EventBeginDate" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
           <ScalarProperty Name="EventName" ColumnName="EventName" />
           <ScalarProperty Name="EventDescription" ColumnName="EventDescription" />
-          <ScalarProperty Name="EventDate" ColumnName="EventDate" />
           <ScalarProperty Name="EventLocation" ColumnName="EventLocation" />
           <ScalarProperty Name="EventPicture" ColumnName="EventPicture" />
           <ScalarProperty Name="EventPrice" ColumnName="EventPrice" />

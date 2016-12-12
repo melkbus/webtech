@@ -11,15 +11,20 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Event
     {
         public int EventId { get; set; }
         public string EventName { get; set; }
         public string EventDescription { get; set; }
-        public Nullable<System.DateTime> EventDate { get; set; }
-        public string EventLocation { get; set; }
         public string EventPicture { get; set; }
-        public int EventPrice { get; set; }
+        public Nullable<int> EventPrice { get; set; }
+        public Nullable<System.DateTime> EventBeginDate { get; set; }
+        public Nullable<System.DateTime> EventEndDate { get; set; }
+        public Nullable<System.DateTime> EventBeginTime { get; set; }
+        public Nullable<System.DateTime> EventEndTime { get; set; }
+        public string EventLocation { get; set; }
+        public Nullable<int> EventParticipants { get; set; }
     }
 }

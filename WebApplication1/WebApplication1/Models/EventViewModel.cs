@@ -10,7 +10,7 @@ namespace WebApplication1.Models
     
     public class EventViewModel
     {
-        Cloudinary cloudinary { get; set; }
+        public Cloudinary cloudinary { get; set; }
         public Event ev { get; set; }
         public List<WebApplication1.Models.Event> events { get; set; }
         [DataType(DataType.Upload)]

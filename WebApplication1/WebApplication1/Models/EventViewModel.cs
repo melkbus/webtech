@@ -10,29 +10,21 @@ namespace WebApplication1.Models
     
     public class EventViewModel
     {
-        Account account = new Account(
-            "zomomo",
-            "161964652558563",
-            "nCU9Op7zsyop4KYoZ44hSMaBM08");
+        Cloudinary cloudinary { get; set; }
         public Event ev { get; set; }
         public List<WebApplication1.Models.Event> events { get; set; }
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
-        public Cloudinary cloudinary { get; set; }
         public EventViewModel() {
             ev = new Event();
             ImageUpload = null;
-            cloudinary = new Cloudinary(account);
+            cloudinary = new CloudinaryAccount().Cloud;
             events = new List<WebApplication1.Models.Event>(); }
     }
 
     public class EventCreateViewModel
     {
 
-        Account account = new Account(
-           "zomomo",
-           "161964652558563",
-           "nCU9Op7zsyop4KYoZ44hSMaBM08");
         public Cloudinary cloudinary { get; set; }
         public HttpPostedFileBase ImageUpload { get; set; }
         public Event ev { get; set; }
@@ -81,7 +73,7 @@ namespace WebApplication1.Models
         public EventCreateViewModel()
         {
             ImageUpload = null;
-            cloudinary = new Cloudinary(account);
+            cloudinary = new CloudinaryAccount().Cloud;
             ev = new Event();
         }
     }

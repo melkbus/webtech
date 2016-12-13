@@ -233,6 +233,7 @@
       <DependentUpon>OnzeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CloudinaryAccount.cs" />
     <Compile Include="Models\Event.cs">
       <DependentUpon>OnzeDb.tt</DependentUpon>
     </Compile>

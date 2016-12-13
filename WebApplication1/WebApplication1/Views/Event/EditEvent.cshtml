@@ -1,31 +1,19 @@
 ﻿@model WebApplication1.Models.Event
 
 @{
-    Layout = null;
+    ViewBag.Title = "EditEvent";
 }
 
-<!DOCTYPE html>
+@using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <h4 style="margin-top:50px; margin-left:10px">Edit Event</h4>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>EditEvent</title>
-</head>
-<body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    
-    
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        
         <div class="form-horizontal">
-            <h4>Event</h4>
-            <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.EventId)
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -33,57 +21,87 @@
                     @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
             <div class="form-group">
-                @Html.LabelFor(model => model.EventDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(m => m.EventDescription, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.EventDescription, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EventDescription, "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.EventDescription, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventDescription, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
             <div class="form-group">
-                @Html.LabelFor(model => model.EventDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(m => m.EventBeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.EventBeginDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventBeginDate, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
             <div class="form-group">
-                @Html.LabelFor(model => model.EventLocation, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(m => m.EventBeginTime, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.EventLocation, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EventLocation, "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.EventBeginTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventBeginTime, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
             <div class="form-group">
-                @Html.LabelFor(model => model.EventPicture, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(m => m.EventEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.EventPicture, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EventPicture, "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.EventEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventEndDate, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
-                @Html.LabelFor(model => model.EventPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(m => m.EventEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.EventPrice, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EventPrice, "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.EventEndTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventEndTime, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventLocation, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventLocation, new { htmlAttributes = new { @class = "form-control", id = "Location" } })
+                    @Html.ValidationMessageFor(m => m.EventLocation, "", new { })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div style="margin-left:135px; margin-bottom:10px" class="form-inline">
+                <span class="form-group"><label>Picture</label></span>
+                <span class="form-group" style="margin-left:40px"><input type="file" accept="image/*" aria-label="photo" name="ImageUpload" id="ImageUpload" /></span>
+            </div>
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Save" class="btn btn-default" />
                 </div>
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-</body>
-</html>
+        <div>
+            @Html.ActionLink("Back to Homepage", "Index")
+        </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
+    <script type="text/javascript">
+        var input = document.getElementById('Location');
+
+        google.maps.event.addDomListener(input, 'keydown', function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+            }
+        });
+
+        google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(input);
+        });
+    </script>
+}

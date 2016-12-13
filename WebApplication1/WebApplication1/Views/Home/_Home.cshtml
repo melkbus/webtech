@@ -20,7 +20,7 @@
         <div class="container" style="padding-right:50px;">
 
             <div class="row">
-                @foreach (var item in Model.events)
+                @foreach (var item in Model.events.OrderBy(item => item.EventBeginTime).OrderBy(item => item.EventBeginDate))
             {
 
                     <div class="col-sm-4 col-lg-4 col-md-4" style="height:350px">
@@ -31,15 +31,18 @@
                                             .Height(150)
                                             .Crop("fill")).BuildImageTag(item.EventPicture)
                             <div class="caption">
-                                <h4 class="pull-right">$@Html.DisplayFor(ModelItem => item.EventPrice)</h4>
+                                <h4 class="pull-right">€@Html.DisplayFor(ModelItem => item.EventPrice)</h4>
                                 <h4>
                                     <a href="#">@Html.DisplayFor(ModelItem => item.EventName)</a>
                                 </h4>
                                 <p>@Html.DisplayFor(ModelItem => item.EventDescription)</p>
-                                <time>@Html.DisplayFor(ModelItem => item.EventBeginDate)</time>
+                                <span>@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Date)</span>
+                                -
+                                <span>@Html.DisplayFor(ModelItem => item.EventBeginTime.Value.TimeOfDay)</span>
+                                <p>@Html.DisplayFor(ModelItem => item.EventLocation)</p>
                             </div>
                             <div class="interactio">
-                                <p class="pull-right">Participants: @Html.DisplayFor(ModelItem => item.EventId)</p>
+                                <p class="pull-right">Participants: @Html.DisplayFor(ModelItem => item.EventParticipants)</p>
                                 <p>
                                     <span class="glyphicon glyphicon-plus" title="Participate"></span>
                                     <span class="glyphicon glyphicon-star" title="Intrested"></span>

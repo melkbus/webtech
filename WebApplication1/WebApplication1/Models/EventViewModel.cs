@@ -26,8 +26,7 @@ namespace WebApplication1.Models
             events = new List<WebApplication1.Models.Event>(); }
     }
 
-    public class EventCreateViewModel
-    {
+    public class EventCreateViewModel {
 
         Account account = new Account(
            "zomomo",
@@ -84,5 +83,6 @@ namespace WebApplication1.Models
             cloudinary = new Cloudinary(account);
             ev = new Event();
         }
+
     }
 }

@@ -22,8 +22,7 @@ namespace WebApplication1.Models
             events = new List<WebApplication1.Models.Event>(); }
     }
 
-    public class EventCreateViewModel
-    {
+    public class EventCreateViewModel {
 
         public Cloudinary cloudinary { get; set; }
         public HttpPostedFileBase ImageUpload { get; set; }
@@ -76,5 +75,6 @@ namespace WebApplication1.Models
             cloudinary = new CloudinaryAccount().Cloud;
             ev = new Event();
         }
+
     }
 }

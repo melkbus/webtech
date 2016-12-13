@@ -7,6 +7,8 @@ using WebApplication1.Models;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using System.Data.Entity.Validation;
+using System.Net;
+using System.Data.Entity;
 
 namespace WebApplication1.Controllers
 {
@@ -99,9 +101,32 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public ActionResult EditEvent()
+
+        public ActionResult EditEvent(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Event ev = db.Event.Find(id);
+            if (ev == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ev);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEvent(Event ev)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(ev).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(ev);
         }
     }
 }

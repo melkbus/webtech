@@ -75,7 +75,7 @@
           <Key>
             <PropertyRef Name="EventId" />
           </Key>
-          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EventDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EventLocation" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />

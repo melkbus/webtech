@@ -7,6 +7,8 @@ using WebApplication1.Models;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using System.Data.Entity.Validation;
+using System.Net;
+using System.Data.Entity;
 
 namespace WebApplication1.Controllers
 {
@@ -17,11 +19,7 @@ namespace WebApplication1.Controllers
             "161964652558563",
             "nCU9Op7zsyop4KYoZ44hSMaBM08");
 
-
-
-
         private webtechEntities db = new webtechEntities();
-
 
         [HttpPost]
         public ActionResult FileUpload(EventCreateViewModel model)
@@ -41,7 +39,7 @@ namespace WebApplication1.Controllers
 
             if (model.ImageUpload != null)
             {
-                Cloudinary cloudinary = new Cloudinary(account);
+                Cloudinary cloudinary = new CloudinaryAccount().Cloud;
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new CloudinaryDotNet.Actions.FileDescription(model.ImageUpload.FileName,
@@ -107,9 +105,32 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public ActionResult EditEvent()
+
+        public ActionResult EditEvent(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Event ev = db.Event.Find(id);
+            if (ev == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ev);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEvent(Event ev)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(ev).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(ev);
         }
     }
 }

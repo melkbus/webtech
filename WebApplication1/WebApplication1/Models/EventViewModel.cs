@@ -7,32 +7,38 @@ using CloudinaryDotNet;
 
 namespace WebApplication1.Models
 {
-    
+    public static class StringExtensions
+    {
+        public static string SubStringTo(this string thatString, int limit)
+        {
+            if (!String.IsNullOrEmpty(thatString))
+            {
+                if (thatString.Length > limit)
+                {
+                    return thatString.Substring(0, limit);
+                }
+                return thatString;
+            }
+            return string.Empty;
+        }
+    }
+
     public class EventViewModel
     {
-        Account account = new Account(
-            "zomomo",
-            "161964652558563",
-            "nCU9Op7zsyop4KYoZ44hSMaBM08");
+        public Cloudinary cloudinary { get; set; }
         public Event ev { get; set; }
         public List<WebApplication1.Models.Event> events { get; set; }
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
-        public Cloudinary cloudinary { get; set; }
         public EventViewModel() {
             ev = new Event();
             ImageUpload = null;
-            cloudinary = new Cloudinary(account);
+            cloudinary = new CloudinaryAccount().Cloud;
             events = new List<WebApplication1.Models.Event>(); }
     }
 
-    public class EventCreateViewModel
-    {
+    public class EventCreateViewModel {
 
-        Account account = new Account(
-           "zomomo",
-           "161964652558563",
-           "nCU9Op7zsyop4KYoZ44hSMaBM08");
         public Cloudinary cloudinary { get; set; }
         public HttpPostedFileBase ImageUpload { get; set; }
         public Event ev { get; set; }
@@ -44,6 +50,7 @@ namespace WebApplication1.Models
 
         [Required]
         [DataType(DataType.MultilineText)]
+        [MaxLength(20)]
         [StringLength(300, ErrorMessage = "max description-length = 300 characters")]
         [Display(Name = "Description")]
         public string EventDescription { get; set; }
@@ -57,7 +64,7 @@ namespace WebApplication1.Models
         [Display(Name = "Price")]
         public int EventPrice { get; set; }
 
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMM ddd d yyyy", ApplyFormatInEditMode = true)]
         [Display(Name = "Begin date")]
         public Nullable<System.DateTime> EventBeginDate { get; set; }
 
@@ -81,8 +88,9 @@ namespace WebApplication1.Models
         public EventCreateViewModel()
         {
             ImageUpload = null;
-            cloudinary = new Cloudinary(account);
+            cloudinary = new CloudinaryAccount().Cloud;
             ev = new Event();
         }
+
     }
 }

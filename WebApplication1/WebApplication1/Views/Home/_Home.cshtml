@@ -2,52 +2,91 @@
 @using CloudinaryDotNet
 @using CloudinaryDotNet.Actions
 @model WebApplication1.Models.EventViewModel
+
 @{
 }
 <!DOCTYPE html>
 
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" HtmlEncode="false" />
     <title>ViewEvent</title>
 </head>
 <body>
     <div>
-        <h4 style="margin-top:100px;">Events</h4>
+        <h2 style="margin-top:100px;">Events</h2>
         <hr />
 
         <div class="container" style="padding-right:50px;">
 
             <div class="row">
-                @foreach (var item in Model.events)
-            {
+                @foreach (var item in Model.events.OrderBy(item => item.EventBeginTime).OrderBy(item => item.EventBeginDate))
+                {
 
-                    <div class="col-sm-4 col-lg-4 col-md-4" style="height:350px">
-                        <div class="thumbnail">
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail" style="height:350px; min-height:350px; max-height:350px; margin-bottom:10px">
                             @Model.cloudinary.Api.UrlImgUp.Transform(
-                                        new Transformation()
-                                            .Width(320)
-                                            .Height(150)
-                                            .Crop("fill")).BuildImageTag(item.EventPicture)
+                        new Transformation()
+                        .Width(320)
+                        .Height(150)
+                        .Crop("fill")).BuildImageTag(item.EventPicture)
                             <div class="caption">
-                                <h4 class="pull-right">$@Html.DisplayFor(ModelItem => item.EventPrice)</h4>
+                                <h4 class="pull-right">€@Html.DisplayFor(ModelItem => item.EventPrice)</h4>
                                 <h4>
                                     <a href="#">@Html.DisplayFor(ModelItem => item.EventName)</a>
                                 </h4>
-                                <p>@Html.DisplayFor(ModelItem => item.EventDescription)</p>
-                                <time>@Html.DisplayFor(ModelItem => item.EventBeginDate)</time>
+                                <p style="margin-bottom:5px">@Html.DisplayFor(ModelItem => item.EventLocation)</p>
+                                <span>
+                                    @Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Day)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Month)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Year)
+                                </span>
+                                -
+                                <span>
+                                    @Html.DisplayFor(ModelItem => item.EventBeginTime.Value.TimeOfDay)
+                                </span>
+
                             </div>
-                            <div class="interactio">
-                                <p class="pull-right">Participants: @Html.DisplayFor(ModelItem => item.EventId)</p>
-                                <p>
-                                    <span class="glyphicon glyphicon-plus" title="Participate"></span>
-                                    <span class="glyphicon glyphicon-star" title="Intrested"></span>
-                                    <span class="glyphicon glyphicon-share" title="Share"></span>
+                            <div class="foot" style="position:absolute;bottom: 2%; width: 85%;">
+                                <p style="margin:10px;">
+                                    <button type="button" class="btn btn-info btn-xs">tag1</button>
+                                    <button type="button" class="btn btn-info btn-xs">tag2</button>
+                                </p>
+                                <p class="pull-right" style="bottom:0">Participants: @Html.DisplayFor(ModelItem => item.EventParticipants)</p>
+                                <p style="margin:10px;">
+                                    <span>
+                                        <a id="Participate" class="btn btn-xs" style="border-radius:60%">
+                                            <i class="mnIcon glyphicon glyphicon-plus" title="Participate"></i>
+                                        </a>
+                                    </span>
+                                    <span>
+                                        <a id="Intrested" class="btn btn-xs" style="border-radius:60%">
+                                            <i class="mnIcon glyphicon glyphicon-star" title="Intrested"></i>
+                                        </a>
+                                    </span>
+                                    <span>
+                                        <a id="Share" class="btn btn-xs" style="border-radius:60%">
+                                            <i class="mnIcon glyphicon glyphicon-share" title="Share"></i>
+                                        </a>
+                                    </span>
                                 </p>
                             </div>
                         </div>
                     </div>
+                    <script>
+                        var glyphOn = true;//Ok, glyphOn is a boolean variable to keep track whether .navList is visible or not.
+                        $('.glyphicon-plus').click(function () {
+                            if (glyphOn == true) {
+                                $('.navList').fadeIn(500);
+                                $('.mnIcon').removeClass('glyphicon-plus');
+                                $('.mnIcon').addClass('glyphicon-ok');
+                                glyphOn = false;
+                            } else {
+                                $('.navList').fadeOut(500);
+                                $('.mnIcon').removeClass('glyphicon-ok');
+                                $('.mnIcon').addClass('glyphicon-plus');
+                                glyphOn = true;
+                            }
+                        });
+                    </script>
                 }
             </div>
         </div>

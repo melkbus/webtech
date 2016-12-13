@@ -27,6 +27,7 @@ namespace WebApplication1.Controllers
         public ActionResult FileUpload(EventCreateViewModel model)
         {
             Event ev = new Event();
+            //logboek lb = new logboek();
             //System.Diagnostics.Debug.WriteLine("reached here 1---------------------------------------------");
             ev.EventName = model.EventName;
             ev.EventDescription = model.EventDescription;
@@ -58,8 +59,10 @@ namespace WebApplication1.Controllers
 
             System.Diagnostics.Debug.WriteLine("name:  \"{0}\" description   \"{1}\" ", ev.EventName, ev.EventDescription);
 
+            int myId = ev.EventId;
             db.Event.Add(ev);
-
+            //db.logboek.Add(lb);
+           
             try
             {
                 db.SaveChanges();

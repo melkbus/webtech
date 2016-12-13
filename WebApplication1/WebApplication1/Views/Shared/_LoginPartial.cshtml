@@ -12,7 +12,8 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="~/Account/Profile">My profile</a></li>
+                <li>
+                <li>@Html.ActionLink("My Profile", "Profile", "Account", new { idUser = User.Identity.GetUserId() }, null)</li>
                 <li><a href="#">My checkins</a></li>
                 <li><a href="#">My events</a></li>
                 <li><a href="#">Settings</a></li>
@@ -28,4 +29,5 @@ else
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
+
 }

@@ -15,40 +15,73 @@
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Hometown, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.EditorFor(m => m.Hometown, new {  htmlAttributes = new {@class = "form-control" } })
-            @Html.ValidationMessageFor(m => m.Hometown, "", new { })
-        </div>
-    </div>    
+
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+        @Html.LabelFor(m => m.firstname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.firstname, new { @class = "form-control" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.lastname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.lastname, new { @class = "form-control" })
+        </div>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.Hometown, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Hometown, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Hometown, "", new { })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.birthday, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.birthday, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.description, new { @class = "form-control" })
+        </div>
+    </div>
+
+    
+   
+    <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk"></script>
-    <script type="text/javascript">
-        google.maps.event.addDomListener(window, 'load', function () {
-            var input = document.getElementById('Hometown');
-            var places = new google.maps.places.Autocomplete(input);
-        });
-    </script>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk"></script>
+            <script type="text/javascript">
+                google.maps.event.addDomListener(window, 'load', function () {
+                    var input = document.getElementById('Hometown');
+                    var places = new google.maps.places.Autocomplete(input);
+                });
+            </script>
 
-}
+        }

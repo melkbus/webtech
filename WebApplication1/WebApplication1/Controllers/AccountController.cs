@@ -152,11 +152,12 @@ namespace WebApplication1.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Profile(int id)
+        public ActionResult Profile()
         {
+            
             webtechEntities db = new webtechEntities();
             account user = new account();
-            user = db.account.Find(id);
+            user = db.account.Find(User.Identity.IsAuthenticated);
             return View(user);
         }
 

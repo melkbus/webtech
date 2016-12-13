@@ -7,7 +7,22 @@ using CloudinaryDotNet;
 
 namespace WebApplication1.Models
 {
-    
+    public static class StringExtensions
+    {
+        public static string SubStringTo(this string thatString, int limit)
+        {
+            if (!String.IsNullOrEmpty(thatString))
+            {
+                if (thatString.Length > limit)
+                {
+                    return thatString.Substring(0, limit);
+                }
+                return thatString;
+            }
+            return string.Empty;
+        }
+    }
+
     public class EventViewModel
     {
         public Cloudinary cloudinary { get; set; }
@@ -35,6 +50,7 @@ namespace WebApplication1.Models
 
         [Required]
         [DataType(DataType.MultilineText)]
+        [MaxLength(20)]
         [StringLength(300, ErrorMessage = "max description-length = 300 characters")]
         [Display(Name = "Description")]
         public string EventDescription { get; set; }
@@ -48,7 +64,7 @@ namespace WebApplication1.Models
         [Display(Name = "Price")]
         public int EventPrice { get; set; }
 
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMM ddd d yyyy", ApplyFormatInEditMode = true)]
         [Display(Name = "Begin date")]
         public Nullable<System.DateTime> EventBeginDate { get; set; }
 

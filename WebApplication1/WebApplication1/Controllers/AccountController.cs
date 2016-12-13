@@ -155,12 +155,32 @@ namespace WebApplication1.Controllers
         public ActionResult Profile(int id)
         {
             
+<<<<<<< HEAD
+            webtechEntities db = new webtechEntities();
+            account user = new account();
+            user = db.account.Find(id);
+=======
             account user = db.account.Find(id);
             Event[] t = db.Event.ToArray();
             ViewBag.EventsMade = t;
             ViewBag.EventsParticipated = t;
+>>>>>>> 42828337cb5005f640b48387d34ad3f53039a4e3
             return View(user);
             }
+
+        [AllowAnonymous]
+        public ActionResult Profile()
+        {
+
+            webtechEntities db = new webtechEntities();
+            account user = new account();
+            if (User.Identity.IsAuthenticated)
+            {
+                user = db.account.Find(user.UserId);
+                return View(user);
+            }
+            else return View();
+        }
 
         //
         // GET: /Account/Register

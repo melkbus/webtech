@@ -35,10 +35,6 @@ textarea {
     }
 }
 
-.pac-container {
-    z-index: 1051 !important;
-}
-
 #login-dp{
     min-width: 250px;
     padding: 14px 14px 0;
@@ -90,11 +86,6 @@ textarea {
     }
 }
 
-
-
-
-
-
 @font-face {
   font-family: 'Logo';
 
@@ -107,4 +98,8 @@ textarea {
   font-family: 'Logo';
   font-size: 50px;
   color:black;
+}
+
+.pac-container {
+    z-index: 1051 !important;
 }

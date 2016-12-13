@@ -1,7 +1,9 @@
-﻿@model WebApplication1.Models.account
+﻿@using WebApplication1.Models;
+
+@model WebApplication1.Models.account
+
 
 @{
-    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -12,42 +14,99 @@
     <title>Profile</title>
 </head>
 <body>
-    <div>
-        <h2>My Profile</h2>
-        <hr />
-        <div class="container">
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <center>
-                                <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbezqZpEuwGSvitKy3wrwnth5kysKdRqBW54cAszm_wiutku3R" name="aboutme" width="140" height="140" border="0" class="img-circle">
-                                <h3 class="media-heading">@Html.DisplayFor(model => model.username)</h3>
-                                <p class="text-left">
-                                    <strong>Description: </strong><br>
-                                    I'm a porn director
-                                </p>
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary active">
-                                        <input type="button" class="btn btn-primary" value="Past Events" autocomplete="off">
-                                    </label>
-                                    <label class="btn btn-primary">
-                                        <input type="button" class="btn btn-primary" value="Future Events" autocomplete="off">
-                                    </label>
-                                    <label class="btn btn-primary">
-                                        <input type="button" class="btn btn-primary" value="Host Events" autocomplete="off">
-                                    </label>
-                                </div>
-                                <br>
-                            </center>
-                        </div>
-                    </div>
+    <div class="container-fluid" id="mySettings" style="margin: 100px">
+        
+            <ul class="nav nav-tabs">
+                <li><a href="#" data-toggle="collapse" data-target="#settings" data-parent="#mySettings">Settings</a></li>
+                <li><a href="#" data-toggle="collapse" data-target="#EventsMade" data-parent="#mySettings">Events Made</a></li>
+                <li><a href="#" data-toggle="collapse" data-target="#EventsChecks" data-parent="#mySettings">Events Checked In</a></li>
+            </ul>
+       
+
+        <div class="Collapsable-Info">
+            <div id="settings" class="collapse in">
+                <dl class="dl-horizontal">
+                    <!--<dt></dt>
+                <dd><img src="~/images/barack.jpg" class="img-rounded"/> </dd>-->
+                    <dt>First name:</dt>
+                    <dd>@Model.firstname</dd>
+                    <dt>Last name:</dt>
+                    <dd>@Model.lastname</dd>
+                    <dt>Username:</dt>
+                    <dd>@Model.username</dd>
+                    <dt>Email:</dt>
+                    <dd>@Model.mail</dd>
+                    <dt>Birthday:</dt>
+                    <dd>@Model.birthday.Date</dd>
+                </dl>
+            </div>
+            <div id="EventsMade" class="collapse">
+                <div class="container-fluid">
+                    <h2>Log Book - Events Made:</h2>
+                    <p>You find here underneath all your history of Events organised by you. Click on the Event name to display the event page.</p>
+                    @if (ViewBag.EventsMade == null)
+                    {
+                        <p> No events history to display. Sorry you have no life.</p>
+                    }
+                    else
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Eventname</th>
+                                    <th>Date</th>
+                                    <th>Participants</th>
+                                    <th>Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Event e in ViewBag.EventsMade)
+                                {
+                                    <tr class="warning">
+                                        <td>@Html.ActionLink(e.EventName, "Register", "Account") </td>
+                                        <td>@e.EventEndDate</td>
+                                        <td>@e.EventParticipants </td>
+                                        <th>@e.EventLocation</th>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>}
+                </div>
+            </div>
+            <div id="EventsChecks" class="collapse">
+                <div class="container-fluid">
+                    <h2>Log Book - Your Check Ins:</h2>
+                    <p>You find here underneath all your history of Events you participated to. Click on the Event name to display the event page.</p>
+                    @if (ViewBag.EventsParticipated == null)
+                    {
+                        <p> No events history to display. Sorry you have no life.</p>
+                    }
+                    else
+                    {
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Eventname</th>
+                                    <th>Date</th>
+                                    <th>Participants</th>
+                                    <th>Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               @foreach (Event e in ViewBag.EventsParticipated)
+                                {
+                                    <tr class="warning">EventEndDate EventLocation
+                                        <td>@Html.ActionLink(e.EventName, "Register", "Account") </td>
+                                        <td>@e.EventEndDate </td>
+                                        <td>@e.EventParticipants </td>
+                                        <td>@e.EventLocation</td>
+                                    </tr>}
+                            </tbody>
+                        </table>}
                 </div>
             </div>
         </div>
-    <p>
-
-    </p>
+  </div>
 </body>
 </html>

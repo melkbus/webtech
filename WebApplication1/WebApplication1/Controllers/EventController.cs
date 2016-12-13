@@ -14,10 +14,15 @@ namespace WebApplication1.Controllers
 {
     public class EventController : Controller
     {
+<<<<<<< HEAD
         Account account = new Account(
             "zomomo",
             "161964652558563",
             "nCU9Op7zsyop4KYoZ44hSMaBM08");
+=======
+
+
+>>>>>>> 42828337cb5005f640b48387d34ad3f53039a4e3
 
         private webtechEntities db = new webtechEntities();
 
@@ -38,7 +43,7 @@ namespace WebApplication1.Controllers
 
             if (model.ImageUpload != null)
             {
-                Cloudinary cloudinary = new Cloudinary(account);
+                Cloudinary cloudinary = new CloudinaryAccount().Cloud;
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new CloudinaryDotNet.Actions.FileDescription(model.ImageUpload.FileName,

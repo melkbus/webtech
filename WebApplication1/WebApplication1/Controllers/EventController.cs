@@ -19,11 +19,7 @@ namespace WebApplication1.Controllers
             "161964652558563",
             "nCU9Op7zsyop4KYoZ44hSMaBM08");
 
-
-
-
         private webtechEntities db = new webtechEntities();
-
 
         [HttpPost]
         public ActionResult FileUpload(EventCreateViewModel model)

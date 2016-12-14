@@ -43,6 +43,10 @@ namespace WebApplication1.Models
         public HttpPostedFileBase ImageUpload { get; set; }
         public Event ev { get; set; }
 
+        [DataType(DataType.Currency)]
+        [Display(Name = "ID")]
+        public string EventID { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Name")]

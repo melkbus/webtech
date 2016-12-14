@@ -8,6 +8,7 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
+    @RenderSection("Scripts", required: false)
 </head>
 <body>
     <nav class="navbar navbar-dark navbar-fixed-top scrolling-navbar primary-color">
@@ -145,6 +146,5 @@
             <p>&copy; @DateTime.Now.Year - ©Copyright ZoMoMo</p>
         </footer>
     </div>
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -30,13 +30,37 @@
             <dd>
                 @Html.DisplayFor(model => model.EventDescription)
             </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EventBeginDate)
+            </dt>
     
             <dt>
-                @Html.DisplayNameFor(model => model.EventDate)
+                @Html.DisplayFor(model => model.EventBeginDate)
+            </dt>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EventBeginTime)
+            </dt>
+
+            <dt>
+                @Html.DisplayFor(model => model.EventBeginTime)
+            </dt>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EventEndDate)
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.EventDate)
+                @Html.DisplayFor(model => model.EventEndDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EventEndTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EventEndTime)
             </dd>
     
             <dt>
@@ -66,8 +90,8 @@
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Edit", "EditEvent", new { id = Model.EventId }) |
+        @Html.ActionLink("Back to List", "../")
     </p>
 </body>
 </html>

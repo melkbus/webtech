@@ -157,11 +157,12 @@ namespace WebApplication1.Controllers
             webtechEntities db = new webtechEntities();
             account user = new account();
             user = db.account.Find(id);
-            account user1 = db.account.Find(id);
+
+            account usr = db.account.Find(id);
             Event[] t = db.Event.ToArray();
             ViewBag.EventsMade = t;
             ViewBag.EventsParticipated = t;
-            return View(user1);
+            return View(usr);
             }
 
         [AllowAnonymous]

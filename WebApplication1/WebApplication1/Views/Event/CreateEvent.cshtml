@@ -5,7 +5,7 @@
 @using (Html.BeginForm("FileUpload", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <hr />
-    <h4 style="margin-top:50px; margin-left:10px">Create your own event!</h4>
+    <h2 style="margin-top:50px; margin-left:10px">Create your own event!</h2>
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

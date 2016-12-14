@@ -21,11 +21,21 @@ namespace WebApplication1.Controllers
 
         private webtechEntities db = new webtechEntities();
 
+        //[HttpPost]
+        //public ActionResult Participate(EventCreateViewModel model)
+        //{
+            
+        //    Event ev = db.Event.Find(model.EventID);
+        //    ev.EventParticipants += 1;
+        //    db.Event.Add(ev);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index", "Event");
+        //}
+
         [HttpPost]
         public ActionResult FileUpload(EventCreateViewModel model)
         {
             Event ev = new Event();
-            //System.Diagnostics.Debug.WriteLine("reached here 1---------------------------------------------");
             ev.EventName = model.EventName;
             ev.EventDescription = model.EventDescription;
             ev.EventBeginDate = model.EventBeginDate;
@@ -34,7 +44,6 @@ namespace WebApplication1.Controllers
             ev.EventEndTime = model.EventEndTime;
             ev.EventLocation = model.EventLocation;
             ev.EventPrice = model.EventPrice;
-            //System.Diagnostics.Debug.WriteLine("reached here 2---------------------------------------------");
 
             if (model.ImageUpload != null)
             {
@@ -98,6 +107,7 @@ namespace WebApplication1.Controllers
         {
             return View(db.Event.Find(id));
         }
+
         public ActionResult SearchEvent()
         {
             return View();

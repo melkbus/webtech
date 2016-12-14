@@ -197,13 +197,10 @@ namespace WebApplication1.Controllers
                         firstname = model.firstname,
                         lastname = model.lastname,
                         Email = model.Email,
-                        birthday = model.birthday,
+                        birthday =null, //model.birthday,
                         description = model.description,
                         profilePic = "sample"
                     };
-                    var x = 2;
-
-
                     db.account.Add(acc);
                     try
                     {

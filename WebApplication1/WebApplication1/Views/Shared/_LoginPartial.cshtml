@@ -3,24 +3,23 @@
 {
     using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" style="margin-top:8px">
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                <li>@Html.ActionLink("My Profile", "Profile", "Account", new { idUser = User.Identity.GetUserId() }, null)</li>
-                <li><a href="#">My checkins</a></li>
-                <li><a href="#">My events</a></li>
-                <li><a href="#">Settings</a></li>
-            </ul>
-        </li>
-       <li><a style="padding-right:30px;" href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" onClicik="dropdownMenu()" style="margin-top:8px">
+                    @MvcHtmlString.Create("Hello " + User.Identity.GetUserName() + "!")
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" id="menuContents">
+                    <li><a href="~/Account/Profile">My profile</a></li>
+                    <li><a href="#">My checkins</a></li>
+                    <li><a href="#">My events</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </li>
+            <li><a style="padding-right:30px;" href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Log off</a></li>
+        </ul>
     }
 }
 else
@@ -29,5 +28,18 @@ else
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
-
 }
+
+
+
+<script src="textType/javascript">
+
+    function dropdownMenu() {
+
+       var contents = document.getElementById("menuContents");
+       contents.classList.toggle("show");
+    }
+
+
+
+</script>

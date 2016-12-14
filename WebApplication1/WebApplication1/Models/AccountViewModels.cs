@@ -90,6 +90,28 @@ namespace WebApplication1.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        public string UserId { get; set; }
+
+        [Display(Name ="First Name")]
+        [Required]
+        public string firstname { get; set; }
+
+        [Required]
+        [Display(Name ="Last Name")]
+        public string lastname { get; set; }
+
+        //[Required]
+        [Display(Name = "birthday:")]
+        public Nullable<System.DateTime> birthday { get; set; }
+
+
+        [Display(Name = "Describe yourself")]
+        public string description { get; set; }
+
+
+        [Display(Name = "Profile Picture")]
+        public string profilePic { get; set; }
+
         [Display(Name = "Hometown")]
         public string Hometown { get; set; }
     }

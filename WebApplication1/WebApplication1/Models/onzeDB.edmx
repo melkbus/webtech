@@ -9,13 +9,13 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="passwordKey" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UserId" Type="char" MaxLength="100" Nullable="false" />
           <Property Name="firstname" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="lastname" Type="char" MaxLength="20" Nullable="false" />
-          <Property Name="mail" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="birthday" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="birthday" Type="datetime" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="profilePic" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -63,13 +63,13 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="passwordKey" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="true" />
           <Property Name="firstname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="lastname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="mail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="birthday" Type="DateTime" Precision="3" Nullable="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="profilePic" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -118,12 +118,12 @@
     <EntitySetMapping Name="account">
       <EntityTypeMapping TypeName="IsTypeOf(webtechModel.account)">
         <MappingFragment StoreEntitySet="account">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="passwordKey" ColumnName="passwordKey" />
+          <ScalarProperty Name="profilePic" ColumnName="profilePic" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="firstname" ColumnName="firstname" />
           <ScalarProperty Name="lastname" ColumnName="lastname" />
-          <ScalarProperty Name="mail" ColumnName="mail" />
           <ScalarProperty Name="birthday" ColumnName="birthday" />
         </MappingFragment>
       </EntityTypeMapping>

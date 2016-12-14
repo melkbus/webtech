@@ -65,8 +65,10 @@ namespace WebApplication1.Controllers
 
             System.Diagnostics.Debug.WriteLine("name:  \"{0}\" description   \"{1}\" ", ev.EventName, ev.EventDescription);
 
+            int myId = ev.EventId;
             db.Event.Add(ev);
-
+            //db.logboek.Add(lb);
+           
             try
             {
                 db.SaveChanges();

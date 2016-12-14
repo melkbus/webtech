@@ -1,43 +1,36 @@
-﻿@using WebApplication1.Models;
-
+﻿@using WebApplication1.Models
 @model WebApplication1.Models.account
-
-
-@{
-}
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Profile</title>
 </head>
 <body>
-    <div class="container-fluid" id="mySettings" style="margin: 100px">
-        
+    <div class="container-fluid" id="mySettings" style="margin-top:100px">
+        <div id="Collapsable-links">
             <ul class="nav nav-tabs">
                 <li><a href="#" data-toggle="collapse" data-target="#settings" data-parent="#mySettings">Settings</a></li>
                 <li><a href="#" data-toggle="collapse" data-target="#EventsMade" data-parent="#mySettings">Events Made</a></li>
                 <li><a href="#" data-toggle="collapse" data-target="#EventsChecks" data-parent="#mySettings">Events Checked In</a></li>
             </ul>
-       
+        </div>
 
         <div class="Collapsable-Info">
             <div id="settings" class="collapse in">
                 <dl class="dl-horizontal">
-                    <!--<dt></dt>
-                <dd><img src="~/images/barack.jpg" class="img-rounded"/> </dd>-->
-                    <dt>First name:</dt>
+                    <dt>Firstname:</dt>
                     <dd>@Model.firstname</dd>
-                    <dt>Last name:</dt>
+                    <dt>Lastname:</dt>
                     <dd>@Model.lastname</dd>
-                    <dt>Username:</dt>
-                    <dd>@Model.username</dd>
                     <dt>Email:</dt>
-                    <dd>@Model.mail</dd>
-                    <dt>Birthday:</dt>
-                    <dd>@Model.birthday.Date</dd>
+                    <dd>@Model.Email</dd>
+                    <dt>Brithday:</dt>
+                    <dd>@Model.birthday</dd>
+                    <dt>Description:</dt>
+                    <dd>@Model.description</dd>
                 </dl>
             </div>
             <div id="EventsMade" class="collapse">
@@ -64,9 +57,9 @@
                                 {
                                     <tr class="warning">
                                         <td>@Html.ActionLink(e.EventName, "Register", "Account") </td>
-                                        <td>@e.EventEndDate</td>
+                                        <td>@e.EventEndDate </td>
                                         <td>@e.EventParticipants </td>
-                                        <th>@e.EventLocation</th>
+                                        <td>@e.EventLocation</td>
                                     </tr>
                                 }
                             </tbody>
@@ -78,7 +71,7 @@
                     <h2>Log Book - Your Check Ins:</h2>
                     <p>You find here underneath all your history of Events you participated to. Click on the Event name to display the event page.</p>
                     @if (ViewBag.EventsParticipated == null)
-                    {
+            {
                         <p> No events history to display. Sorry you have no life.</p>
                     }
                     else
@@ -94,9 +87,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               @foreach (Event e in ViewBag.EventsParticipated)
+                                @foreach (Event e in ViewBag.EventsParticipated)
                                 {
-                                    <tr class="warning">EventEndDate EventLocation
+                                    <tr class="warning">
                                         <td>@Html.ActionLink(e.EventName, "Register", "Account") </td>
                                         <td>@e.EventEndDate </td>
                                         <td>@e.EventParticipants </td>
@@ -107,6 +100,7 @@
                 </div>
             </div>
         </div>
-  </div>
+    </div>
+
 </body>
 </html>

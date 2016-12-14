@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApplication1.Models;
+using System.Data.Entity.Validation;
 
 namespace WebApplication1.Controllers
 {
@@ -19,6 +20,8 @@ namespace WebApplication1.Controllers
         private webtechEntities db = new webtechEntities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        private int AccountIdAmount = 0;
 
         public AccountController()
         {
@@ -152,31 +155,16 @@ namespace WebApplication1.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Profile(int id)
+        public ActionResult Profile(string idUser)
         {
+            
             webtechEntities db = new webtechEntities();
-            account user = new account();
-            user = db.account.Find(id);
+            account user= db.account.Find(idUser);
 
-            account usr = db.account.Find(id);
-            Event[] t = db.Event.ToArray();
-            ViewBag.EventsMade = t;
-            ViewBag.EventsParticipated = t;
-            return View(usr);
-            }
-
-        [AllowAnonymous]
-        public ActionResult Profile()
-        {
-
-            webtechEntities db = new webtechEntities();
-            account user = new account();
-            if (User.Identity.IsAuthenticated)
-            {
-                user = db.account.Find(user.UserId);
-                return View(user);
-            }
-            else return View();
+            Event[] events = db.Event.ToArray();
+            ViewBag.EventsMade = events;
+            ViewBag.EventsParticipated = events;
+            return View(user);
         }
 
         //
@@ -194,14 +182,47 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    account acc = new account
+                    {
+                        UserId = user.Id,
+                        firstname = model.firstname,
+                        lastname = model.lastname,
+                        Email = model.Email,
+                        birthday = model.birthday,
+                        description = model.description,
+                        profilePic = "sample"
+                    };
+                    var x = 2;
 
+
+                    db.account.Add(acc);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        foreach (var eve in e.EntityValidationErrors)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                            foreach (var ve in eve.ValidationErrors)
+                            {
+                                System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                    ve.PropertyName, ve.ErrorMessage);
+                            }
+                        }
+                        throw;
+                    }
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

@@ -14,12 +14,12 @@ namespace WebApplication1.Models
     
     public partial class account
     {
-        public int UserId { get; set; }
-        public string username { get; set; }
-        public string passwordKey { get; set; }
+        public string UserId { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
-        public string mail { get; set; }
-        public System.DateTime birthday { get; set; }
+        public string Email { get; set; }
+        public Nullable<System.DateTime> birthday { get; set; }
+        public string description { get; set; }
+        public string profilePic { get; set; }
     }
 }

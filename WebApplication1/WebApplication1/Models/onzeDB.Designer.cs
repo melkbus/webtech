@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model '\\vmware-host\Shared Folders\Documents\VUB\3ebach\Web Technologies\Project_web\WebApplication1\WebApplication1\Models\OnzeDb.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\desktop\Documents\Visual Studio 2015\Projects\webtechno_voor_carlos\WebApplication1\WebApplication1\Models\OnzeDb.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

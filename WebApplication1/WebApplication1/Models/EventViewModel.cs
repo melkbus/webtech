@@ -70,11 +70,11 @@ namespace WebApplication1.Models
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMM ddd d yyyy", ApplyFormatInEditMode = true)]
         [Display(Name = "Begin date")]
-        public Nullable<System.DateTime> EventBeginDate { get; set; }
+        public DateTime EventBeginDate { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "End date")]
-        public Nullable<System.DateTime> EventEndDate { get; set; }
+        public DateTime EventEndDate { get; set; }
 
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Begin time")]

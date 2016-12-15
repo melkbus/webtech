@@ -37,7 +37,7 @@
                                 </h4>
                                 <p style="margin-bottom:5px">@Html.DisplayFor(ModelItem => item.EventLocation)</p>
                                 <span>
-                                    @Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Day)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Month)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Year)
+                                    @Html.DisplayFor(ModelItem => item.EventBeginDate.Day)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Month)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Year)
                                 </span>
                                 -
                                 <span>
@@ -89,7 +89,6 @@
                             </div>
                         </div>
                     </div>
-                    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
                     <script>
                         $(document).after(function () {
                             $('#participants').click(function () {

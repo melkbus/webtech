@@ -14,7 +14,7 @@ namespace WebApplication1.Models
     
     public partial class account
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string username { get; set; }
         public string passwordKey { get; set; }
         public string firstname { get; set; }

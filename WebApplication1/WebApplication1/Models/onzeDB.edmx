@@ -9,13 +9,13 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="passwordKey" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UserId" Type="char" MaxLength="100" Nullable="false" />
           <Property Name="firstname" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="lastname" Type="char" MaxLength="20" Nullable="false" />
-          <Property Name="mail" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="birthday" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="birthday" Type="datetime" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="profilePic" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -24,8 +24,8 @@
           <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="EventDescription" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="EventBeginDate" Type="datetime" />
-          <Property Name="EventEndDate" Type="datetime" />
+          <Property Name="EventBeginDate" Type="datetime" Nullable="false" />
+          <Property Name="EventEndDate" Type="datetime" Nullable="false" />
           <Property Name="EventBeginTime" Type="datetime" />
           <Property Name="EventEndTime" Type="datetime" />
           <Property Name="EventLocation" Type="nvarchar(max)" />
@@ -63,13 +63,13 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="passwordKey" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" />
           <Property Name="firstname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="lastname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="mail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="birthday" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="profilePic" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -81,8 +81,8 @@
           <Property Name="EventLocation" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="EventPicture" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
           <Property Name="EventPrice" Type="Int32" />
-          <Property Name="EventBeginDate" Type="DateTime" Precision="3" />
-          <Property Name="EventEndDate" Type="DateTime" Precision="3" />
+          <Property Name="EventBeginDate" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="EventEndDate" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="EventBeginTime" Type="DateTime" Precision="3" />
           <Property Name="EventEndTime" Type="DateTime" Precision="3" />
           <Property Name="EventParticipants" Type="Int32" />
@@ -118,12 +118,12 @@
     <EntitySetMapping Name="account">
       <EntityTypeMapping TypeName="IsTypeOf(webtechModel.account)">
         <MappingFragment StoreEntitySet="account">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="passwordKey" ColumnName="passwordKey" />
+          <ScalarProperty Name="profilePic" ColumnName="profilePic" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="firstname" ColumnName="firstname" />
           <ScalarProperty Name="lastname" ColumnName="lastname" />
-          <ScalarProperty Name="mail" ColumnName="mail" />
           <ScalarProperty Name="birthday" ColumnName="birthday" />
         </MappingFragment>
       </EntityTypeMapping>

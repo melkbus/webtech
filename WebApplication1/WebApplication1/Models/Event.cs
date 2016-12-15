@@ -20,8 +20,8 @@ namespace WebApplication1.Models
         public string EventDescription { get; set; }
         public string EventPicture { get; set; }
         public Nullable<int> EventPrice { get; set; }
-        public Nullable<System.DateTime> EventBeginDate { get; set; }
-        public Nullable<System.DateTime> EventEndDate { get; set; }
+        public DateTime EventBeginDate { get; set; }
+        public DateTime EventEndDate { get; set; }
         public Nullable<System.DateTime> EventBeginTime { get; set; }
         public Nullable<System.DateTime> EventEndTime { get; set; }
         public string EventLocation { get; set; }

@@ -5,83 +5,121 @@
 
 @{
 }
-
 <!DOCTYPE html>
-<html>
-<body>
-    <div class="container" style="padding-right:50px;">
-        <h2 style="margin-top:100px;">Events</h2>
-        <div class="row">
-            @foreach (var item in Model.events.OrderBy(item => item.EventBeginTime).OrderBy(item => item.EventBeginDate))
-            {
 
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail" style="height:350px; min-height:350px; max-height:350px; margin-bottom:10px">
-                        @Model.cloudinary.Api.UrlImgUp.Transform(
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" HtmlEncode="false" />
+    <title>ViewEvent</title>
+</head>
+
+<body>
+    <div>
+        <h2 style="margin-top:100px;">Events</h2>
+        <hr />
+
+        <div class="container" style="padding-right:50px;">
+
+            <div class="row">
+                @foreach (var item in Model.events.OrderBy(item => item.EventBeginTime).OrderBy(item => item.EventBeginDate))
+                {
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail" style="height:350px; min-height:350px; max-height:350px; margin-bottom:10px">
+                            @Model.cloudinary.Api.UrlImgUp.Transform(
                         new Transformation()
                         .Width(320)
                         .Height(150)
                         .Crop("fill")).BuildImageTag(item.EventPicture)
-                        <div class="caption">
-                            <h4 class="pull-right">€@Html.DisplayFor(ModelItem => item.EventPrice)</h4>
-                            <h4>
-                                <a href="#">@Html.DisplayFor(ModelItem => item.EventName)</a>
-                            </h4>
-                            <p style="margin-bottom:5px">@Html.DisplayFor(ModelItem => item.EventLocation)</p>
-                            <span>
-                                @Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Day)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Month)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Year)
-                            </span>
+                            <div class="caption">
+                                <h4 class="pull-right">€@Html.DisplayFor(ModelItem => item.EventPrice)</h4>
+                                <h4>
+                                    <a href='@string.Format("../Event/ViewEvent/{0}", item.EventId)'>@Html.DisplayFor(ModelItem => item.EventName)</a>
+                                </h4>
+                                <p style="margin-bottom:5px">@Html.DisplayFor(ModelItem => item.EventLocation)</p>
+                                <span>
+                                    @Html.DisplayFor(ModelItem => item.EventBeginDate.Day)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Month)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Year)
+                                </span>
+                                -
+                                <span>
+                                    @Html.DisplayFor(ModelItem => item.EventBeginTime.Value.TimeOfDay)
+                                </span>
 
-                            <span>
-                                @Html.DisplayFor(ModelItem => item.EventBeginTime.Value.TimeOfDay)
-                            </span>
+                            </div>
+                            <div class="pull" style="position:absolute; bottom: 2%; width: 85%;">
+                                <p class="pull"style="margin:10px;">
+                                    <button type="button" class="btn btn-info btn-xs">tag1</button>
+                                    <button type="button" class="btn btn-info btn-xs">tag2</button>
+                                </p>
+                                <p class="pull-right" style="bottom:0">Participants: @Html.DisplayFor(ModelItem => item.EventParticipants)</p>
+                                <p class="pull-left" style="margin:5px; margin-bottom:10px">
 
-                        </div>
-                        <div class="foot" style="position:absolute;bottom: 2%; width: 85%;">
-                            <p style="margin:10px;">
-                                <button type="button" class="btn btn-info btn-xs">tag1</button>
-                                <button type="button" class="btn btn-info btn-xs">tag2</button>
-                            </p>
-                            <p class="pull-right" style="bottom:0">Participants: @Html.DisplayFor(ModelItem => item.EventParticipants)</p>
-                            <p style="margin:10px;">
-                                <span>
-                                    <a id="Participate" class="btn btn-xs" style="border-radius:60%">
-                                        <i class="mnIcon glyphicon glyphicon-plus" title="Participate"></i>
-                                    </a>
-                                </span>
-                                <span>
-                                    <a id="Intrested" class="btn btn-xs" style="border-radius:60%">
-                                        <i class="mnIcon glyphicon glyphicon-star" title="Intrested"></i>
-                                    </a>
-                                </span>
-                                <span>
-                                    <a id="Share" class="btn btn-xs" style="border-radius:60%">
-                                        <i class="mnIcon glyphicon glyphicon-share" title="Share"></i>
-                                    </a>
-                                </span>
-                            </p>
+                                    <button type="button" id="participants" class="btn btn-sm" style="border-radius:80%">
+                                        <span class="glyphicon glyphicon-plus" title="Participate" style="color:black"></span>
+                                    </button>
+
+                                    <button type="button" id="intrested" class="btn btn-sm" style="border-radius:80%">
+                                        <span class="glyphicon glyphicon-star-empty" title="Intrested" style="color:black"></span>
+                                    </button>
+
+                                    <button type="button" id="alert" class="btn btn-sm" style="border-radius:80%">
+                                        <span class="glyphicon glyphicon-bell" title="Notification" style="color:black"></span>
+                                    </button>
+
+                                    <button type="button" id="share" name="Share" class="btn btn-sm" style="border-radius:80%">
+                                        <span class="glyphicon glyphicon-share" id="share" title="Share" style="color:black"></span>
+                                    </button>
+
+
+                                    @*<span>
+                                            <a id="Participate" class="btn btn-xs" style="border-radius:60%">
+                                                <i class="mnIcon glyphicon glyphicon-plus" onclick="Participate(this)" title="Participate"></i>
+                                            </a>
+                                        </span>
+                                        <span>
+                                            <a id="Intrested" class="btn btn-xs" style="border-radius:60%">
+                                                <i class="mnIcon glyphicon glyphicon-star" title="Intrested"></i>
+                                            </a>
+                                        </span>
+                                        <span>
+                                            <a id="Share" class="btn btn-xs" style="border-radius:60%">
+                                                <i class="mnIcon glyphicon glyphicon-share" title="Share"></i>
+                                            </a>
+                                        </span>*@
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <script>
-                    var glyphOn = true;//Ok, glyphOn is a boolean variable to keep track whether .navList is visible or not.
-                    $('.glyphicon-plus').click(function () {
-                        if (glyphOn == true) {
-                            $('.navList').fadeIn(500);
-                            $('.mnIcon').removeClass('glyphicon-plus');
-                            $('.mnIcon').addClass('glyphicon-ok');
-                            glyphOn = false;
-                        } else {
-                            $('.navList').fadeOut(500);
-                            $('.mnIcon').removeClass('glyphicon-ok');
-                            $('.mnIcon').addClass('glyphicon-plus');
-                            glyphOn = true;
-                        }
-                    });
-                </script>
-            }
+                    <script>
+                        $(document).after(function () {
+                            $('#participants').click(function () {
+                                if ($('button span').hasClass('glyphicon-plus')) {
+                                    $('#participants').html('<span class="glyphicon glyphicon-ok" style="color:#3b5998"></span>');
+                                }
+                                else {
+                                    $('#participants').html('<span class="glyphicon glyphicon-plus" style="color:black"></span>');
+                                }
+                            });
+                            $('#intrested').click(function () {
+                                if ($('button span').hasClass('glyphicon-star-empty')) {
+                                    $('#intrested').html('<span class="glyphicon glyphicon-star" style="color:#3b5998"></span>');
+                                }
+                                else {
+                                    $('#intrested').html('<span class="glyphicon glyphicon-star-empty" style="color:black"></span>');
+                                }
+                            });
+                            $('#alert').click(function () {
+                                if ($('button span').css("color") == black) {
+                                    $('#alert').html('<span class="glyphicon glyphicon-bell" style="color:#3b5998"></span>');
+                                }
+                                else {
+                                    $('#alert').html('<span class="glyphicon glyphicon-bell" style="color:black"></span>');
+                                }
+                            });
+                        });
+                    </script>
+                }
+            </div>
         </div>
     </div>
 </body>
-
 </html>

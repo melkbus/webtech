@@ -105,7 +105,9 @@ namespace WebApplication1.Controllers
         [AllowAnonymous]
         public ActionResult ViewEvent(int id)
         {
-            return View(db.Event.Find(id));
+            EventViewModel model = new EventViewModel();
+            model.ev = db.Event.Find(id);
+            return View(model);
         }
 
         public ActionResult SearchEvent()

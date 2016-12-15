@@ -24,8 +24,8 @@
           <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="EventDescription" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="EventBeginDate" Type="datetime" />
-          <Property Name="EventEndDate" Type="datetime" />
+          <Property Name="EventBeginDate" Type="datetime" Nullable="false" />
+          <Property Name="EventEndDate" Type="datetime" Nullable="false" />
           <Property Name="EventBeginTime" Type="datetime" />
           <Property Name="EventEndTime" Type="datetime" />
           <Property Name="EventLocation" Type="nvarchar(max)" />
@@ -35,11 +35,12 @@
         </EntityType>
         <EntityType Name="logboek">
           <Key>
-            <PropertyRef Name="EventID" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="EventID" Type="int" Nullable="false" />
-          <Property Name="UserID" Type="int" />
-          <Property Name="organises" Type="int" />
+          <Property Name="UserID" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="Organize" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -81,26 +82,18 @@
           <Property Name="EventLocation" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="EventPicture" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
           <Property Name="EventPrice" Type="Int32" />
-          <Property Name="EventBeginDate" Type="DateTime" Precision="3" />
-          <Property Name="EventEndDate" Type="DateTime" Precision="3" />
+          <Property Name="EventBeginDate" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="EventEndDate" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="EventBeginTime" Type="DateTime" Precision="3" />
           <Property Name="EventEndTime" Type="DateTime" Precision="3" />
           <Property Name="EventParticipants" Type="Int32" />
         </EntityType>
-        <EntityType Name="logboek">
-          <Key>
-            <PropertyRef Name="EventID" />
-          </Key>
-          <Property Name="EventID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="organises" Type="Int32" />
-        </EntityType>
         <EntityContainer Name="webtechEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="account" EntityType="Self.account" />
           <EntitySet Name="Event" EntityType="Self.Event" />
-          <EntitySet Name="logboek" EntityType="Self.logboek" />
           <EntitySet Name="Table" EntityType="webtechModel.Table" />
-        </EntityContainer>
+          <EntitySet Name="logboeks" EntityType="webtechModel.logboek" />
+          </EntityContainer>
         <EntityType Name="Table">
           <Key>
             <PropertyRef Name="AccountName" />
@@ -109,7 +102,16 @@
           <Property Name="AccountName" Type="String" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
         </EntityType>
-      </Schema>
+        <EntityType Name="logboek">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="Organize" Type="Int32" Nullable="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -145,15 +147,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="logboek">
-      <EntityTypeMapping TypeName="IsTypeOf(webtechModel.logboek)">
-        <MappingFragment StoreEntitySet="logboek">
-          <ScalarProperty Name="EventID" ColumnName="EventID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="organises" ColumnName="organises" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Table">
       <EntityTypeMapping TypeName="IsTypeOf(webtechModel.Table)">
         <MappingFragment StoreEntitySet="Table">
@@ -162,7 +155,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-  </EntityContainerMapping>
+          <EntitySetMapping Name="logboeks">
+            <EntityTypeMapping TypeName="webtechModel.logboek">
+              <MappingFragment StoreEntitySet="logboek">
+                <ScalarProperty Name="Organize" ColumnName="Organize" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
@@ -175,7 +178,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

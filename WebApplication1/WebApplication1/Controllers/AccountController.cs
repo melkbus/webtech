@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebApplication1.Models;
 using System.Data.Entity.Validation;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
 
 namespace WebApplication1.Controllers
 {
@@ -20,8 +22,6 @@ namespace WebApplication1.Controllers
         private webtechEntities db = new webtechEntities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
-        private int AccountIdAmount = 0;
 
         public AccountController()
         {
@@ -152,13 +152,13 @@ namespace WebApplication1.Controllers
             }
         }
 
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Profile(string idUser)
         {
             
-            webtechEntities db = new webtechEntities();
             account user= db.account.Find(idUser);
 
             Event[] events = db.Event.ToArray();
@@ -189,7 +189,7 @@ namespace WebApplication1.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    
+
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     account acc = new account
                     {
@@ -197,10 +197,31 @@ namespace WebApplication1.Controllers
                         firstname = model.firstname,
                         lastname = model.lastname,
                         Email = model.Email,
-                        birthday =null, //model.birthday,
-                        description = model.description,
-                        profilePic = "sample"
+                        birthday = model.birthday,
+                        description=model.description
                     };
+                    if (model.description ==null) {
+                        acc.description = "Profile description under construction";
+                    }
+
+                    if (model.ImageUpload != null)
+                    {
+                        Cloudinary cloudinary = model.cloudinary;
+                        var uploadParams = new ImageUploadParams()
+                        {
+                            File = new CloudinaryDotNet.Actions.FileDescription(model.ImageUpload.FileName,
+                                model.ImageUpload.InputStream)
+                        };
+                        var uploadResult = cloudinary.Upload(uploadParams);
+
+                        acc.profilePic = uploadResult.PublicId;
+
+                    }
+                    else
+                    {
+                        acc.profilePic = "sample";
+                    }
+
                     db.account.Add(acc);
                     try
                     {

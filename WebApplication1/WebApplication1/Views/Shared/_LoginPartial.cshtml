@@ -5,17 +5,19 @@
     {
         @Html.AntiForgeryToken()
 
+
+
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" onClicik="dropdownMenu()" style="margin-top:8px">
+                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" onClick="dropdownMenu()" style="margin-top:8px">
                     @MvcHtmlString.Create("Hello " + User.Identity.GetUserName() + "!")
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" id="menuContents">
-                    <li><a href="~/Account/Profile">My profile</a></li>
-                    <li><a href="#">My checkins</a></li>
-                    <li><a href="#">My events</a></li>
-                    <li><a href="#">Settings</a></li>
+                    <li class="itemMenu">@Html.ActionLink("My Profile", "Profile","Account", new { idUser = User.Identity.GetUserId()}, null)</li>
+                    <li class="itemMenu"><a href="#">My checkins</a></li>
+                    <li class="itemMenu"><a href="#">My events</a></li>
+                    <li class="itemMenu"><a href="#">Settings</a></li>
                 </ul>
             </li>
             <li><a style="padding-right:30px;" href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Log off</a></li>
@@ -32,7 +34,7 @@ else
 
 
 
-<script src="textType/javascript">
+<script type="text/javascript">
 
     function dropdownMenu() {
 
@@ -40,6 +42,22 @@ else
        contents.classList.toggle("show");
     }
 
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropdown-toggle')) {
 
+            var dropdowns = document.getElementById("menuContents");
+            if (dropdowns.classList.contains('show')) {
+                dropdowns.classList.remove('show');
+            }
+
+            /*var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }*/
+        }
+    }
 
 </script>

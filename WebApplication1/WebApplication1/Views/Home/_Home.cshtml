@@ -1,131 +1,46 @@
-﻿@using WebApplication1.Models
+﻿
 @using CloudinaryDotNet
-@using CloudinaryDotNet.Actions
+
 @model WebApplication1.Models.EventViewModel
 
- <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-
-@{
-}
 <!DOCTYPE html>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" HtmlEncode="false" />
     <title>ViewEvent</title>
-   
-    
 </head>
-
 <body>
+    <div id="viewPlaceHolder"> @Html.Partial("_Events", Model)</div>
     <div>
-        <h2 style="margin-top:100px;">Events</h2>
         <hr />
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var cityfield = document.getElementById('City');
+                var namefield = document.getElementById('name');
+                var id = $("#city").val();
+                var data = JSON.stringify({
+                    'id': $("#city").val(),
+                    'name': $("#name").val()
+                });
+                function ajax(e) {
+                    jQuery.ajax({
+                        type: "GET",
+                        url: "/Home/GetView?id=" + $("#City").val() + "&name=" +  $("#name").val(),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (viewHTML) {
+                            $("#viewPlaceHolder").html(viewHTML);
+                        },
+                        error: function (req, status, error) {
+                            alert(req.responseText);
+                        }
+                    });
 
-        <div class="container" style="padding-right:50px;">
-
-            <div class="row">
-                @foreach (var item in Model.events.OrderBy(item => item.EventBeginTime).OrderBy(item => item.EventBeginDate))
-                {
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail" style="height:350px; min-height:350px; max-height:350px; margin-bottom:10px">
-                            @Model.cloudinary.Api.UrlImgUp.Transform(
-                        new Transformation()
-                        .Width(320)
-                        .Height(150)
-                        .Crop("fill")).BuildImageTag(item.EventPicture)
-                            <div class="caption">
-                                <h4 class="pull-right">€@Html.DisplayFor(ModelItem => item.EventPrice)</h4>
-                                <h4>
-                                    <a href='@string.Format("../Event/ViewEvent/{0}", item.EventId)'>@Html.DisplayFor(ModelItem => item.EventName)</a>
-                                </h4>
-                                <p style="margin-bottom:5px">@Html.DisplayFor(ModelItem => item.EventLocation)</p>
-                                <span>
-                                    @Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Day)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Month)/@Html.DisplayFor(ModelItem => item.EventBeginDate.Value.Year)
-                                </span>
-                                -
-                                <span>
-                                    @Html.DisplayFor(ModelItem => item.EventBeginTime.Value.TimeOfDay)
-                                </span>
-
-                            </div>
-                            <div class="foot" style="position:absolute; bottom: 2%; width: 85%;">
-                                <p style="margin:10px;">
-                                    <button type="button" class="btn btn-info btn-xs">tag1</button>
-                                    <button type="button" class="btn btn-info btn-xs">tag2</button>
-                                </p>
-                                <p class="pull-right" style="bottom:0">Participants: @Html.DisplayFor(ModelItem => item.EventParticipants)</p>
-                                <p style="margin:5px; margin-bottom:10px">
-
-                                    <button type="button" id="participants" class="btn btn-sm" style="border-radius:80%">
-                                        <span class="glyphicon glyphicon-plus" title="Participate" style="color:black"></span>
-                                    </button>
-
-                                    <button type="button" id="intrested" class="btn btn-sm" style="border-radius:80%">
-                                        <span class="glyphicon glyphicon-star-empty" title="Intrested" style="color:black"></span>
-                                    </button>
-
-                                    <button type="button" id="alert" class="btn btn-sm" style="border-radius:80%">
-                                        <span class="glyphicon glyphicon-bell" title="Notification" style="color:black"></span>
-                                    </button>
-
-                                    <button type="button" id="share" name="Share" class="btn btn-sm" style="border-radius:80%">
-                                        <span class="glyphicon glyphicon-share" id="share" title="Share" style="color:black"></span>
-                                    </button>
-
-
-                                    @*<span>
-                                            <a id="Participate" class="btn btn-xs" style="border-radius:60%">
-                                                <i class="mnIcon glyphicon glyphicon-plus" onclick="Participate(this)" title="Participate"></i>
-                                            </a>
-                                        </span>
-                                        <span>
-                                            <a id="Intrested" class="btn btn-xs" style="border-radius:60%">
-                                                <i class="mnIcon glyphicon glyphicon-star" title="Intrested"></i>
-                                            </a>
-                                        </span>
-                                        <span>
-                                            <a id="Share" class="btn btn-xs" style="border-radius:60%">
-                                                <i class="mnIcon glyphicon glyphicon-share" title="Share"></i>
-                                            </a>
-                                        </span>*@
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <script type="text/javascript">
-                        $(document).after(function () {
-                            $('#participants').click(function () {
-                                if ($('button span').hasClass('glyphicon-plus')) {
-                                    $('#participants').html('<span class="glyphicon glyphicon-ok" style="color:#3b5998"></span>');
-                                }
-                                else {
-                                    $('#participants').html('<span class="glyphicon glyphicon-plus" style="color:black"></span>');
-                                }
-                            });
-                            $('#intrested').click(function () {
-                                if ($('button span').hasClass('glyphicon-star-empty')) {
-                                    $('#intrested').html('<span class="glyphicon glyphicon-star" style="color:#3b5998"></span>');
-                                }
-                                else {
-                                    $('#intrested').html('<span class="glyphicon glyphicon-star-empty" style="color:black"></span>');
-                                }
-                            });
-                            $('#alert').click(function () {
-                                if ($('button span').css("color") == black) {
-                                    $('#alert').html('<span class="glyphicon glyphicon-bell" style="color:#3b5998"></span>');
-                                }
-                                else {
-                                    $('#alert').html('<span class="glyphicon glyphicon-bell" style="color:black"></span>');
-                                }
-                            });
-                        });
-                    </script>
                 }
-            </div>
+                cityfield.addEventListener('input', ajax);
+                namefield.addEventListener('input', ajax);
+            })
+        </script>
         </div>
-    </div>
 </body>
 </html>

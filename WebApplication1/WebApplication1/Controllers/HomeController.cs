@@ -19,5 +19,39 @@ namespace WebApplication1.Controllers
 
             return View(model);
         }
+        [HttpGet]
+        public ActionResult GetView(string id, string name)
+        {
+
+            System.Diagnostics.Debug.WriteLine("getview!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.Diagnostics.Debug.WriteLine(id);
+            EventViewModel model = new EventViewModel();
+            if (String.IsNullOrEmpty(id))
+            {
+                if (String.IsNullOrEmpty(name))
+                {
+                    model.events = db.Event.ToList();
+                }
+                else
+                {
+                    model.events = db.Event.Where(e => e.EventName.Contains(name)).ToList();
+                }
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(name))
+                {
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id)).ToList();
+                }
+                else
+                {
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventName.Contains(name)).ToList();
+                }
+                }
+                
+           
+            return PartialView("~/Views/Home/_Events.cshtml", model);
+        }
+
     }
 }

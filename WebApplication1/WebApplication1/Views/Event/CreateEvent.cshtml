@@ -1,9 +1,11 @@
 ﻿@model WebApplication1.Models.EventCreateViewModel
+
 @{
     ViewBag.Title = "Create Event";
 }
+
 @using (Html.BeginForm("FileUpload", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+    {
     <hr />
     <h2 style="margin-top:50px; margin-left:10px">Create your own event!</h2>
 
@@ -21,6 +23,26 @@
             <div class="col-md-10">
                 @Html.EditorFor(m => m.EventDescription, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.EventDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.tag.TagName, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10" id="tags">
+
+                @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control", @id= "Tags" } })
+                @Html.ValidationMessageFor(m => m.TagName, "", new { @class = "text-danger" })
+                <script>
+                    $(function () {
+                        $('#Tags').tokenfield({
+                            autocomplete: {
+                                source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+                                delay: 100
+                            },
+                            preventDefault: true,
+                            showAutocompleteOnFocus: true
+                        });
+                    });
+                </script>
             </div>
         </div>
         <div class="form-group">
@@ -55,7 +77,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.EventLocation, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EditorFor(m => m.EventLocation, new { htmlAttributes = new { @class = "form-control", id="Location" } })
+                @Html.EditorFor(m => m.EventLocation, new { htmlAttributes = new { @class = "form-control", id = "Location" } })
                 @Html.ValidationMessageFor(m => m.EventLocation, "", new { })
             </div>
         </div>
@@ -84,19 +106,16 @@
         @Html.ActionLink("Back to Homepage", "Index")
     </div>
 }
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
-    <script type="text/javascript">
-        var input = document.getElementById('Location');
 
-        google.maps.event.addDomListener(input, 'keydown', function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-            }
-        });
-        google.maps.event.addDomListener(window, 'load', function () {
-            var places = new google.maps.places.Autocomplete(input);
-        });
-    </script>
-}
+<script type="text/javascript">
+    var input = document.getElementById('Location');
+
+    google.maps.event.addDomListener(input, 'keydown', function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+        }
+    });
+    google.maps.event.addDomListener(window, 'load', function () {
+        var places = new google.maps.places.Autocomplete(input);
+    })
+</script>

@@ -1,7 +1,7 @@
 ﻿@model WebApplication1.Models.EventViewModel
-@using CloudinaryDotNet
+@using CloudinaryDotNet;
 @{
-    Layout = null;
+    ViewBag.Title = "View Event";
 }
 <!DOCTYPE html>
 
@@ -9,21 +9,33 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>ViewEvent</title>
-    <link rel="stylesheet" href="bootstrap.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="bootstrap.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-    @Styles.Render("~/Content/bootstrapcss")
+    <!-- Include Required Prerequisites -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Styles.Render("~/Content/bootstrapcss")    }
 </head>
 <body>
-    <div class="card text-center" style="width:80%; left:10%; right:10%">
-        @Model.cloudinary.Api.UrlImgUp.Transform(
-                     new Transformation()
-                     .Width(1135)
-                     .Height(400)
-                     .Crop("fill")).BuildImageTag(Model.ev.EventPicture)
+    <div class="card" style="width:80%; left:10%; right:10%; margin-top:50px">
+        <div class="row">
+            <div class="center">
+                <div class="col-lg-9 center-block">
+                    @Model.cloudinary.Api.UrlImgUp.Transform(
+                        new Transformation()
+                        .Width(Request.Browser.ScreenPixelsWidth)
+                        .Height(300)
+                        .Crop("fill")).BuildImageTag(Model.ev.EventPicture)
+                </div>
+            </div>
+        </div>
         <div class="card-block text-xs-center">
-            @Model.ev.EventPicture;
             <h4 class="card-title">@Html.DisplayFor(model => model.ev.EventName)</h4>
             <h6 class="card-subtitle text-muted">tags</h6>
             <div class="card-text">
@@ -32,69 +44,42 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-6 left">
+                <div class="col-sm-3">
                     <ul class="list-group">
-                        <li class="list-group-item pull-left">Begin Date: @Html.DisplayFor(model => model.ev.EventBeginDate)</li>
-                        <li class="list-group-item">Begin Time: @Html.DisplayFor(model => model.ev.EventBeginTime)</li>
+                        <li class="list-group-item pull-left">
+                            <p>Begin Date: @Html.DisplayFor(model => model.ev.EventBeginDate)</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p>Begin Time: @Html.DisplayFor(model => model.ev.EventBeginTime)</p>
+                        </li>
                     </ul>
                 </div>
-                <div class="col-sm-6 right">
+                <div class="col-sm-3">
                     <ul class="list-group">
-                        <li class="list-group-item pull-left">End Date: @Html.DisplayFor(model => model.ev.EventEndDate)</li>
-                        <li class="list-group-item">End Time: @Html.DisplayFor(model => model.ev.EventEndTime)</li>
+                        <li class="list-group-item pull-left clearfix">
+                            <p>End Date: @Html.DisplayFor(model => model.ev.EventEndDate)</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p>End Time: @Html.DisplayFor(model => model.ev.EventEndTime)</p>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="card-block text-xs-center">
-            <button id="participants" class="btn-lg glyphicon glyphicon-plus" style="border-radius:50%"></button>
-            <button id="participants" class="btn-lg glyphicon glyphicon-plus" style="border-radius:50%"></button>
-            <button id="participants" class="btn-lg glyphicon glyphicon-plus" style="border-radius:50%"></button>
-            <button id="participants" class="btn-lg glyphicon glyphicon-plus" style="border-radius:50%"></button>
+            <button id="participants" class="btn-sm glyphicon glyphicon-plus" style="border-radius:50%"></button>
+            <button id="intrested" class="btn-sm glyphicon glyphicon-star-empty" style="border-radius:50%"></button>
+            <button id="notification" class="btn-sm glyphicon glyphicon-bell" style="border-radius:50%"></button>
+            <button id="share" class="btn-sm glyphicon glyphicon-share" style="border-radius:50%"></button>
         </div>
-        @*<div class="card-footer text-muted">
-                This is a card footer
-            </div>*@
+
+        <div class="card-footer text-muted text-xs-center">
+            @Html.ActionLink("Edit", "EditEvent", new { id = Model.ev.EventId }) |
+            @Html.ActionLink("Home", "../")
+        </div>
     </div>
-    @*<div class="container">
-            <div class="row">
-                <div class="col-md-9">
-                    <img src="http://cdn.jssor.com/demos/img/photography/005.jpg" class="img-responsive center-block" height="300" style="border:thin; border-radius:10%" />
-                    <div class="row">
-                        @Html.DisplayNameFor(model => model.EventName) @Html.DisplayFor(model => model.EventName)
-                        @Html.DisplayNameFor(model => model.EventDescription)  @Html.DisplayFor(model => model.EventDescription)
-                        @Html.DisplayNameFor(model => model.EventBeginDate) @Html.DisplayFor(model => model.EventBeginDate)
-                        @Html.DisplayNameFor(model => model.EventBeginTime) @Html.DisplayFor(model => model.EventBeginTime)
-                        @Html.DisplayNameFor(model => model.EventEndDate) @Html.DisplayFor(model => model.EventEndDate)
-                        @Html.DisplayNameFor(model => model.EventEndTime) @Html.DisplayFor(model => model.EventEndTime)
-                        @Html.DisplayNameFor(model => model.EventLocation)  @Html.DisplayFor(model => model.EventLocation)
-                        @Html.DisplayNameFor(model => model.EventPicture) @Html.DisplayFor(model => model.EventPicture)
-                        @Html.DisplayNameFor(model => model.EventPrice) @Html.DisplayFor(model => model.EventPrice)
-                    </div>
-                </div>
-            </div>
-        </div>
-            <div class="col-md-9">
-            <img src="http://cdn.jssor.com/demos/img/photography/005.jpg" class="img-responsive center-block" height="300" style="border:thin; border-radius:10%" />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="container col-md-10 col-md-offset-1" style="border:solid; width:400px">
-                        @Html.DisplayNameFor(model => model.EventName) @Html.DisplayFor(model => model.EventName)
-                        @Html.DisplayNameFor(model => model.EventDescription)  @Html.DisplayFor(model => model.EventDescription)
-                        @Html.DisplayNameFor(model => model.EventBeginDate) @Html.DisplayFor(model => model.EventBeginDate)
-                        @Html.DisplayNameFor(model => model.EventBeginTime) @Html.DisplayFor(model => model.EventBeginTime)
-                        @Html.DisplayNameFor(model => model.EventEndDate) @Html.DisplayFor(model => model.EventEndDate)
-                        @Html.DisplayNameFor(model => model.EventEndTime) @Html.DisplayFor(model => model.EventEndTime)
-                        @Html.DisplayNameFor(model => model.EventLocation)  @Html.DisplayFor(model => model.EventLocation)
-                        @Html.DisplayNameFor(model => model.EventPicture) @Html.DisplayFor(model => model.EventPicture)
-                        @Html.DisplayNameFor(model => model.EventPrice) @Html.DisplayFor(model => model.EventPrice)
-                    </div>
-                </div>
-            </div>
-        </div>*@
-    <p style="left:10%">
-        @Html.ActionLink("Edit", "EditEvent", new { id = Model.ev.EventId }) |
-        @Html.ActionLink("Back to List", "../")
-    </p>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

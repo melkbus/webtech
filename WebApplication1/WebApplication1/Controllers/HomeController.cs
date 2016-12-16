@@ -34,22 +34,22 @@ namespace WebApplication1.Controllers
             {
                 if (String.IsNullOrEmpty(name))
                 {
-                    model.events = db.Event.Where(e => e.EventBeginDate > beginDate && e.EventBeginDate < endDate).ToList();
+                    model.events = db.Event.Where(e => e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
                 }
                 else
                 {
-                    model.events = db.Event.Where(e => e.EventName.Contains(name)&& e.EventBeginDate > beginDate && e.EventBeginDate < endDate).ToList();
+                    model.events = db.Event.Where(e => e.EventName.Contains(name)&& e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
                 }
             }
             else
             {
                 if (String.IsNullOrEmpty(name))
                 {
-                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate > beginDate && e.EventBeginDate < endDate).ToList();
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
                 }
                 else
                 {
-                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate > beginDate && e.EventBeginDate < endDate  && e.EventName.Contains(name)).ToList();
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate  && e.EventName.Contains(name)).ToList();
                 }
                 }
                 

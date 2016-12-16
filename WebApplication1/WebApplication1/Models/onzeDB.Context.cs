@@ -15,8 +15,7 @@ namespace WebApplication1.Models
     
     public partial class webtechEntities : DbContext
     {
-        public webtechEntities()
-            : base("name=webtechEntities")
+        public webtechEntities() : base("name=webtechEntities")
         {
         }
     

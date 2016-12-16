@@ -13,7 +13,12 @@ namespace WebApplication1.Controllers
         private webtechEntities db = new webtechEntities();
         public ActionResult Index()
         {
-
+            logboek newlb = new logboek();
+            newlb.EventID = 1;
+            newlb.UserID = "jasper";
+            newlb.Organize = 1;
+            db.logboek.Add(newlb);
+            db.SaveChanges();
             EventViewModel model = new EventViewModel();
             model.events = db.Event.ToList();
 

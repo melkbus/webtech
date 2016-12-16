@@ -14,9 +14,9 @@ namespace WebApplication1.Models
     
     public partial class logboek
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int EventID { get; set; }
-        public String UserID { get; set; }
+        public string UserID { get; set; }
         public int Organize { get; set; }
     }
 }

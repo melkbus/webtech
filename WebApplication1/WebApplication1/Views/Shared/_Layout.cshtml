@@ -7,6 +7,8 @@
     <meta charset="utf-8" />
     <title>ZoMoMo - Home </title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
 
 
@@ -35,34 +37,7 @@
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                             </div>
 
-                            <script type="text/javascript">
-                                $(function () {
-
-                                    var start = moment().subtract(29, 'days');
-                                    var end = moment();
-
-                                    function cb(start, end) {
-                                        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                                    }
-
-                                    $('#reportrange').daterangepicker({
-                                        startDate: start,
-                                        endDate: end,
-                                        "opens" : "left",
-                                        ranges: {
-                                            'Today': [moment(), moment()],
-                                            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                                            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                                            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                                            'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                                        }
-                                    }, cb);
-
-                                    cb(start, end);
-
-                                })
-                            </script>
+                            
                             <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
                             <script type="text/javascript">
                                 var input = document.getElementById('City');
@@ -86,6 +61,11 @@
             </div>
         </div>
     </nav>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <!-- Include Required Prerequisites -->
+
+    @RenderSection("Scripts", required: false)
 
     <div class="container body-content" style="background-color:#e8edf3">
 
@@ -96,8 +76,5 @@
             <p>&copy; @DateTime.Now.Year - ©Copyright ZoMoMo</p>
         </footer>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

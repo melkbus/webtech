@@ -20,32 +20,36 @@ namespace WebApplication1.Controllers
             return View(model);
         }
         [HttpGet]
-        public ActionResult GetView(string id, string name)
+        public ActionResult GetView(string id, string name ,string start, string end)
         {
-
+            DateTime beginDate = Convert.ToDateTime(start);
+            DateTime endDate = Convert.ToDateTime(end);
             System.Diagnostics.Debug.WriteLine("getview!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            System.Diagnostics.Debug.WriteLine(id);
+            System.Diagnostics.Debug.WriteLine(start);
+            System.Diagnostics.Debug.WriteLine(beginDate);
+            System.Diagnostics.Debug.WriteLine(end);
+            System.Diagnostics.Debug.WriteLine(endDate);
             EventViewModel model = new EventViewModel();
             if (String.IsNullOrEmpty(id))
             {
                 if (String.IsNullOrEmpty(name))
                 {
-                    model.events = db.Event.ToList();
+                    model.events = db.Event.Where(e => e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
                 }
                 else
                 {
-                    model.events = db.Event.Where(e => e.EventName.Contains(name)).ToList();
+                    model.events = db.Event.Where(e => e.EventName.Contains(name)&& e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
                 }
             }
             else
             {
                 if (String.IsNullOrEmpty(name))
                 {
-                    model.events = db.Event.Where(e => e.EventLocation.Contains(id)).ToList();
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
                 }
                 else
                 {
-                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventName.Contains(name)).ToList();
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate  && e.EventName.Contains(name)).ToList();
                 }
                 }
                 

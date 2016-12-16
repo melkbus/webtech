@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudinaryDotNet;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
@@ -74,6 +75,10 @@ namespace WebApplication1.Models
 
     public class RegisterViewModel
     {
+
+        public Cloudinary cloudinary { get; set; }
+
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -90,8 +95,43 @@ namespace WebApplication1.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        public string UserId { get; set; }
+
+        [Display(Name ="First Name")]
+        [Required]
+        [DataType(DataType.Text)]
+        [StringLength(20, ErrorMessage = "First Name must be maximum 20 characters")]
+        public string firstname { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name ="Last Name")]
+        [StringLength(20, ErrorMessage = "Last Name must be maximum 20 characters")]
+        public string lastname { get; set; }
+
+        [Required]
+        [Display(Name = "birthday:")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMM ddd d yyyy", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> birthday { get; set; }
+
+
+        [DataType(DataType.MultilineText)]
+        [StringLength(500, ErrorMessage = "max description-length = 500 characters")]
+        [Display(Name = "Describe yourself")]
+        public string description { get; set; }
+
+
+        [Display(Name = "Profile Picture")]
+        public HttpPostedFileBase ImageUpload { get; set; }
+
         [Display(Name = "Hometown")]
         public string Hometown { get; set; }
+
+        public RegisterViewModel()
+        {
+            ImageUpload = null;
+            cloudinary = new CloudinaryAccount().Cloud;
+        }
     }
 
     public class ResetPasswordViewModel

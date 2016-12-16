@@ -4,20 +4,56 @@
 @model WebApplication1.Models.EventViewModel
 
 <!DOCTYPE html>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" HtmlEncode="false" />
     <title>ViewEvent</title>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </head>
 <body>
     <div id="viewPlaceHolder"> @Html.Partial("_Events", Model)</div>
     <div>
+
         <hr />
         <script type="text/javascript">
+
+
+            $(function () {
+
+                var start = moment();
+                var end = moment().add(1, 'year');
+
+                function cb(start, end) {
+                    $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
+                }
+
+                $('#reportrange').daterangepicker({ 
+                    startDate: start,
+                    endDate: end,
+                    dateFormat: 'dd/mm/yyyy',
+                    opens : 'left',
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    }
+                }, cb);
+
+                cb(start, end);
+               
+
+            });
+            var picker = $('#reportrange').daterangepicker();
+
             $(document).ready(function(){
                 var cityfield = document.getElementById('City');
                 var namefield = document.getElementById('name');
+                var date = document.getElementById('reportrange');
                 var id = $("#city").val();
                 var data = JSON.stringify({
                     'id': $("#city").val(),
@@ -26,7 +62,8 @@
                 function ajax(e) {
                     jQuery.ajax({
                         type: "GET",
-                        url: "/Home/GetView?id=" + $("#City").val() + "&name=" +  $("#name").val(),
+                        url: "/Home/GetView",
+                        data: { id :   $("#City").val(),  name :  $("#name").val() , start : $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), end:   $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD')},
                         contentType: 'application/json; charset=utf-8',
                         success: function (viewHTML) {
                             $("#viewPlaceHolder").html(viewHTML);
@@ -39,6 +76,7 @@
                 }
                 cityfield.addEventListener('input', ajax);
                 namefield.addEventListener('input', ajax);
+                $('#reportrange').on('apply.daterangepicker', ajax);
             })
         </script>
         </div>

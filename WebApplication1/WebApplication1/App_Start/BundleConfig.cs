@@ -40,13 +40,18 @@ namespace WebApplication1
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
-                "~/Scripts/respond.js"));
+                "~/Scripts/respond.js",
+                "~/Scripts/jquery-ui.js",
+                "~/Scripts/bootstrap-tokenfield.js",
+                "~/Scripts/typeahead.jquery.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
                  "~/Content/bootstrap-theme.css",
                  "~/Content/bootstrap-theme.min.css",
-                 "~/Content/Site.css"));
+                 "~/Content/Site.css",
+                 "~/Content/bootstrap-tokenfield.css",
+                 "~/Content/jquery-ui.css"));
         }
     }
 }

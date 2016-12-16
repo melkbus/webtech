@@ -5,7 +5,7 @@
 }
 
 @using (Html.BeginForm("FileUpload", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+    {
     <hr />
     <h2 style="margin-top:50px; margin-left:10px">Create your own event!</h2>
 
@@ -26,28 +26,22 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.TagName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.tag.TagName, htmlAttributes: new { @class = "control-label col-md-2"})
             <div class="col-md-10" id="tags">
 
-                @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control", @id= "Tags" } })
                 @Html.ValidationMessageFor(m => m.TagName, "", new { @class = "text-danger" })
-                <script type="text/javascript">
+                <script>
                     $(function () {
-                        $('#TagName').tagsinput({
-                            itemValue: 'value',
-                            itemText: 'text',
-                            typeahead: {
-                                source: function (query) {
-                                    return $.getJSON('cities.json');
-                                }
-                            }
+                        $('#Tags').tokenfield({
+                            autocomplete: {
+                                source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+                                delay: 100
+                            },
+                            preventDefault: true,
+                            showAutocompleteOnFocus: true
                         });
-                        $('#TagName').tagsinput('add', { "value": 1, "text": "Amsterdam" });
-                        $('#TagName').tagsinput('add', { "value": 4, "text": "Washington" });
-                        $('#TagName').tagsinput('add', { "value": 7, "text": "Sydney" });
-                        $('#TagName').tagsinput('add', { "value": 10, "text": "Beijing" });
-                        $('#TagName').tagsinput('add', { "value": 13, "text": "Cairo" });
-                    })
+                    });
                 </script>
             </div>
         </div>
@@ -113,8 +107,6 @@
     </div>
 }
 
-@*@Scripts.Render("~/bundles/jquery");
-@Scripts.Render("~/bundles/bootstrap");*@
 <script type="text/javascript">
     var input = document.getElementById('Location');
 
@@ -127,4 +119,3 @@
         var places = new google.maps.places.Autocomplete(input);
     })
 </script>
-}

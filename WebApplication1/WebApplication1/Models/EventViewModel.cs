@@ -27,11 +27,13 @@ namespace WebApplication1.Models
     {
         public Cloudinary cloudinary { get; set; }
         public Event ev { get; set; }
+        public Tag tag { get; set; }
         public List<WebApplication1.Models.Event> events { get; set; }
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
         public EventViewModel() {
             ev = new Event();
+            tag = new Models.Tag();
             ImageUpload = null;
             cloudinary = new CloudinaryAccount().Cloud;
             events = new List<WebApplication1.Models.Event>(); }
@@ -42,6 +44,7 @@ namespace WebApplication1.Models
         public Cloudinary cloudinary { get; set; }
         public HttpPostedFileBase ImageUpload { get; set; }
         public Event ev { get; set; }
+        public Tag tag { get; set; }
 
         [DataType(DataType.Currency)]
         [Display(Name = "ID")]
@@ -70,11 +73,11 @@ namespace WebApplication1.Models
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMM ddd d yyyy", ApplyFormatInEditMode = true)]
         [Display(Name = "Begin date")]
-        public Nullable<System.DateTime> EventBeginDate { get; set; }
+        public DateTime EventBeginDate { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "End date")]
-        public Nullable<System.DateTime> EventEndDate { get; set; }
+        public DateTime EventEndDate { get; set; }
 
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Begin time")]
@@ -88,12 +91,17 @@ namespace WebApplication1.Models
         [Display(Name = "Location")]
         public string EventLocation { get; set; }
 
+        [Display(Name = "Tags")]
+        public string TagName { get; set; }
+
 
         public EventCreateViewModel()
         {
             ImageUpload = null;
             cloudinary = new CloudinaryAccount().Cloud;
             ev = new Event();
+            tag = new Tag();
+
         }
 
     }

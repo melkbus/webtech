@@ -12,14 +12,10 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class account
+    public partial class Tag
     {
-        public string UserId { get; set; }
-        public string firstname { get; set; }
-        public string lastname { get; set; }
-        public Nullable<System.DateTime> birthday { get; set; }
-        public string Email { get; set; }
-        public string description { get; set; }
-        public string profilePic { get; set; }
+        public int EventId { get; set; }
+        public int TagName { get; set; }
+        public int TagId { get; set; }
     }
 }

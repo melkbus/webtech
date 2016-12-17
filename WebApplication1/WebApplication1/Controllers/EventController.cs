@@ -145,16 +145,25 @@ namespace WebApplication1.Controllers
 
         public ActionResult EditEvent(int? id)
         {
-            if (id == null)
+            var userID = User.Identity.GetUserId();
+            var res = db.logboek.Where(l => l.EventID == id && l.UserID == userID && l.Organize == true);
+            if (res.Any())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event ev = db.Event.Find(id);
-            if (ev == null)
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Event ev = db.Event.Find(id);
+                if (ev == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(ev);
+            }else
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
-            return View(ev);
+            
         }
 
         [HttpPost]

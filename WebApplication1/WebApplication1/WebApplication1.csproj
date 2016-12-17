@@ -443,6 +443,7 @@
     <Content Include="Views\Account\YourEvents.cshtml" />
     <Content Include="Views\Account\CheckIns.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
+    <Content Include="Views\Home\_Event.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -130,7 +130,7 @@
             <PropertyRef Name="TagId" />
           </Key>
           <Property Name="EventId" Type="Int32" Nullable="false" />
-          <Property Name="TagName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="TagName" Type="String" Nullable="false" Unicode="false" FixedLength="false" MaxLength="20" />
           <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         </Schema>

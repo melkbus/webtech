@@ -28,14 +28,18 @@
         <div class="form-group">
             @Html.LabelFor(m => m.TagName, htmlAttributes: new { @class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control", @id= "Tags", @style="width:30%", @limit= "5" } })
+                @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control", @id= "Tags", @style="width:30%"} })
                 @Html.ValidationMessageFor(m => m.TagName, "", new { @class = "text-danger" })
                 <script>
                     $(function () {
                         $('#Tags').tokenfield({
                             autocomplete: {
-                                source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+                                source: [   'Sports', 'Food', 'Party', 'Conference', 'Meeting', 'Team Building', 'Trade',
+                                            'Press Conference', 'Buisiness Dinner', 'Opening Ceremonies', 'VIP Events',
+                                            'Wedding', 'BirthDay', 'Family Events'
+                                         ],
                                 delay: 100,
+                                delimiter: ''
                             },
                             showAutocompleteOnFocus: true,
                             limit: 5

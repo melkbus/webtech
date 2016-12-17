@@ -21,8 +21,7 @@ namespace WebApplication1.Controllers
             "nCU9Op7zsyop4KYoZ44hSMaBM08");
 
         private webtechEntities db = new webtechEntities();
-
-        private int eventIdCounter = 12;
+        
         //[HttpPost]
         //public ActionResult Participate(EventCreateViewModel model)
         //{
@@ -33,13 +32,6 @@ namespace WebApplication1.Controllers
         //    db.SaveChanges();
         //    return RedirectToAction("Index", "Event");
         //}
-
-        [HttpGet] public ActionResult CheckTags(String tags)
-        {
-            System.Diagnostics.Debug.WriteLine("Tags: " + tags);
-            return View();
-
-        }
 
         [HttpPost]
         public ActionResult FileUpload(EventCreateViewModel model)
@@ -53,18 +45,19 @@ namespace WebApplication1.Controllers
             ev.EventEndTime = model.EventEndTime;
             ev.EventLocation = model.EventLocation;
             ev.EventPrice = model.EventPrice;
-
-            for(int i=0; i < model.TagName.Length; i++)
+            
+            //split input tags
+            string[] tags = model.TagName.Split(new string[] { ", " }, StringSplitOptions.None);
+            for (int i=0; i < tags.Length; i++)
             {
+                //make all tags
                 Tag tag = new Tag();
-                tag.TagName = model.TagName[i];
+                tag.TagName = tags[i];
                 tag.EventId = model.EventID;
+                //add binding EventId - tagName to database
                 db.Tag.Add(tag);
-                System.Diagnostics.Debug.WriteLine("Tag[" + i + "] = " + tag.TagName);
             }
            
-
-
             if (model.ImageUpload != null)
             {
                 Cloudinary cloudinary = new CloudinaryAccount().Cloud;
@@ -150,7 +143,8 @@ namespace WebApplication1.Controllers
         {
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);
-            return View(model);
+            model.tags = db.Tag.Where(e => e.EventId == id).ToList();
+            return PartialView("~/Views/Home/_Event.cshtml", model);
         }
 
         public ActionResult SearchEvent()

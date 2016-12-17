@@ -27,16 +27,17 @@ namespace WebApplication1.Models
     {
         public Cloudinary cloudinary { get; set; }
         public Event ev { get; set; }
-        public Tag tag { get; set; }
         public List<WebApplication1.Models.Event> events { get; set; }
+        public List<WebApplication1.Models.Tag> tags { get; set; }
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
         public EventViewModel() {
             ev = new Event();
-            tag = new Tag();
+            events = new List<WebApplication1.Models.Event>();
+            tags = new List<WebApplication1.Models.Tag>();
             ImageUpload = null;
             cloudinary = new CloudinaryAccount().Cloud;
-            events = new List<WebApplication1.Models.Event>(); }
+             }
     }
 
     public class EventCreateViewModel {
@@ -57,7 +58,6 @@ namespace WebApplication1.Models
 
         [Required]
         [DataType(DataType.MultilineText)]
-        [MaxLength(20)]
         [StringLength(300, ErrorMessage = "max description-length = 300 characters")]
         [Display(Name = "Description")]
         public string EventDescription { get; set; }
@@ -90,10 +90,11 @@ namespace WebApplication1.Models
         [Required]
         [Display(Name = "Location")]
         public string EventLocation { get; set; }
-
+        
         [DataType(DataType.Text)]
+        [StringLength(105, ErrorMessage = "max description-length = 105 characters")]
         [Display(Name = "Tags")]
-        public string[] TagName { get; set; }
+        public string TagName { get; set; }
 
 
         public EventCreateViewModel()

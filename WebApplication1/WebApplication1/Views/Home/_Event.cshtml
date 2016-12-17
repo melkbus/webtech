@@ -28,7 +28,7 @@
             <p class="pull" style="margin:10px;">
                 @foreach (var item in Model.tags)
                 {
-                    <button style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
+                    <button action="~/Home/Search/?name=@item.TagName" style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
                 }
             </p>
             <p class="pull-right" style="bottom:0">Participants: @Html.DisplayFor(ModelItem => Model.ev.EventParticipants)</p>

@@ -36,10 +36,10 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.EventBeginTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(m => m.EventBeginDate.TimeOfDay, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(m => m.EventBeginTime, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => m.EventBeginTime, "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.EventBeginDate.TimeOfDay, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventBeginDate.TimeOfDay, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
@@ -51,10 +51,10 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(m => m.EventEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(m => m.EventEndDate.TimeOfDay, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(m => m.EventEndTime, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => m.EventEndTime, "", new { @class = "text-danger" })
+                    @Html.EditorFor(m => m.EventEndDate.TimeOfDay, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventEndDate.TimeOfDay, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">

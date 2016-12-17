@@ -28,7 +28,7 @@
             <p class="pull" style="margin:10px;">
                 @foreach (var item in Model.tags)
                 {
-                    <button action="~/Home/Search/?name=@item.TagName" style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
+                    <button style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
                 }
             </p>
             <p class="pull-right" style="bottom:0">Participants: @Html.DisplayFor(ModelItem => Model.ev.EventParticipants)</p>
@@ -78,6 +78,7 @@
                                 $('#@string.Format("intrested{0}", Model.ev.EventId)').html('<span id=@string.Format("i{0}", Model.ev.EventId) class="glyphicon glyphicon-star-empty" style="color:black"></span>');
                             }
                         });
+                        
                        @* $('#@string.Format("notification{0}", Model.ev.EventId)').click(function () {
                             if ($('#@string.Format("notification{0}", Model.ev.EventId)').css("color") == black) {
                                 $('#@string.Format("notification{0}", Model.ev.EventId)').html('<span class="glyphicon glyphicon-bell" style="color:#3b5998"></span>');

@@ -21,7 +21,7 @@
         <div class="container" style="padding-right:50px;">
 
             <div class="row" id="eventRow">
-                @foreach (var item in Model.events.OrderBy(item => item.EventBeginTime).OrderBy(item => item.EventBeginDate))
+                @foreach (var item in Model.events.OrderBy(item => item.EventBeginDate))
                 {
                     <script>
                     jQuery.ajax({

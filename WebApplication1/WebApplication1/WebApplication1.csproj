@@ -424,6 +424,9 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Event\CreateEvent.cshtml" />
     <Content Include="Views\Home\_events.cshtml" />
+    <Content Include="Views\Account\YourEvents.cshtml" />
+    <Content Include="Views\Account\CheckIns.cshtml" />
+    <Content Include="Views\Account\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

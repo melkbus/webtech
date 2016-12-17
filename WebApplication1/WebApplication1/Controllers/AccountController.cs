@@ -12,6 +12,7 @@ using WebApplication1.Models;
 using System.Data.Entity.Validation;
 using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
+using System.Collections.Generic;
 
 namespace WebApplication1.Controllers
 {
@@ -160,10 +161,46 @@ namespace WebApplication1.Controllers
         {
             
             account user= db.account.Find(idUser);
+            List<Event> eventsMade = new List<Event>();
+            List<Event> eventsChecked = new List<Event>();
 
-            Event[] events = db.Event.ToArray();
-            ViewBag.EventsMade = events;
-            ViewBag.EventsParticipated = events;
+        
+            var elements= (from lb in db.logboek
+                            join ev in db.Event on lb.EventID equals ev.EventId
+                            where ((lb.Organize == true || lb.Going ==true)  && (ev.EventEndDate < System.DateTime.Now) && (lb.UserID == user.UserId))
+                            select new
+                            {
+                                Organize= lb.Organize,
+                                Going = lb.Going,
+                                EventName=ev.EventName,
+                                EventEndDate =ev.EventEndDate,
+                                EventParticipants=ev.EventParticipants,
+                                EventLocation =ev.EventLocation,
+                                Eventid=ev.EventId
+                            }
+                            ).OrderBy(p => p.EventEndDate).ToArray();
+
+
+            foreach (var ev in elements) {
+                Event e =new Event {
+                    EventName = ev.EventName,
+                    EventEndDate = ev.EventEndDate,
+                    EventParticipants = ev.EventParticipants,
+                    EventLocation = ev.EventLocation,
+                    EventId = ev.Eventid
+                };
+                if (ev.Organize)
+                {
+                    eventsMade.Add(e);
+                }
+                else
+                {
+                    eventsChecked.Add(e);
+                }
+            }
+
+            ViewBag.EventsMade = eventsMade;
+            ViewBag.EventsParticipated = eventsChecked;
             return View(user);
         }
 
@@ -185,7 +222,7 @@ namespace WebApplication1.Controllers
             
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = null};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -254,6 +291,71 @@ namespace WebApplication1.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+
+
+        //GET: /Account/YourEvents
+        public ActionResult YourEvents()
+        {
+
+            return View();
+        }
+
+
+        //GET: /Account/CheckIns
+        public ActionResult CheckIns()
+        {
+
+            return View();
+        }
+
+
+        //GET: /Account/Settings
+        public ActionResult Settings()
+        {
+            account acc = db.account.Find(User.Identity.GetUserId());
+            ChangesToProfile model = new ChangesToProfile
+            {
+                lastname = acc.firstname,
+                firstname = acc.lastname,
+                description = acc.description
+            };
+            return View(model);
+        }
+
+        //GET: /Account/Settings
+        [HttpPost]
+        public ActionResult Settings(ChangesToProfile model)
+        {
+
+            account acc = db.account.Find(User.Identity.GetUserId());
+
+            if (model.firstname != null)
+            {
+                db.Entry(acc).Property(u => u.firstname).CurrentValue = model.firstname;
+            }
+            if (model.lastname != null)
+            {
+                db.Entry(acc).Property(u => u.lastname).CurrentValue = model.lastname;
+            }
+            if (model.birthday != null)
+            {
+                db.Entry(acc).Property(u => u.birthday).CurrentValue = model.birthday;
+            }
+            if (model.description != null)
+            {
+                db.Entry(acc).Property(u => u.description).CurrentValue = model.description;
+            }
+            //db.Entry(acc).Property(u => u).CurrentValue = model.;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e) {
+                return View(model);
+            }
+            return RedirectToAction("Profile", "Account", new { idUser = acc.UserId });
         }
 
         //

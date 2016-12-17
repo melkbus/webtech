@@ -123,9 +123,10 @@ namespace WebApplication1.Models
 
         [Display(Name = "Profile Picture")]
         public HttpPostedFileBase ImageUpload { get; set; }
-
-        [Display(Name = "Hometown")]
-        public string Hometown { get; set; }
+    
+        //[Required]
+        //[Display(Name = "Hometown")]
+        //public string Hometown { get; set; }
 
         public RegisterViewModel()
         {
@@ -153,6 +154,56 @@ namespace WebApplication1.Models
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
+    }
+
+
+    public class ChangesToProfile
+    {
+        public Cloudinary cloudinary { get; set; }
+
+        public string UserId { get; set; }
+
+
+        [Display(Name = "First Name")]
+        [DataType(DataType.Text)]
+        [StringLength(20, ErrorMessage = "First Name must be maximum 20 characters")]
+        public string firstname { get; set; }
+
+
+       
+        [DataType(DataType.Text)]
+        [Display(Name = "Last Name")]
+        [StringLength(20, ErrorMessage = "Last Name must be maximum 20 characters")]
+        public string lastname { get; set; }
+
+       
+        [Display(Name = "birthday:")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMM ddd d yyyy", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> birthday { get; set; }
+
+
+        
+        [DataType(DataType.MultilineText)]
+        [StringLength(500, ErrorMessage = "max description-length = 500 characters")]
+        [Display(Name = "Describe yourself")]
+        public string description { get; set; }
+
+
+        [Display(Name = "Profile Picture")]
+        public HttpPostedFileBase ImageUpload { get; set; }
+
+        
+        //[Display(Name = "Hometown")]
+        //public string Hometown { get; set; }
+        
+        public ChangesToProfile()
+        {
+            ImageUpload = null;
+            cloudinary = new CloudinaryAccount().Cloud;
+        }
+
+
+
     }
 
     public class ForgotPasswordViewModel

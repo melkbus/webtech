@@ -24,11 +24,6 @@ namespace WebApplication1.Controllers
         {
             DateTime beginDate = Convert.ToDateTime(start);
             DateTime endDate = Convert.ToDateTime(end);
-            System.Diagnostics.Debug.WriteLine("getview!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            System.Diagnostics.Debug.WriteLine(start);
-            System.Diagnostics.Debug.WriteLine(beginDate);
-            System.Diagnostics.Debug.WriteLine(end);
-            System.Diagnostics.Debug.WriteLine(endDate);
             EventViewModel model = new EventViewModel();
             if (String.IsNullOrEmpty(id))
             {
@@ -57,5 +52,39 @@ namespace WebApplication1.Controllers
             return PartialView("~/Views/Home/_Events.cshtml", model);
         }
 
+        
+        public ActionResult Search(string id, string name, string start, string end)
+        {
+            DateTime beginDate = Convert.ToDateTime(start);
+            DateTime endDate = Convert.ToDateTime(end);
+            EventViewModel model = new EventViewModel();
+            if (String.IsNullOrEmpty(id))
+            {
+                if (String.IsNullOrEmpty(name))
+                {
+                    model.events = db.Event.Where(e => e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
+                }
+                else
+                {
+                    model.events = db.Event.Where(e => e.EventName.Contains(name) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
+                }
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(name))
+                {
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
+                }
+                else
+                {
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate && e.EventName.Contains(name)).ToList();
+                }
+            }
+
+
+            return View("~/Views/Home/_Home.cshtml", model);
+        }
+
     }
 }
+

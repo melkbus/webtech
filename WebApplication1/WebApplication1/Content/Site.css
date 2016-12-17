@@ -109,3 +109,11 @@ textarea {
   max-width: 500px;
   margin: 0 auto 100px;
 }
+
+.hidden>div {
+    display:none;
+}
+
+.visible>div {
+    display:block;
+}

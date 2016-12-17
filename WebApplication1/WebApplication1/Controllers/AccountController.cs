@@ -164,40 +164,46 @@ namespace WebApplication1.Controllers
             List<Event> eventsMade = new List<Event>();
             List<Event> eventsChecked = new List<Event>();
 
-        
-            var elements= (from lb in db.logboek
-                            join ev in db.Event on lb.EventID equals ev.EventId
-                            where ((lb.Organize == true || lb.Going ==true)  && (ev.EventEndDate < System.DateTime.Now) && (lb.UserID == user.UserId))
-                            select new
-                            {
-                                Organize= lb.Organize,
-                                Going = lb.Going,
-                                EventName=ev.EventName,
-                                EventEndDate =ev.EventEndDate,
-                                EventParticipants=ev.EventParticipants,
-                                EventLocation =ev.EventLocation,
-                                Eventid=ev.EventId
-                            }
-                            ).OrderBy(p => p.EventEndDate).ToArray();
+
+            var elements = db.logboek.Where(l => l.UserID == user.UserId && l.Organize == true ).Select(t => t.EventID).ToList();
+            eventsMade = db.Event.Where(e => elements.Contains(e.EventId)).ToList();
+
+            var elements2 = db.logboek.Where(l => l.UserID == user.UserId &&  l.Going == true).Select(t => t.EventID).ToList();
+            eventsChecked = db.Event.Where(e => elements.Contains(e.EventId)).ToList();
+
+            //(from lb in db.logboek
+            //                join ev in db.Event on lb.EventID equals ev.EventId
+            //                where ((lb.Organize == true || lb.Going ==true)  && (ev.EventEndDate < System.DateTime.Now) && (lb.UserID == user.UserId))
+            //                select new
+            //                {
+            //                    Organize= lb.Organize,
+            //                    Going = lb.Going,
+            //                    EventName=ev.EventName,
+            //                    EventEndDate =ev.EventEndDate,
+            //                    EventParticipants=ev.EventParticipants,
+            //                    EventLocation =ev.EventLocation,
+            //                    Eventid=ev.EventId
+            //                }
+            //                ).OrderBy(p => p.EventEndDate).ToArray();
 
 
-            foreach (var ev in elements) {
-                Event e =new Event {
-                    EventName = ev.EventName,
-                    EventEndDate = ev.EventEndDate,
-                    EventParticipants = ev.EventParticipants,
-                    EventLocation = ev.EventLocation,
-                    EventId = ev.Eventid
-                };
-                if (ev.Organize)
-                {
-                    eventsMade.Add(e);
-                }
-                else
-                {
-                    eventsChecked.Add(e);
-                }
-            }
+            //foreach (var ev in elements) {
+            //    Event e =new Event {
+            //        EventName = ev.EventName,
+            //        EventEndDate = ev.EventEndDate,
+            //        EventParticipants = ev.EventParticipants,
+            //        EventLocation = ev.EventLocation,
+            //        EventId = ev.Eventid
+            //    };
+            //    if (ev.Organize)
+            //    {
+            //        eventsMade.Add(e);
+            //    }
+            //    else
+            //    {
+            //        eventsChecked.Add(e);
+            //    }
+            //}
 
             ViewBag.EventsMade = eventsMade;
             ViewBag.EventsParticipated = eventsChecked;

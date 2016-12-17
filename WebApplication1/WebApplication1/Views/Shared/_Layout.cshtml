@@ -44,6 +44,7 @@
 
                                 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
                                 <script type="text/javascript">
+                                  
                                     var input = document.getElementById('City');
 
                                     google.maps.event.addDomListener(input, 'keydown', function (e) {
@@ -82,7 +83,7 @@
             @{
                 var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
             }
-            @if (controllerName == "Account")
+            @if (controllerName != "Home")
             {
                 <script type="text/javascript">
 

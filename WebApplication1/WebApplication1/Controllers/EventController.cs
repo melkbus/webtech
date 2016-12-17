@@ -37,27 +37,14 @@ namespace WebApplication1.Controllers
         public ActionResult FileUpload(EventCreateViewModel model)
         {
             Event ev = new Event();
+            model.EventBeginDate = model.EventBeginDate.Add(model.EventBeginTime.Value.TimeOfDay);
+            model.EventEndDate = model.EventEndDate.Add(model.EventEndTime.Value.TimeOfDay);
             ev.EventName = model.EventName;
             ev.EventDescription = model.EventDescription;
             ev.EventBeginDate = model.EventBeginDate;
-            ev.EventBeginTime = model.EventBeginTime;
             ev.EventEndDate = model.EventEndDate;
-            ev.EventEndTime = model.EventEndTime;
             ev.EventLocation = model.EventLocation;
-            ev.EventPrice = model.EventPrice;
-            
-            //split input tags
-            string[] tags = model.TagName.Split(new string[] { ", " }, StringSplitOptions.None);
-            for (int i=0; i < tags.Length; i++)
-            {
-                //make all tags
-                Tag tag = new Tag();
-                tag.TagName = tags[i];
-                tag.EventId = model.EventID;
-                //add binding EventId - tagName to database
-                db.Tag.Add(tag);
-            }
-           
+            ev.EventPrice = model.EventPrice;                               
             if (model.ImageUpload != null)
             {
                 Cloudinary cloudinary = new CloudinaryAccount().Cloud;
@@ -75,11 +62,7 @@ namespace WebApplication1.Controllers
             {
                 ev.EventPicture = "sample";
             }
-
-                  
-
             db.Event.Add(ev);
-
             try
             {
                 db.SaveChanges();
@@ -96,18 +79,28 @@ namespace WebApplication1.Controllers
                             ve.PropertyName, ve.ErrorMessage);
                     }
                 }
-                throw;
-                
+                throw;    
             }
 
             logboek lb = new logboek
             {
                 UserID = User.Identity.GetUserId(),
-                EventID = ev.EventId,
+                EventID = db.Event.Where(e => e.EventName == ev.EventName && e.EventDescription == ev.EventDescription && e.EventPicture == ev.EventPicture).Select(t => t.EventId).First(),
                 Organize = true,
                 Interested=false,
                 Going=true
             };
+            //split input tags
+            string[] tags = model.TagName.Split(new string[] { ", " }, StringSplitOptions.None);
+            for (int i = 0; i < tags.Length; i++)
+            {
+                //make all tags
+                Tag tag = new Tag();
+                tag.TagName = tags[i];
+                tag.EventId = lb.EventID;
+                //add binding EventId - tagName to database
+                db.Tag.Add(tag);
+            }
 
             db.logboek.Add(lb);
             try {
@@ -117,10 +110,7 @@ namespace WebApplication1.Controllers
             {
                 //Dit is gewoon test code indien het niet werkte
                 return RedirectToAction("Index", "Home");
-            }
-
-           
-
+            }          
             return RedirectToAction("CreateEvent", "Event");
             // after successfully uploading redirect the user
         }

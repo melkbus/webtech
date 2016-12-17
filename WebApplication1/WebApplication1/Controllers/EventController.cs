@@ -121,6 +121,7 @@ namespace WebApplication1.Controllers
             return View("no model found");
         }
         // GET: /Event/CreateEvent
+        [Authorize]
         public ActionResult CreateEvent()
         {
             return View(new EventCreateViewModel());

@@ -166,10 +166,10 @@ namespace WebApplication1.Controllers
 
 
             var elements = db.logboek.Where(l => l.UserID == user.UserId && l.Organize == true ).Select(t => t.EventID).ToList();
-            eventsMade = db.Event.Where(e => elements.Contains(e.EventId)).ToList();
+            eventsMade = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
 
             var elements2 = db.logboek.Where(l => l.UserID == user.UserId &&  l.Going == true).Select(t => t.EventID).ToList();
-            eventsChecked = db.Event.Where(e => elements.Contains(e.EventId)).ToList();
+            eventsChecked = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
 
             //(from lb in db.logboek
             //                join ev in db.Event on lb.EventID equals ev.EventId

@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers
         private webtechEntities db = new webtechEntities();
         public ActionResult Index()
         {
-
+         
             EventViewModel model = new EventViewModel();
             model.events = db.Event.ToList();
 

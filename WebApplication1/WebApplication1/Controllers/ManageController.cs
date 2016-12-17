@@ -15,7 +15,7 @@ namespace WebApplication1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private webtechEntities db = new webtechEntities();
         public ManageController()
         {
         }
@@ -50,8 +50,6 @@ namespace WebApplication1.Controllers
             }
         }
 
-        //
-        // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -74,6 +72,7 @@ namespace WebApplication1.Controllers
             };
             return View(model);
         }
+
 
         //
         // POST: /Manage/RemoveLogin

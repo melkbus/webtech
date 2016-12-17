@@ -17,8 +17,8 @@ namespace WebApplication1.Models
         public string UserId { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
-        public string Email { get; set; }
         public Nullable<System.DateTime> birthday { get; set; }
+        public string Email { get; set; }
         public string description { get; set; }
         public string profilePic { get; set; }
     }

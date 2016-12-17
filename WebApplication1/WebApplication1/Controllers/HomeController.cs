@@ -34,7 +34,12 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                    model.events = db.Event.Where(e => e.EventName.Contains(name)&& e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate).ToList();
+                    var tagevents = db.Tag.Where(t => t.TagName.Contains(name)).Select(s => s.EventId).ToList();
+                    model.events = db.Event.Where(e => (e.EventName.Contains(name) &&
+                                                        e.EventBeginDate >= beginDate &&
+                                                        e.EventBeginDate <= endDate) ||
+                                                        tagevents.Contains(e.EventId)
+                                                        ).ToList();
                 }
             }
             else

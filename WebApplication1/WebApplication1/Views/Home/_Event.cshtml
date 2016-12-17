@@ -28,27 +28,66 @@
             <p class="pull" style="margin:10px;">
                 @foreach (var item in Model.tags)
                 {
-                    <button type="button" class="btn btn-info btn-xs">item</button>
+                    <button style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
                 }
             </p>
             <p class="pull-right" style="bottom:0">Participants: @Html.DisplayFor(ModelItem => Model.ev.EventParticipants)</p>
             <p class="pull-left" style="margin:5px; margin-bottom:10px">
 
-                <button type="button" id="participants" class="btn btn-sm" style="border-radius:80%">
-                    <span class="glyphicon glyphicon-plus" title="Participate" style="color:black"></span>
+                <button type="button" id=@string.Format("participants{0}", Model.ev.EventId) class="btn btn-sm" style="border-radius:80%">
+                    <span id=@string.Format("p{0}", Model.ev.EventId) class="glyphicon glyphicon-plus" title="Participate" style="color:black"></span>
                 </button>
 
-                <button type="button" id="intrested" class="btn btn-sm" style="border-radius:80%">
-                    <span class="glyphicon glyphicon-star-empty" title="Intrested" style="color:black"></span>
+                <button type="button" id=@string.Format("intrested{0}", Model.ev.EventId) class="btn btn-sm" style="border-radius:80%">
+                    <span id=@string.Format("i{0}", Model.ev.EventId) class="glyphicon glyphicon-star-empty" title="Intrested" style="color:black"></span>
                 </button>
 
-                <button type="button" id="alert" class="btn btn-sm" style="border-radius:80%">
-                    <span class="glyphicon glyphicon-bell" title="Notification" style="color:black"></span>
+                <button type="button" id=@string.Format("notification{0}", Model.ev.EventId) class="btn btn-sm" style="border-radius:80%">
+                    <span id=@string.Format("n{0}", Model.ev.EventId) class="glyphicon glyphicon-bell" title="Notification" style="color:black"></span>
                 </button>
 
-                <button type="button" id="share" name="Share" class="btn btn-sm" style="border-radius:80%">
-                    <span class="glyphicon glyphicon-share" id="share" title="Share" style="color:black"></span>
+                <button type="button" id=@string.Format("share{0}", Model.ev.EventId) name="Share" class="btn btn-sm" style="border-radius:80%">
+                    <span id=@string.Format("s{0}", Model.ev.EventId) class="glyphicon glyphicon-share" title="Share" style="color:black"></span>
                 </button>
+
+                <script>
+                    $(function () {
+                        $('#@string.Format("participants{0}", Model.ev.EventId)').click(function () {
+                            var p = '#@string.Format("p{0}", Model.ev.EventId)'
+                            if ($(p).hasClass('glyphicon-plus')) {
+                                $(p).removeClass('glyphicon-plus')
+                                $(p).addClass('glyphicon-ok')
+                                $('#@string.Format("participants{0}", Model.ev.EventId)').html('<span id=@string.Format("p{0}", Model.ev.EventId) class="glyphicon glyphicon-ok" style="color:#3b5998"></span>');
+                            }
+                            else {
+                                $(p).removeClass('glyphicon-ok')
+                                $(p).addClass('glyphicon-plus')
+                                $('#@string.Format("participants{0}", Model.ev.EventId)').html('<span id=@string.Format("p{0}", Model.ev.EventId) class="glyphicon glyphicon-plus" style="color:black"></span>');
+                            }
+                        });
+                        $('#@string.Format("intrested{0}", Model.ev.EventId)').click(function () {
+                            var i = '#@string.Format("i{0}", Model.ev.EventId)'
+                            if ($(i).hasClass('glyphicon-star-empty')) {
+                                $(i).removeClass('glyphicon-star-empty')
+                                $(i).addClass('glyphicon-star')
+                                $('#@string.Format("intrested{0}", Model.ev.EventId)').html('<span id=@string.Format("i{0}", Model.ev.EventId) class="glyphicon glyphicon-star" style="color:#3b5998"></span>');
+                            }
+                            else {
+                                $(i).removeClass('glyphicon-star')
+                                $(i).addClass('glyphicon-star-empty')
+                                $('#@string.Format("intrested{0}", Model.ev.EventId)').html('<span id=@string.Format("i{0}", Model.ev.EventId) class="glyphicon glyphicon-star-empty" style="color:black"></span>');
+                            }
+                        });
+                       @* $('#@string.Format("notification{0}", Model.ev.EventId)').click(function () {
+                            if ($('#@string.Format("notification{0}", Model.ev.EventId)').css("color") == black) {
+                                $('#@string.Format("notification{0}", Model.ev.EventId)').html('<span class="glyphicon glyphicon-bell" style="color:#3b5998"></span>');
+                            }
+                            else {
+                                $('#@string.Format("notification{0}", Model.ev.EventId)').html('<span class="glyphicon glyphicon-bell" style="color:black"></span>');
+                            }
+                        });*@
+                    });
+                </script>
 
 
                 @*<span>
@@ -70,32 +109,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).after(function () {
-        $('#participants').click(function () {
-            if ($('button span').hasClass('glyphicon-plus')) {
-                $('#participants').html('<span class="glyphicon glyphicon-ok" style="color:#3b5998"></span>');
-            }
-            else {
-                $('#participants').html('<span class="glyphicon glyphicon-plus" style="color:black"></span>');
-            }
-        });
-        $('#intrested').click(function () {
-            if ($('button span').hasClass('glyphicon-star-empty')) {
-                $('#intrested').html('<span class="glyphicon glyphicon-star" style="color:#3b5998"></span>');
-            }
-            else {
-                $('#intrested').html('<span class="glyphicon glyphicon-star-empty" style="color:black"></span>');
-            }
-        });
-        $('#alert').click(function () {
-            if ($('button span').css("color") == black) {
-                $('#alert').html('<span class="glyphicon glyphicon-bell" style="color:#3b5998"></span>');
-            }
-            else {
-                $('#alert').html('<span class="glyphicon glyphicon-bell" style="color:black"></span>');
-            }
-        });
-    });
-</script>

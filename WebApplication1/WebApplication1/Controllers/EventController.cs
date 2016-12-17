@@ -21,11 +21,11 @@ namespace WebApplication1.Controllers
             "nCU9Op7zsyop4KYoZ44hSMaBM08");
 
         private webtechEntities db = new webtechEntities();
-        private int eventIdCounter = 12;
+        
         //[HttpPost]
         //public ActionResult Participate(EventCreateViewModel model)
         //{
-            
+
         //    Event ev = db.Event.Find(model.EventID);
         //    ev.EventParticipants += 1;
         //    db.Event.Add(ev);
@@ -45,7 +45,19 @@ namespace WebApplication1.Controllers
             ev.EventEndTime = model.EventEndTime;
             ev.EventLocation = model.EventLocation;
             ev.EventPrice = model.EventPrice;
-
+            
+            //split input tags
+            string[] tags = model.TagName.Split(new string[] { ", " }, StringSplitOptions.None);
+            for (int i=0; i < tags.Length; i++)
+            {
+                //make all tags
+                Tag tag = new Tag();
+                tag.TagName = tags[i];
+                tag.EventId = model.EventID;
+                //add binding EventId - tagName to database
+                db.Tag.Add(tag);
+            }
+           
             if (model.ImageUpload != null)
             {
                 Cloudinary cloudinary = new CloudinaryAccount().Cloud;
@@ -64,26 +76,16 @@ namespace WebApplication1.Controllers
                 ev.EventPicture = "sample";
             }
 
-            System.Diagnostics.Debug.WriteLine("name:  \"{0}\" description   \"{1}\" ", ev.EventName, ev.EventDescription);
-            
-            logboek lb = new logboek
-            {
-                UserID = User.Identity.GetUserId(),
-                EventID = eventIdCounter
-            };
-            eventIdCounter += 1;
+                  
+
             db.Event.Add(ev);
-            //db.logboek.Add(lb);
 
             try
             {
-                
-               db.SaveChanges();
+                db.SaveChanges();
             }
             catch (DbEntityValidationException e)
             {
-                eventIdCounter -= 1;
-
                 foreach (var eve in e.EntityValidationErrors)
                 {
                     System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
@@ -98,9 +100,31 @@ namespace WebApplication1.Controllers
                 
             }
 
+            logboek lb = new logboek
+            {
+                UserID = User.Identity.GetUserId(),
+                EventID = ev.EventId,
+                Organize = true,
+                Interested=false,
+                Going=true
+            };
+
+            db.logboek.Add(lb);
+            try {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                //Dit is gewoon test code indien het niet werkte
+                return RedirectToAction("Index", "Home");
+            }
+
+           
+
             return RedirectToAction("CreateEvent", "Event");
             // after successfully uploading redirect the user
         }
+
         [HttpGet]
         public ActionResult FileUpload()
         {
@@ -119,7 +143,8 @@ namespace WebApplication1.Controllers
         {
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);
-            return View(model);
+            model.tags = db.Tag.Where(e => e.EventId == id).ToList();
+            return PartialView("~/Views/Home/_Event.cshtml", model);
         }
 
         public ActionResult SearchEvent()

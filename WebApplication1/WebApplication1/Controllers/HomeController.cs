@@ -9,8 +9,8 @@ namespace WebApplication1.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-
         private webtechEntities db = new webtechEntities();
+
         public ActionResult Index()
         {
          
@@ -19,6 +19,7 @@ namespace WebApplication1.Controllers
 
             return View(model);
         }
+
         [HttpGet]
         public ActionResult GetView(string id, string name ,string start, string end)
         {

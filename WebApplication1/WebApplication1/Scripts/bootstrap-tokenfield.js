@@ -174,8 +174,7 @@
             var side = this.textDirection === 'rtl' ? 'right' : 'left'
              , autocompleteOptions = $.extend({
                  minLength: this.options.showAutocompleteOnFocus ? 0 : null,
-                 position: { my: side + " top", at: side + " bottom", of: this.$wrapper },
-                 autoFocus: true
+                 position: { my: side + " top", at: side + " bottom", of: this.$wrapper }
              }, this.options.autocomplete)
 
             this.$input.autocomplete(autocompleteOptions)

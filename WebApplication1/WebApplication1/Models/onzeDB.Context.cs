@@ -26,6 +26,7 @@ namespace WebApplication1.Models
     
         public virtual DbSet<account> account { get; set; }
         public virtual DbSet<Event> Event { get; set; }
+        public virtual DbSet<Tag> Tag { get; set; }
         public virtual DbSet<logboek> logboek { get; set; }
     }
 }

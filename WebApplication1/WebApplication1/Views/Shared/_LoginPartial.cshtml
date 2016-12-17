@@ -15,9 +15,9 @@
                 </button>
                 <ul class="dropdown-menu" id="menuContents">
                     <li class="itemMenu">@Html.ActionLink("My Profile", "Profile","Account", new { idUser = User.Identity.GetUserId()}, null)</li>
-                    <li class="itemMenu"><a href="#">My checkins</a></li>
-                    <li class="itemMenu"><a href="#">My events</a></li>
-                    <li class="itemMenu"><a href="#">Settings</a></li>
+                    <li class="itemMenu">@Html.ActionLink("My checkins", "CheckIns", "Account", null, null)</li>
+                    <li class="itemMenu">@Html.ActionLink("My events", "YourEvents", "Account", null, null)</li>
+                    <li class="itemMenu">@Html.ActionLink("Settings", "Settings", "Account", null, null)</li>
                 </ul>
             </li>
             <li><a style="padding-right:30px;" href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">Log off</a></li>

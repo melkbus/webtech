@@ -275,6 +275,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OnzeDb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\OnzeDb1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OnzeDb.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Table.cs">
       <DependentUpon>OnzeDb.tt</DependentUpon>
     </Compile>
@@ -302,6 +307,7 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\layout.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\tokenfield.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -350,7 +356,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\OnzeDb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OnzeDb.Designer.cs</LastGenOutput>
+      <LastGenOutput>OnzeDb1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\OnzeDb.edmx.diagram">
       <DependentUpon>OnzeDb.edmx</DependentUpon>
@@ -390,6 +396,7 @@
     <Content Include="Scripts\app\app.viewmodel.js" />
     <Content Include="Scripts\app\common.js" />
     <Content Include="Scripts\app\home.viewmodel.js" />
+    <Content Include="Scripts\tokenfield.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -435,6 +442,10 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Event\CreateEvent.cshtml" />
     <Content Include="Views\Home\_events.cshtml" />
+    <Content Include="Views\Account\YourEvents.cshtml" />
+    <Content Include="Views\Account\CheckIns.cshtml" />
+    <Content Include="Views\Account\Settings.cshtml" />
+    <Content Include="Views\Home\_Event.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

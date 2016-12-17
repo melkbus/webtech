@@ -22,8 +22,6 @@ namespace WebApplication1.Models
         public Nullable<int> EventPrice { get; set; }
         public System.DateTime EventBeginDate { get; set; }
         public System.DateTime EventEndDate { get; set; }
-        public Nullable<System.DateTime> EventBeginTime { get; set; }
-        public Nullable<System.DateTime> EventEndTime { get; set; }
         public Nullable<int> EventParticipants { get; set; }
     }
 }

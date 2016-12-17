@@ -6,7 +6,7 @@ using WebApplication1.Models;
 namespace WebApplication1.Controllers
 {
 
-    [Authorize]
+   
     public class HomeController : Controller
     {
         private webtechEntities db = new webtechEntities();

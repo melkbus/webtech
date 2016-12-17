@@ -50,7 +50,7 @@
                             <p>Begin Date: @Html.DisplayFor(model => model.ev.EventBeginDate)</p>
                         </li>
                         <li class="list-group-item">
-                            <p>Begin Time: @Html.DisplayFor(model => model.ev.EventBeginTime)</p>
+                            <p>Begin Time: @Html.DisplayFor(model => model.ev.EventBeginDate.TimeOfDay)</p>
                         </li>
                     </ul>
                 </div>
@@ -60,7 +60,7 @@
                             <p>End Date: @Html.DisplayFor(model => model.ev.EventEndDate)</p>
                         </li>
                         <li class="list-group-item">
-                            <p>End Time: @Html.DisplayFor(model => model.ev.EventEndTime)</p>
+                            <p>End Time: @Html.DisplayFor(model => model.ev.EventEndDate.TimeOfDay)</p>
                         </li>
                     </ul>
                 </div>

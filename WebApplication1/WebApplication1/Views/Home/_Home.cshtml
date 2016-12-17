@@ -16,7 +16,6 @@
     <div id="viewPlaceHolder"> @Html.Partial("_Events", Model)</div>
     <div>
 
-        <input type="text" name="daterange" value="01/01/2015 - 01/31/2015" />
         <hr />
         <script type="text/javascript">
 
@@ -27,23 +26,27 @@
                 var end = moment().add(1, 'year');
 
                 function cb(start, end) {
-                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                    $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
                 }
 
-                $('#reportrange').daterangepicker({
+                $('#reportrange').daterangepicker({ 
                     startDate: start,
                     endDate: end,
+                    dateFormat: 'dd/mm/yyyy',
+                    opens : 'left',
                     ranges: {
+                        'Future': [moment(), moment().add(100, 'years')],
                         'Today': [moment(), moment()],
-                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Week': [moment(), moment().add(7, 'days')],
                         'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        'All': [moment().subtract(100, 'years'), moment().add(100, 'years')],
+                        'Past': [moment().subtract(100, 'years'), moment()]
+                        
                     }
                 }, cb);
 
                 cb(start, end);
+               
 
             });
             var picker = $('#reportrange').daterangepicker();
@@ -51,6 +54,7 @@
             $(document).ready(function(){
                 var cityfield = document.getElementById('City');
                 var namefield = document.getElementById('name');
+                var date = document.getElementById('reportrange');
                 var id = $("#city").val();
                 var data = JSON.stringify({
                     'id': $("#city").val(),
@@ -73,6 +77,7 @@
                 }
                 cityfield.addEventListener('input', ajax);
                 namefield.addEventListener('input', ajax);
+                $('#reportrange').on('apply.daterangepicker', ajax);
             })
         </script>
         </div>

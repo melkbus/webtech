@@ -244,7 +244,7 @@ namespace WebApplication1.Controllers
                         description=model.description
                     };
                     if (model.description ==null) {
-                        acc.description = "Profile description under construction";
+                        acc.description = "No desctiption";
                     }
 
                     if (model.ImageUpload != null)
@@ -559,7 +559,7 @@ namespace WebApplication1.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = "" };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

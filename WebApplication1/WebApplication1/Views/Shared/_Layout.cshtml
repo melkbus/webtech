@@ -1,80 +1,179 @@
 ﻿@using WebApplication1.Models
 @using Microsoft.AspNet.Identity
 <!DOCTYPE html>
-<html lang="en">
+<div id="page">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <title>ZoMoMo - Home </title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <head>
+        <meta charset="utf-8" />
+        <title>ZoMoMo - Home </title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @Styles.Render("~/Content/css")
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        @Styles.Render("~/Content/css")
 
 
-</head>
-<body>
-    <nav class="navbar navbar-fixed-top scrolling-navbar">
-        <div id="custom-bootstrap-menu" class="navbar navbar-default " role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="../">ZoMoMo</a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    @Html.Partial("_LoginPartial")
-                    <ul class="nav navbar-nav"></ul>
-                    <form class="nav navbar-form navbar-nav navbar-right">
-                        <div class="input-group">
+    </head>
+    <body>
+        <nav class="navbar navbar-fixed-top scrolling-navbar">
+            <div id="custom-bootstrap-menu" class="navbar navbar-default " role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="../">ZoMoMo</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        @Html.Partial("_LoginPartial")
+                        <ul class="nav navbar-nav"></ul>
 
-                            <span><input type="text" id="name" class="form-control navbar-nav" placeholder="Search events or tags" style="width:400px;"></span>
-                            <span><input type="text" class="form-control navbar-nav city" placeholder="Enter a city" id="City" /></span>
-                            <div id="reportrange" class="form-control navbar-nav" style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 40px">
-                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+
+                        <form class="nav navbar-form navbar-nav navbar-right">
+                            <div class="input-group">
+
+                                <span><input type="text" id="name" class="form-control navbar-nav" placeholder="Search events or tags" style="width:400px;"></span>
+                                <span><input type="text" class="form-control navbar-nav city" placeholder="Enter a city" id="City" /></span>
+                                <div id="reportrange" class="form-control navbar-nav" style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 40px">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </div>
+
+
+                                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
+                                <script type="text/javascript">
+                                    var input = document.getElementById('City');
+
+                                    google.maps.event.addDomListener(input, 'keydown', function (e) {
+                                        if (e.keyCode == 13) {
+                                            e.preventDefault();
+                                        }
+                                    });
+
+                                    google.maps.event.addDomListener(window, 'load', function () {
+                                        var options = {
+                                            types: ['(cities)']
+                                        };
+                                        var places = new google.maps.places.Autocomplete(input, options);
+                                    });
+                                </script>
                             </div>
+                        </form>
 
-                            
-                            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
-                            <script type="text/javascript">
-                                var input = document.getElementById('City');
-
-                                google.maps.event.addDomListener(input, 'keydown', function (e) {
-                                    if (e.keyCode == 13) {
-                                        e.preventDefault();
-                                    }
-                                });
-
-                                google.maps.event.addDomListener(window, 'load', function () {
-                                    var options = {
-                                        types: ['(cities)']
-                                    };
-                                    var places = new google.maps.places.Autocomplete(input, options);
-                                });
-                            </script>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
+        </nav>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        <!-- Include Required Prerequisites -->
+
+        @RenderSection("Scripts", required: false)
+
+        <div class="container body-content" style="background-color:#e8edf3">
+            <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+            <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+
+
+            @{
+                var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+            }
+            @if (controllerName == "Account")
+            {
+                <script type="text/javascript">
+
+
+                    $(function () {
+                        $('#content').addClass("visible");
+                        $('#viewPlaceHolder2').addClass("hidden");
+                        var start = moment();
+                        var end = moment().add(1, 'year');
+
+                        function cb(start, end) {
+                            $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
+                        }
+
+                        $('#reportrange').daterangepicker({
+                            startDate: start,
+                            endDate: end,
+                            dateFormat: 'dd/mm/yyyy',
+                            opens: 'left',
+                            ranges: {
+                                'Future': [moment(), moment().add(100, 'years')],
+                                'Today': [moment(), moment()],
+                                'This Week': [moment(), moment().add(7, 'days')],
+                                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                'All': [moment().subtract(100, 'years'), moment().add(100, 'years')],
+                                'Past': [moment().subtract(100, 'years'), moment()]
+
+                            }
+                        }, cb);
+
+                        cb(start, end);
+
+
+                    });
+                    var picker = $('#reportrange').daterangepicker();
+
+                    $(document).ready(function () {
+                        var cityfield = document.getElementById('City');
+                        var namefield = document.getElementById('name');
+                        var date = document.getElementById('reportrange');
+                        var id = $("#city").val();
+                        var data = JSON.stringify({
+                            'id': $("#city").val(),
+                            'name': $("#name").val()
+                        });
+                        function ajax(e) {
+                            if ($("#name").val() != "" || $("#City").val() != "") {
+                                if (!$('#content').hasClass("hidden")) {
+                                    $('#content').removeClass("visible").addClass("hidden");
+                                    $('#viewPlaceHolder2').removeClass("hidden").addClass("visible");
+                                }
+
+                                jQuery.ajax({
+                                    type: "GET",
+                                    url: "/Home/GetView",
+                                    data: { id: $("#City").val(), name: $("#name").val(), start: $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), end: $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD') },
+                                    contentType: 'application/json; charset=utf-8',
+                                    success: function (viewHTML) {
+                                        $("#viewPlaceHolder2").html(viewHTML);
+                                    },
+                                    error: function (req, status, error) {
+                                        alert(req.responseText);
+                                    }
+                                });
+                            } else {
+                                if ($('#content').hasClass("hidden")) {
+                                    $('#content').removeClass("hidden").addClass("visible");
+                                    $('#viewPlaceHolder2').removeClass("visible").addClass("hidden");
+
+                                }
+                            }
+                        }
+
+
+                        cityfield.addEventListener('input', ajax);
+                        namefield.addEventListener('input', ajax);
+                        $('#reportrange').on('apply.daterangepicker', ajax);
+                    })
+                </script>
+            }
+            <div id="viewPlaceHolder2"> 
+                </div>
+            <div id="content">
+                @RenderBody()
+            </div>
+            @RenderSection("SPAViews", required: false)
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - ©Copyright ZoMoMo</p>
+            </footer>
         </div>
-    </nav>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    <!-- Include Required Prerequisites -->
-
-    @RenderSection("Scripts", required: false)
-
-    <div class="container body-content" style="background-color:#e8edf3">
-
-        @RenderBody()
-        @RenderSection("SPAViews", required: false)
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - ©Copyright ZoMoMo</p>
-        </footer>
-    </div>
-</body>
+    </body>
 </html>
+</div>

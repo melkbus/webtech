@@ -43,7 +43,9 @@ namespace WebApplication1
                 "~/Scripts/respond.js",
                 "~/Scripts/jquery-ui.js",
                 "~/Scripts/bootstrap-tokenfield.js",
-                "~/Scripts/typeahead.jquery.js"));
+                "~/Scripts/typeahead.jquery.js",
+                "~/Scripts/typeahead.moment.min.js",
+                "~/Scripts/typeahead.daterangepicker.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",

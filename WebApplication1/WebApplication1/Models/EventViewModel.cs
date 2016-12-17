@@ -33,7 +33,7 @@ namespace WebApplication1.Models
         public HttpPostedFileBase ImageUpload { get; set; }
         public EventViewModel() {
             ev = new Event();
-            tag = new Models.Tag();
+            tag = new Tag();
             ImageUpload = null;
             cloudinary = new CloudinaryAccount().Cloud;
             events = new List<WebApplication1.Models.Event>(); }
@@ -48,7 +48,7 @@ namespace WebApplication1.Models
 
         [DataType(DataType.Currency)]
         [Display(Name = "ID")]
-        public string EventID { get; set; }
+        public int EventID { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
@@ -91,8 +91,9 @@ namespace WebApplication1.Models
         [Display(Name = "Location")]
         public string EventLocation { get; set; }
 
+        [DataType(DataType.Text)]
         [Display(Name = "Tags")]
-        public string TagName { get; set; }
+        public string[] TagName { get; set; }
 
 
         public EventCreateViewModel()

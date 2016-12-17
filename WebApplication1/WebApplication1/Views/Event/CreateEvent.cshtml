@@ -1,5 +1,5 @@
 ﻿@model WebApplication1.Models.EventCreateViewModel
-
+ 
 @{
     ViewBag.Title = "Create Event";
 }
@@ -26,23 +26,23 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.tag.TagName, htmlAttributes: new { @class = "control-label col-md-2"})
-            <div class="col-md-10" id="tags">
-
-                @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control", @id= "Tags" } })
+            @Html.LabelFor(m => m.TagName, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control", @id= "Tags", @style="width:30%", @limit= "5" } })
                 @Html.ValidationMessageFor(m => m.TagName, "", new { @class = "text-danger" })
                 <script>
                     $(function () {
                         $('#Tags').tokenfield({
                             autocomplete: {
                                 source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
-                                delay: 100
+                                delay: 100,
                             },
-                            preventDefault: true,
-                            showAutocompleteOnFocus: true
+                            showAutocompleteOnFocus: true,
+                            limit: 5
                         });
                     });
                 </script>
+                
             </div>
         </div>
         <div class="form-group">
@@ -106,7 +106,6 @@
         @Html.ActionLink("Back to Homepage", "Index")
     </div>
 }
-
 <script type="text/javascript">
     var input = document.getElementById('Location');
 
@@ -118,4 +117,5 @@
     google.maps.event.addDomListener(window, 'load', function () {
         var places = new google.maps.places.Autocomplete(input);
     })
+
 </script>

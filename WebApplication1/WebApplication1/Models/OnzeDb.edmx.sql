@@ -41,7 +41,7 @@ GO
 
 -- Creating table 'account'
 CREATE TABLE [dbo].[account] (
-    [UserId] int  NOT NULL,
+    [UserId] varchar(100)  NOT NULL,
     [username] varchar(20)  NOT NULL,
     [passwordKey] varchar(20)  NOT NULL,
     [firstname] char(20)  NOT NULL,

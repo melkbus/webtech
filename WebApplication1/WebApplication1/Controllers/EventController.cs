@@ -25,13 +25,20 @@ namespace WebApplication1.Controllers
         //[HttpPost]
         //public ActionResult Participate(EventCreateViewModel model)
         //{
-            
+
         //    Event ev = db.Event.Find(model.EventID);
         //    ev.EventParticipants += 1;
         //    db.Event.Add(ev);
         //    db.SaveChanges();
         //    return RedirectToAction("Index", "Event");
         //}
+
+        [HttpGet] public ActionResult CheckTags(String tags)
+        {
+            System.Diagnostics.Debug.WriteLine("Tags: " + tags);
+            return View();
+
+        }
 
         [HttpPost]
         public ActionResult FileUpload(EventCreateViewModel model)
@@ -45,6 +52,17 @@ namespace WebApplication1.Controllers
             ev.EventEndTime = model.EventEndTime;
             ev.EventLocation = model.EventLocation;
             ev.EventPrice = model.EventPrice;
+
+            for(int i=0; i < model.TagName.Length; i++)
+            {
+                Tag tag = new Tag();
+                tag.TagName = model.TagName[i];
+                tag.EventId = model.EventID;
+                db.Tag.Add(tag);
+                System.Diagnostics.Debug.WriteLine("Tag[" + i + "] = " + tag.TagName);
+            }
+           
+
 
             if (model.ImageUpload != null)
             {
@@ -71,7 +89,6 @@ namespace WebApplication1.Controllers
                 UserID = User.Identity.GetUserId(),
                 EventID = eventIdCounter
             };
-            eventIdCounter += 1;
             db.Event.Add(ev);
             //db.logboek.Add(lb);
 

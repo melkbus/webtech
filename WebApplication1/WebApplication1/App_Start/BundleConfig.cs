@@ -50,7 +50,7 @@ namespace WebApplication1
                  "~/Content/bootstrap-theme.css",
                  "~/Content/bootstrap-theme.min.css",
                  "~/Content/Site.css",
-                 "~/Content/bootstrap-tokenfield.css",
+                 "~/Content/tokenfield.css",
                  "~/Content/jquery-ui.css"));
         }
     }

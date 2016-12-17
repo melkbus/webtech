@@ -35,11 +35,14 @@
         </EntityType>
         <EntityType Name="logboek">
           <Key>
-            <PropertyRef Name="EventID" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="int" Nullable="false" />
-          <Property Name="UserID" Type="int" />
-          <Property Name="organises" Type="int" />
+          <Property Name="UserID" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="Organize" Type="bit" />
+          <Property Name="Interested" Type="bit" />
+          <Property Name="Going" Type="bit" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -54,7 +57,7 @@
             <PropertyRef Name="TagId" />
           </Key>
           <Property Name="EventId" Type="int" Nullable="false" />
-          <Property Name="TagName" Type="int" Nullable="false" />
+          <Property Name="TagName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityContainer Name="webtechModelStoreContainer">
@@ -72,7 +75,7 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="String" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="true" />
           <Property Name="firstname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="lastname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="birthday" Type="DateTime" Precision="3" />
@@ -99,10 +102,15 @@
         <EntityType Name="logboek">
           <Key>
             <PropertyRef Name="EventID" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="EventID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" />
+          <Property Name="UserID" Type="String" Nullable="false" />
           <Property Name="organises" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Organize" Type="Boolean" />
+          <Property Name="Interested" Type="Boolean" />
+          <Property Name="Going" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="webtechEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="account" EntityType="Self.account" />
@@ -124,7 +132,7 @@
             <PropertyRef Name="TagId" />
           </Key>
           <Property Name="EventId" Type="Int32" Nullable="false" />
-          <Property Name="TagName" Type="Int32" Nullable="false" />
+          <Property Name="TagName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
       </Schema>
@@ -166,9 +174,12 @@
     <EntitySetMapping Name="logboek">
       <EntityTypeMapping TypeName="IsTypeOf(webtechModel.logboek)">
         <MappingFragment StoreEntitySet="logboek">
-          <ScalarProperty Name="EventID" ColumnName="EventID" />
+          <ScalarProperty Name="Going" ColumnName="Going" />
+                <ScalarProperty Name="Interested" ColumnName="Interested" />
+                <ScalarProperty Name="Organize" ColumnName="Organize" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="organises" ColumnName="organises" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

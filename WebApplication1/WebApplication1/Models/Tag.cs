@@ -15,7 +15,7 @@ namespace WebApplication1.Models
     public partial class Tag
     {
         public int EventId { get; set; }
-        public int TagName { get; set; }
+        public string TagName { get; set; }
         public int TagId { get; set; }
     }
 }

@@ -147,9 +147,12 @@ namespace WebApplication1.Controllers
         }
 
 
-        public ActionResult SearchEvent()
+        public ActionResult EventDetails(int id)
         {
-            return View();
+            EventViewModel model = new EventViewModel();
+            model.ev = db.Event.Find(id);
+            model.tags = db.Tag.Where(e => e.EventId == id).ToList();
+            return View(model);
         }
 
         public ActionResult EditEvent(int? id)

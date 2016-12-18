@@ -7,22 +7,6 @@ using CloudinaryDotNet;
 
 namespace WebApplication1.Models
 {
-    public static class StringExtensions
-    {
-        public static string SubStringTo(this string thatString, int limit)
-        {
-            if (!String.IsNullOrEmpty(thatString))
-            {
-                if (thatString.Length > limit)
-                {
-                    return thatString.Substring(0, limit);
-                }
-                return thatString;
-            }
-            return string.Empty;
-        }
-    }
-
     public class EventViewModel
     { 
         public logboek log { get; set; }

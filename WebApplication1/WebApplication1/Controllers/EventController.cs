@@ -151,6 +151,13 @@ namespace WebApplication1.Controllers
         {
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);
+            string userid = User.Identity.GetUserId();
+            model.log = new logboek();
+            var log = db.logboek.Where(l => l.EventID == id && l.UserID == userid).ToList();
+            if (log.Any())
+            {
+                model.log = log.First();
+            }
             model.tags = db.Tag.Where(e => e.EventId == id).ToList();
             return View(model);
         }

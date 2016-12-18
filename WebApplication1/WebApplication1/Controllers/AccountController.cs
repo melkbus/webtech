@@ -740,8 +740,8 @@ namespace WebApplication1.Controllers
                 change.UserID = userid;
                 change.EventID = id;
                 change.Interested = true;
+                db.logboek.Add(change);
             }
-            db.logboek.Add(change);
             try
             {
                 db.SaveChanges();

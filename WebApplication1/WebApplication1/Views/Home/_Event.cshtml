@@ -12,7 +12,7 @@
         <div class="caption">
             <h4 class="pull-right">€@Html.DisplayFor(ModelItem => Model.ev.EventPrice)</h4>
             <h4>
-                <a href='@string.Format("../Event/ViewEvent/{0}", Model.ev.EventId)'>@Html.DisplayFor(ModelItem => Model.ev.EventName)</a>
+                <a href='@string.Format("../Event/EventDetails/{0}", Model.ev.EventId)'>@Html.DisplayFor(ModelItem => Model.ev.EventName)</a>
             </h4>
             <p style="margin-bottom:5px">@Html.DisplayFor(ModelItem => Model.ev.EventLocation)</p>
             <span>
@@ -64,12 +64,6 @@
                 <button type="button" id=@string.Format("intrested{0}", Model.ev.EventId) class="btn btn-sm" style="border-radius:80%">
                     <span id=@string.Format("i{0}", Model.ev.EventId) class="glyphicon @(@Model.log.Interested ? "glyphicon-star" : "glyphicon-star-empty") " title="Intrested" style="color:black"></span>
                 </button>
-
-                <button type="button" id=@string.Format("notification{0}", Model.ev.EventId) class="btn btn-sm" style="border-radius:80%">
-                    <span id=@string.Format("n{0}", Model.ev.EventId) class="glyphicon glyphicon-bell" title="Notification" style="color:black"></span>
-                </button>
-
-
 
                 <script>
                     (function(d, s, id) {

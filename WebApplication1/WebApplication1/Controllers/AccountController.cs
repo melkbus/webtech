@@ -306,8 +306,11 @@ namespace WebApplication1.Controllers
         //GET: /Account/YourEvents
         public ActionResult YourEvents()
         {
-
-            return View();
+            EventViewModel model = new EventViewModel();
+            var userid = User.Identity.GetUserId();
+            var elements = db.logboek.Where(l => l.UserID == userid && l.Organize == true).Select(t => t.EventID).ToList();
+            model.events = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
+            return View("~/Views/Account/YourEvents.cshtml", model);
         }
 
 
@@ -315,7 +318,11 @@ namespace WebApplication1.Controllers
         public ActionResult CheckIns()
         {
 
-            return View();
+            EventViewModel model = new EventViewModel();
+            var userid = User.Identity.GetUserId();
+            var elements = db.logboek.Where(l => l.UserID == userid && l.Organize == false && l.Going == true).Select(t => t.EventID).ToList();
+            model.events = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
+            return View("~/Views/Account/CheckIns.cshtml", model);
         }
 
 

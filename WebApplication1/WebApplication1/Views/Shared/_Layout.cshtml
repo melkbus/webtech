@@ -44,7 +44,7 @@
 
                                 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
                                 <script type="text/javascript">
-                                  
+
                                     var input = document.getElementById('City');
 
                                     google.maps.event.addDomListener(input, 'keydown', function (e) {
@@ -59,6 +59,14 @@
                                         };
                                         var places = new google.maps.places.Autocomplete(input, options);
                                     });
+
+                                    (function (d, s, id) {
+                                        var js, fjs = d.getElementsByTagName(s)[0];
+                                        if (d.getElementById(id)) return;
+                                        js = d.createElement(s); js.id = id;
+                                        js.src = "//connect.facebook.net/nl_NL/sdk.js#xfbml=1&version=v2.8&appId=541588936047667";
+                                        fjs.parentNode.insertBefore(js, fjs);
+                                    }(document, 'script', 'facebook-jssdk'));
                                 </script>
                             </div>
                         </form>
@@ -129,7 +137,7 @@
                             'id': $("#city").val(),
                             'name': $("#name").val()
                         });
-                        function ajax(e) {
+                        function ajax() {
                             if ($("#name").val() != "" || $("#City").val() != "") {
                                 if (!$('#content').hasClass("hidden")) {
                                     $('#content').removeClass("visible").addClass("hidden");
@@ -162,10 +170,13 @@
                         namefield.addEventListener('input', ajax);
                         $('#reportrange').on('apply.daterangepicker', ajax);
                     })
+
+
+
                 </script>
             }
-            <div id="viewPlaceHolder2"> 
-                </div>
+            <div id="viewPlaceHolder2">
+            </div>
             <div id="content">
                 @RenderBody()
             </div>

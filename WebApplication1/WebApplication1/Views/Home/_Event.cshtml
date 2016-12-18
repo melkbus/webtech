@@ -28,31 +28,61 @@
             <p class="pull" style="margin:10px;">
                 @foreach (var item in Model.tags)
                 {
-                    <button style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
+                    <button id=@string.Format("t{0}", item.TagId) style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
+                    <script>
+                        $('#@string.Format("t{0}", item.TagId)').click(function () {
+                            document.getElementById("name").value = "@item.TagName";
+                         
+
+                                    jQuery.ajax({
+                                        type: "GET",
+                                        url: "/Home/GetView",
+                                        data: { id: $("#City").val(), name: $("#name").val(), start: $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), end: $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD') },
+                                        contentType: 'application/json; charset=utf-8',
+                                        success: function (viewHTML) {
+                                            $("#viewPlaceHolder").html(viewHTML);
+                                        },
+                                        error: function (req, status, error) {
+                                            alert(req.responseText);
+                                        }
+                                    });
+                                } 
+                                
+                            
+                        )
+                    </script>
                 }
             </p>
             <p class="pull-right" style="bottom:0">Participants: @Html.DisplayFor(ModelItem => Model.ev.EventParticipants)</p>
             <p class="pull-left" style="margin:5px; margin-bottom:10px">
 
+
                 <button type="button" id=@string.Format("participants{0}", Model.ev.EventId) class="btn btn-sm" style="border-radius:80%">
-                    <span id=@string.Format("p{0}", Model.ev.EventId) class="glyphicon glyphicon-plus" title="Participate" style="color:black"></span>
+                    <span id=@string.Format("p{0}", Model.ev.EventId) class="glyphicon @(@Model.log.Going ? "glyphicon-ok" : "glyphicon-plus")" title="Participate" style="color:black"></span>
                 </button>
 
                 <button type="button" id=@string.Format("intrested{0}", Model.ev.EventId) class="btn btn-sm" style="border-radius:80%">
-                    <span id=@string.Format("i{0}", Model.ev.EventId) class="glyphicon glyphicon-star-empty" title="Intrested" style="color:black"></span>
+                    <span id=@string.Format("i{0}", Model.ev.EventId) class="glyphicon @(@Model.log.Interested ? "glyphicon-star" : "glyphicon-star-empty") " title="Intrested" style="color:black"></span>
                 </button>
 
                 <button type="button" id=@string.Format("notification{0}", Model.ev.EventId) class="btn btn-sm" style="border-radius:80%">
                     <span id=@string.Format("n{0}", Model.ev.EventId) class="glyphicon glyphicon-bell" title="Notification" style="color:black"></span>
                 </button>
 
-                <button type="button" id=@string.Format("share{0}", Model.ev.EventId) name="Share" class="btn btn-sm" style="border-radius:80%">
-                    <span id=@string.Format("s{0}", Model.ev.EventId) class="glyphicon glyphicon-share" title="Share" style="color:black"></span>
-                </button>
+
 
                 <script>
+                    (function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+
                     $(function () {
                         $('#@string.Format("participants{0}", Model.ev.EventId)').click(function () {
+
                             var p = '#@string.Format("p{0}", Model.ev.EventId)'
                             if ($(p).hasClass('glyphicon-plus')) {
                                 $(p).removeClass('glyphicon-plus')
@@ -64,6 +94,13 @@
                                 $(p).addClass('glyphicon-plus')
                                 $('#@string.Format("participants{0}", Model.ev.EventId)').html('<span id=@string.Format("p{0}", Model.ev.EventId) class="glyphicon glyphicon-plus" style="color:black"></span>');
                             }
+
+                            jQuery.ajax({
+                                url: "/Account/participate",
+                                data: { id: @Model.ev.EventId },
+                                success: function(viewHTML) {
+                                }
+                            });
                         });
                         $('#@string.Format("intrested{0}", Model.ev.EventId)').click(function () {
                             var i = '#@string.Format("i{0}", Model.ev.EventId)'
@@ -77,9 +114,15 @@
                                 $(i).addClass('glyphicon-star-empty')
                                 $('#@string.Format("intrested{0}", Model.ev.EventId)').html('<span id=@string.Format("i{0}", Model.ev.EventId) class="glyphicon glyphicon-star-empty" style="color:black"></span>');
                             }
+                            jQuery.ajax({
+                                url: "/Account/interested",
+                                data: { id: @Model.ev.EventId },
+                                success: function(viewHTML) {
+                                }
+                            });
                         });
-                        
-                       @* $('#@string.Format("notification{0}", Model.ev.EventId)').click(function () {
+                       
+                        @* $('#@string.Format("notification{0}", Model.ev.EventId)').click(function () {
                             if ($('#@string.Format("notification{0}", Model.ev.EventId)').css("color") == black) {
                                 $('#@string.Format("notification{0}", Model.ev.EventId)').html('<span class="glyphicon glyphicon-bell" style="color:#3b5998"></span>');
                             }

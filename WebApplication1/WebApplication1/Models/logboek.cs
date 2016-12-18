@@ -17,8 +17,8 @@ namespace WebApplication1.Models
         public int Id { get; set; }
         public int EventID { get; set; }
         public string UserID { get; set; }
-        public Nullable<bool> Organize { get; set; }
-        public Nullable<bool> Interested { get; set; }
-        public Nullable<bool> Going { get; set; }
+        public bool Organize { get; set; }
+        public bool Interested { get; set; }
+        public bool Going { get; set; }
     }
 }

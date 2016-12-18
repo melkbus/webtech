@@ -35,11 +35,9 @@ namespace WebApplication1.Controllers
                 else
                 {
                     var tagevents = db.Tag.Where(t => t.TagName.Contains(name)).Select(s => s.EventId).ToList();
-                    model.events = db.Event.Where(e => (e.EventName.Contains(name) &&
+                    model.events = db.Event.Where(e => (e.EventName.Contains(name) || tagevents.Contains(e.EventId)) &&
                                                         e.EventBeginDate >= beginDate &&
-                                                        e.EventBeginDate <= endDate) ||
-                                                        tagevents.Contains(e.EventId)
-                                                        ).ToList();
+                                                        e.EventBeginDate <= endDate).ToList();
                 }
             }
             else
@@ -50,7 +48,8 @@ namespace WebApplication1.Controllers
                 }
                 else
                 {
-                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate  && e.EventName.Contains(name)).ToList();
+                    var tagevents = db.Tag.Where(t => t.TagName.Contains(name)).Select(s => s.EventId).ToList();
+                    model.events = db.Event.Where(e => e.EventLocation.Contains(id) && e.EventBeginDate >= beginDate && e.EventBeginDate <= endDate  && (e.EventName.Contains(name) || tagevents.Contains(e.EventId))).ToList();
                 }
                 }
                 

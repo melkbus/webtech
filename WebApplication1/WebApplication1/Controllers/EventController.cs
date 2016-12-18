@@ -40,6 +40,7 @@ namespace WebApplication1.Controllers
             model.EventBeginDate = model.EventBeginDate.Add(model.EventBeginTime.Value.TimeOfDay);
             model.EventEndDate = model.EventEndDate.Add(model.EventEndTime.Value.TimeOfDay);
             ev.EventName = model.EventName;
+            ev.EventParticipants = 1;
             ev.EventDescription = model.EventDescription;
             ev.EventBeginDate = model.EventBeginDate;
             ev.EventEndDate = model.EventEndDate;
@@ -134,9 +135,17 @@ namespace WebApplication1.Controllers
         {
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);
+            string userid = User.Identity.GetUserId();
+            model.log = new logboek();
+            var log = db.logboek.Where(l => l.EventID == id && l.UserID == userid).ToList();
+            if (log.Any())
+            {
+                model.log = log.First();
+            }
             model.tags = db.Tag.Where(e => e.EventId == id).ToList();
             return PartialView("~/Views/Home/_Event.cshtml", model);
         }
+
 
         public ActionResult SearchEvent()
         {

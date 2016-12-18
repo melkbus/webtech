@@ -53,7 +53,8 @@ namespace WebApplication1
                  "~/Content/bootstrap-theme.min.css",
                  "~/Content/Site.css",
                  "~/Content/tokenfield.css",
-                 "~/Content/jquery-ui.css"));
+                 "~/Content/jquery-ui.css",
+                 "~/Content/bootstrap-social.css"));
         }
     }
 }

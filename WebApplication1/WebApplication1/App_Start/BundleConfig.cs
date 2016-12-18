@@ -45,7 +45,8 @@ namespace WebApplication1
                 "~/Scripts/bootstrap-tokenfield.js",
                 "~/Scripts/typeahead.jquery.js",
                 "~/Scripts/typeahead.moment.min.js",
-                "~/Scripts/typeahead.daterangepicker.js"));
+                "~/Scripts/typeahead.daterangepicker.js",
+                "~/Scripts/countdowncube.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
@@ -53,7 +54,8 @@ namespace WebApplication1
                  "~/Content/bootstrap-theme.min.css",
                  "~/Content/Site.css",
                  "~/Content/tokenfield.css",
-                 "~/Content/jquery-ui.css"));
+                 "~/Content/jquery-ui.css",
+                 "~/Content/countdowncube.css"));
         }
     }
 }

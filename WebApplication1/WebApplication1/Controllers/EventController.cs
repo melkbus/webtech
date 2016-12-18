@@ -138,9 +138,12 @@ namespace WebApplication1.Controllers
             return PartialView("~/Views/Home/_Event.cshtml", model);
         }
 
-        public ActionResult SearchEvent()
+        public ActionResult SearchEvent(int id)
         {
-            return View();
+            EventViewModel model = new EventViewModel();
+            model.ev = db.Event.Find(id);
+            model.tags = db.Tag.Where(e => e.EventId == id).ToList();
+            return View(model);
         }
 
         public ActionResult EditEvent(int? id)

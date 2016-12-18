@@ -147,7 +147,7 @@ namespace WebApplication1.Controllers
         }
 
 
-        public ActionResult SearchEvent()
+        public ActionResult EventDetails(int id)
         {
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);

@@ -146,13 +146,13 @@ namespace WebApplication1.Controllers
             return PartialView("~/Views/Home/_Event.cshtml", model);
         }
 
-
+        [AllowAnonymous]
         public ActionResult EventDetails(int id)
         {
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);
             model.tags = db.Tag.Where(e => e.EventId == id).ToList();
-            return View(model);
+            return View("~/Views/Event/EventDetails.cshtml", model);
         }
 
         public ActionResult EditEvent(int? id)

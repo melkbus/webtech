@@ -60,7 +60,7 @@
                             @foreach (Event e in ViewBag.EventsMade)
                                 {
                                 <tr class="warning">
-                                    <td>@Html.ActionLink(e.EventName, "ViewEvent", "Event", new { id = e.EventId}, null) </td>
+                                    <td>@Html.ActionLink(e.EventName, "EventDetails", "Event", new { id = e.EventId}, null) </td>
                                     <td>@e.EventEndDate </td>
                                     <td>@e.EventParticipants </td>
                                     <td>@e.EventLocation</td>
@@ -94,7 +94,7 @@
                             @foreach (Event e in ViewBag.EventsParticipated)
                                 {
                                 <tr class="warning">
-                                    <td>@Html.ActionLink(e.EventName,"ViewEvent", "Event", new { id = e.EventId }, null) </td>
+                                    <td>@Html.ActionLink(e.EventName, "EventDetails", "Event", new { id = e.EventId }, null) </td>
                                     <td>@e.EventEndDate </td>
                                     <td>@e.EventParticipants </td>
                                     <td>@e.EventLocation</td>

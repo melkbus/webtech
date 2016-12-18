@@ -1,7 +1,6 @@
 ﻿@model WebApplication1.Models.EventViewModel
 @using CloudinaryDotNet;
 @{
-    ViewBag.Title = "View Event";
 }
 <!DOCTYPE html>
 
@@ -117,15 +116,74 @@
                     </div>
                 </div>
                 <div class="panel-footer text-center">
-                    <button id="participants" class="btn-sm glyphicon glyphicon-plus" style="border-radius:50%"></button>
-                    <button id="intrested" class="btn-sm glyphicon glyphicon-star-empty" style="border-radius:50%"></button>
-                    <button id="notification" class="btn-sm glyphicon glyphicon-bell" style="border-radius:50%"></button>
-                    <button id="share" class="btn-sm glyphicon glyphicon-share" style="border-radius:50%"></button>
+                    <button type="button" id="participants" class="btn btn-sm" style="border-radius:50%">
+                        <span id="p"class="glyphicon @(@Model.log.Going ? "glyphicon-ok" : "glyphicon-plus")" title="Participate" style="color:black"></span>
+                    </button>
+
+                    <button type="button" id="intrested" class="btn btn-sm" style="border-radius:50%">
+                        <span id="i" class="glyphicon @(@Model.log.Interested ? "glyphicon-star" : "glyphicon-star-empty") " title="Intrested" style="color:black"></span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+
+
+
+    <script>
+                    (function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+
+                    $(function () {
+                        $('#participants').click(function () {
+
+                            var p = $('#p')
+                            if ($(p).hasClass('glyphicon-plus')) {
+                                $(p).removeClass('glyphicon-plus')
+                                $(p).addClass('glyphicon-ok')
+                                $('#participants').html('<span id="p" class="glyphicon glyphicon-ok" style="color:#3b5998"></span>');
+                            }
+                            else {
+                                $(p).removeClass('glyphicon-ok')
+                                $(p).addClass('glyphicon-plus')
+                                $('#participants').html('<span id="p" class="glyphicon glyphicon-plus" style="color:black"></span>');
+                            }
+
+                            jQuery.ajax({
+                                url: "/Account/participate",
+                                data: { id: @Model.ev.EventId },
+                                success: function(viewHTML) {
+                                }
+                            });
+                        });
+                        $('#intrested').click(function () {
+                            var i = '#@string.Format("i{0}", Model.ev.EventId)'
+                            if ($(i).hasClass('glyphicon-star-empty')) {
+                                $(i).removeClass('glyphicon-star-empty')
+                                $(i).addClass('glyphicon-star')
+                                 $('#intrested').html('<span id="i" class="glyphicon glyphicon-star" style="color:#3b5998"></span>');
+                            }
+                            else {
+                                $(i).removeClass('glyphicon-star')
+                                $(i).addClass('glyphicon-star-empty')
+                                $('#intrested').html('<span id="i" class="glyphicon glyphicon-star-empty" style="color:black"></span>');
+                            }
+                            jQuery.ajax({
+                                url: "/Account/interested",
+                                data: { id: @Model.ev.EventId },
+                                success: function(viewHTML) {
+                                }
+                            });
+                        });
+
+                    });
+    </script>
     <div class="card-footer text-muted text-xs-center">
         @Html.ActionLink("Edit", "EditEvent", new { id = Model.ev.EventId }) |
         @Html.ActionLink("Home", "../")

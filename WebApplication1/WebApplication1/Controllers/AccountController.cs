@@ -161,6 +161,9 @@ namespace WebApplication1.Controllers
         {
             
             account user= db.account.Find(idUser);
+            ProfileViewModel model = new ProfileViewModel();
+            model.account = user;
+
             List<Event> eventsMade = new List<Event>();
             List<Event> eventsChecked = new List<Event>();
 
@@ -168,46 +171,13 @@ namespace WebApplication1.Controllers
             var elements = db.logboek.Where(l => l.UserID == user.UserId && l.Organize == true ).Select(t => t.EventID).ToList();
             eventsMade = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
 
-            var elements2 = db.logboek.Where(l => l.UserID == user.UserId &&  l.Going == true).Select(t => t.EventID).ToList();
-            eventsChecked = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
+            var elements2 = db.logboek.Where(l => l.UserID == user.UserId &&  l.Going == true  && l.Organize==false).Select(t => t.EventID).ToList();
+            eventsChecked = db.Event.Where(e => elements2.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
 
-            //(from lb in db.logboek
-            //                join ev in db.Event on lb.EventID equals ev.EventId
-            //                where ((lb.Organize == true || lb.Going ==true)  && (ev.EventEndDate < System.DateTime.Now) && (lb.UserID == user.UserId))
-            //                select new
-            //                {
-            //                    Organize= lb.Organize,
-            //                    Going = lb.Going,
-            //                    EventName=ev.EventName,
-            //                    EventEndDate =ev.EventEndDate,
-            //                    EventParticipants=ev.EventParticipants,
-            //                    EventLocation =ev.EventLocation,
-            //                    Eventid=ev.EventId
-            //                }
-            //                ).OrderBy(p => p.EventEndDate).ToArray();
-
-
-            //foreach (var ev in elements) {
-            //    Event e =new Event {
-            //        EventName = ev.EventName,
-            //        EventEndDate = ev.EventEndDate,
-            //        EventParticipants = ev.EventParticipants,
-            //        EventLocation = ev.EventLocation,
-            //        EventId = ev.Eventid
-            //    };
-            //    if (ev.Organize)
-            //    {
-            //        eventsMade.Add(e);
-            //    }
-            //    else
-            //    {
-            //        eventsChecked.Add(e);
-            //    }
-            //}
 
             ViewBag.EventsMade = eventsMade;
             ViewBag.EventsParticipated = eventsChecked;
-            return View(user);
+            return View(model);
         }
 
         //
@@ -244,12 +214,12 @@ namespace WebApplication1.Controllers
                         description=model.description
                     };
                     if (model.description ==null) {
-                        acc.description = "No desctiption";
+                        acc.description = "Profile is still under construction";
                     }
 
                     if (model.ImageUpload != null)
                     {
-                        Cloudinary cloudinary = model.cloudinary;
+                        Cloudinary cloudinary = new CloudinaryAccount().Cloud;
                         var uploadParams = new ImageUploadParams()
                         {
                             File = new CloudinaryDotNet.Actions.FileDescription(model.ImageUpload.FileName,
@@ -353,7 +323,18 @@ namespace WebApplication1.Controllers
             {
                 db.Entry(acc).Property(u => u.description).CurrentValue = model.description;
             }
-            //db.Entry(acc).Property(u => u).CurrentValue = model.;
+            if (model.ImageUpload != null)
+            {
+                Cloudinary cloudinary = new CloudinaryAccount().Cloud;
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new CloudinaryDotNet.Actions.FileDescription(model.ImageUpload.FileName,
+                        model.ImageUpload.InputStream)
+                };
+                var uploadResult = cloudinary.Upload(uploadParams);
+                db.Entry(acc).Property(u => u.profilePic).CurrentValue = uploadResult.PublicId;
+            }
+            
             try
             {
                 db.SaveChanges();

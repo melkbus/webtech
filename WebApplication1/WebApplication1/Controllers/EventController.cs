@@ -131,7 +131,7 @@ namespace WebApplication1.Controllers
         // GET: /Event/id
 
         [AllowAnonymous]
-        public ActionResult ViewEvent(int id)
+        public ActionResult ShowEvent(int id)
         {
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);
@@ -145,14 +145,14 @@ namespace WebApplication1.Controllers
             model.tags = db.Tag.Where(e => e.EventId == id).ToList();
             return PartialView("~/Views/Home/_Event.cshtml", model);
         }
-
-        [AllowAnonymous]
-        public ActionResult EventDetails(int id)
+        
+        public ActionResult Details(int id)
         {
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);
+            System.Diagnostics.Debug.WriteLine(model.ev.EventDescription);
             model.tags = db.Tag.Where(e => e.EventId == id).ToList();
-            return View("~/Views/Event/EventDetails.cshtml", model);
+            return View(model);
         }
 
         public ActionResult EditEvent(int? id)

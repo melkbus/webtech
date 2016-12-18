@@ -1,0 +1,180 @@
+﻿@model WebApplication1.Models.EventViewModel
+@using CloudinaryDotNet;
+@{
+    ViewBag.Title = "View Event";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewEvent</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Styles.Render("~/Content/bootstrapcss")    }
+    <link rel="stylesheet" type="text/css" href="css/jquery.jdigiclock.css" />
+    <script type="text/javascript" src="lib/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.jdigiclock.js"></script>
+</head>
+<body>
+    <div class="container" style="width:90%; margin-top:40px">
+        <div class="center-block">
+            <div class="panel">
+                <div class="panel-heading text-center">
+                    <div id="pic">
+                        @Model.cloudinary.Api.UrlImgUp.Transform(
+                            new Transformation()
+                            .Width(900)
+                            .Height(300)
+                            .Crop("fill")).BuildImageTag(Model.ev.EventPicture)
+                    </div>
+                    <div id="countdown" style="margin-top:20px; font-size:40px"></div>
+                    <script type="text/javascript">
+                        $('#countdown').countdown('2017/01/01', function (event) {
+                            $(this).html(event.strftime('<span>%w weeks %d days %H:%M:%S</span>'));
+                        });
+                    </script>
+                </div>
+                <hr />
+                <div class="panel-body text-center" style="padding-top:0">
+                    <div class="panel-title">
+                        <h2 style="margin-top:-5px">@Html.DisplayFor(model => model.ev.EventName)</h2>
+                        @foreach (var item in Model.tags)
+                        {
+                            <button style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
+                        }
+                    </div>
+                    <hr />
+                    <div class="panel-info" id="date">
+                        <div class="row">
+                            <div class="col-md-5 col-md-offset-2">
+                                <p style="fill:ButtonFace">Start: @Html.DisplayFor(model => model.ev.EventBeginDate)</p>
+                                <div id="klok"></div>
+                            </div>
+                            <div class="col-md-3">
+                                <p>End: @Html.DisplayFor(model => model.ev.EventEndDate)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="panel-info">
+                        <div class="row row-centered">
+                            <div id="floating-panel">
+                                <input id="address" type="text" value="@Html.DisplayFor(model => model.ev.EventLocation)">
+                                <input id="submit" type="button" value="search" onclick="initMap">
+                            </div>
+                        </div>
+                        <div class="row row-centered">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div id="map" style="height:300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function initMap() {
+                            var mapCanvas = document.getElementById("map");
+                            var mapOptions = {
+                                center: new google.maps.LatLng(50.85, 4.35),
+                                zoom: 6
+                            }
+                            var directionsService = new google.maps.DirectionsService;
+                            var directionsDisplay = new google.maps.DirectionsRenderer;
+                            var geocoder = new google.maps.Geocoder();
+                            var map = new google.maps.Map(mapCanvas, mapOptions);
+                            directionsDisplay.setMap(map);
+                            document.getElementById('submit').addEventListener('click', function () {
+                                geocodeAddress(geocoder, map);
+                            });
+                        }
+
+                        function geocodeAddress(geocoder, resultsMap) {
+                            var address = document.getElementById('address').value;
+                            geocoder.geocode({ 'address': address }, function (results, status) {
+                                if (status === 'OK') {
+                                    resultsMap.setCenter(results[0].geometry.location);
+                                    var marker = new google.maps.Marker({
+                                        map: resultsMap,
+                                        position: results[0].geometry.location
+                                    });
+                                }
+                                else {
+                                    alert('Geocode was not successful for the following reason: ' + status);
+                                }
+                            });
+                        }
+                    </script>
+                    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places&callback=initMap"></script>
+                    <hr />
+                    <div class="panel-body">
+                        <h4><a data-toggle="collapse" href="#coll">description</a></h4>
+                        <div class="panel-collapse collapsing" id="coll">
+                            <p>@Html.DisplayFor(model => model.ev.EventDescription)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <button type="button" id="participants" class="btn btn-sm" style="border-radius:80%">
+                        @{
+                            var going = Model.log.Going;
+                        }
+                        <span id="p" class="glyphicon @(going ? "glyphicon-ok" : "glyphicon-plus")" title="Participate" style="color:black"></span>
+                    </button>
+                    <button type="button" id="intrested" class="btn btn-sm" style="border-radius:80%">
+                        <span id="i" class="glyphicon @(Model.log.Interested ? "glyphicon-star" : "glyphicon-star-empty")" title="Intrested" style="color:black"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('#participants').click(function () {
+                if ($('#p').hasClass('glyphicon-plus')) {
+                    $('#p').removeClass('glyphicon-plus')
+                    $('#p').addClass('glyphicon-ok')
+                    $('#participants').html('<span id="p") class="glyphicon glyphicon-ok" style="color:#3b5998"></span>');
+                }
+                else {
+                    $(p).removeClass('glyphicon-ok')
+                    $(p).addClass('glyphicon-plus')
+                    $('#participants').html('<span id="p" class="glyphicon glyphicon-plus" style="color:black"></span>');
+                }
+
+                jQuery.ajax({
+                    url: "/Account/participate",
+                    data: { id: @Model.ev.EventId },
+                    success: function(viewHTML) {
+                    }
+                });
+            });
+            $('#intrested').click(function () {
+                if ($('#i').hasClass('glyphicon-star-empty')) {
+                    $('#i').removeClass('glyphicon-star-empty')
+                    $('#i').addClass('glyphicon-star')
+                    $('#intrested').html('<span id="i" class="glyphicon glyphicon-star" style="color:#3b5998"></span>');
+                }
+                else {
+                    $('#i').removeClass('glyphicon-star')
+                    $('#i').addClass('glyphicon-star-empty')
+                    $('#intrested').html('<span id="i" class="glyphicon glyphicon-star-empty" style="color:black"></span>');
+                }
+                jQuery.ajax({
+                    url: "/Account/interested",
+                    data: { id: @Model.ev.EventId },
+                    success: function(viewHTML) {
+                    }
+                });
+            })
+        })
+    </script>
+
+    <div class="card-footer text-muted text-xs-center">
+        @Html.ActionLink("Edit", "EditEvent", new { id = Model.ev.EventId }) |
+        @Html.ActionLink("Home", "../")
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

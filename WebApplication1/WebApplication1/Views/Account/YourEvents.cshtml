@@ -1,5 +1,46 @@
-﻿
-<body style="margin-top:50px">
+﻿@using WebApplication1.Models
+@using CloudinaryDotNet
+@using CloudinaryDotNet.Actions
+@model WebApplication1.Models.EventViewModel
 
+@{
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" HtmlEncode="false" />
+    <title>ViewEvent</title>
+</head>
+
+<body>
+    <div>
+        <h2 style="margin-top:100px;">your events</h2>
+        <hr />
+
+        <div class="container" style="padding-right:50px;">
+
+            <div class="row" id="eventRow">
+                @foreach (var item in Model.events.OrderBy(item => item.EventBeginDate))
+                {
+                    <script>
+                    jQuery.ajax({
+                    type: "GET",
+                    url: "/Event/ViewEvent",
+                    data: { id: @item.EventId },
+                        success: function(viewHTML) {
+                            $("#eventRow").append(viewHTML);
+                        },
+                        error: function(req, status, error) {
+                            alert(req.responseText);
+                        }
+                    });
+                    </script>
+                }
+
+            </div>
+        </div>
+    </div>
 </body>
+</html>
 

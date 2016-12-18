@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>2.9</ProductVersion>
-    <ProjectGuid>3c1f1e32-198a-48d2-b958-2346e7386c86</ProjectGuid>
+    <ProjectGuid>1a2b833d-7b90-454d-90ec-8c2e441ef6b4</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebApplication1.Azure</RootNamespace>

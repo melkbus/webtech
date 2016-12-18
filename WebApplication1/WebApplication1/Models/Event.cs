@@ -15,7 +15,6 @@ namespace WebApplication1.Models
     public partial class Event
     {
         public int EventId { get; set; }
-        public string EventName { get; set; }
         public string EventDescription { get; set; }
         public string EventLocation { get; set; }
         public string EventPicture { get; set; }
@@ -23,5 +22,6 @@ namespace WebApplication1.Models
         public System.DateTime EventBeginDate { get; set; }
         public System.DateTime EventEndDate { get; set; }
         public Nullable<int> EventParticipants { get; set; }
+        public String EventName { get; set; }
     }
 }

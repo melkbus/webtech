@@ -164,13 +164,10 @@ namespace WebApplication1.Models
         [Display(Name = "Describe yourself")]
         public string description { get; set; }
 
-
+        [DataType(DataType.ImageUrl)]
         [Display(Name = "Profile Picture (optional)")]
         public HttpPostedFileBase ImageUpload { get; set; }
     
-        //[Required]
-        //[Display(Name = "Hometown")]
-        //public string Hometown { get; set; }
 
         public RegisterViewModel()
         {
@@ -178,7 +175,21 @@ namespace WebApplication1.Models
             cloudinary = new CloudinaryAccount().Cloud;
         }
     }
+    public class ProfileViewModel
+    {
+        public Cloudinary cloudinary { get; set; }
 
+        public account account { get; set; }
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase ImageUpload { get; set; }
+
+        public ProfileViewModel()
+        {
+            account = new account();
+            ImageUpload = null;
+            cloudinary = new CloudinaryAccount().Cloud;
+        }
+    }
     public class ResetPasswordViewModel
     {
         [Required]

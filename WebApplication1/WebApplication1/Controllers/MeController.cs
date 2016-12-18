@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using WebApplication1.Models;
+using System.Data.Entity.Validation;
+using System.Web.Security;
 
 namespace WebApplication1.Controllers
 {
@@ -40,6 +42,9 @@ namespace WebApplication1.Controllers
             }
         }
 
+
+  
+
         // GET api/Me
         public GetViewModel Get()
         {
@@ -47,4 +52,6 @@ namespace WebApplication1.Controllers
             return new GetViewModel() { Hometown = user.Hometown };
         }
     }
+
+    
 }

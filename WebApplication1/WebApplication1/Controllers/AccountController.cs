@@ -70,6 +70,8 @@ namespace WebApplication1.Controllers
             return new EmptyResult();
         }
 
+
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -169,7 +171,7 @@ namespace WebApplication1.Controllers
             eventsMade = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
 
             var elements2 = db.logboek.Where(l => l.UserID == user.UserId &&  l.Going == true).Select(t => t.EventID).ToList();
-            eventsChecked = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
+            eventsChecked = db.Event.Where(e => elements2.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
 
             //(from lb in db.logboek
             //                join ev in db.Event on lb.EventID equals ev.EventId
@@ -567,6 +569,57 @@ namespace WebApplication1.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        account acc = new account
+                        {
+                            UserId = user.Id,
+                            firstname = model.firstname,
+                            lastname = model.lastname,
+                            Email = model.Email,
+                            birthday = model.birthday,
+                            description = model.description
+                        };
+                        if (model.description == null)
+                        {
+                            acc.description = "No desctiption";
+                        }
+
+                        if (model.ImageUpload != null)
+                        {
+                            Cloudinary cloudinary = model.cloudinary;
+                            var uploadParams = new ImageUploadParams()
+                            {
+                                File = new CloudinaryDotNet.Actions.FileDescription(model.ImageUpload.FileName,
+                                    model.ImageUpload.InputStream)
+                            };
+                            var uploadResult = cloudinary.Upload(uploadParams);
+
+                            acc.profilePic = uploadResult.PublicId;
+
+                        }
+                        else
+                        {
+                            acc.profilePic = "sample";
+                        }
+
+                        db.account.Add(acc);
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch (DbEntityValidationException e)
+                        {
+                            foreach (var eve in e.EntityValidationErrors)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                                foreach (var ve in eve.ValidationErrors)
+                                {
+                                    System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                        ve.PropertyName, ve.ErrorMessage);
+                                }
+                            }
+                            throw;
+                        }
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -613,6 +666,101 @@ namespace WebApplication1.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+
+        [HttpGet]
+        public ActionResult participate(int id)
+        {
+            //int eventId = id ?? default(int);
+
+            var userid = User.Identity.GetUserId();
+            var log = db.logboek.Where(l => l.EventID == id && l.UserID == userid).ToList();
+            logboek change = new logboek();
+            if (log.Any())
+            {
+                System.Diagnostics.Debug.WriteLine("lalalallalalal hier geraakt");
+                change = log.First();
+                change.Going = !change.Going;
+            }
+            else
+            {
+                change.UserID = userid;
+                change.EventID = id;
+                change.Going = true;
+
+                db.logboek.Add(change);
+            }
+            Event ev = db.Event.Find(change.EventID);
+            if (change.Going)
+            {
+                ev.EventParticipants++;
+            }
+            else
+            {
+                ev.EventParticipants--;
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+            return new EmptyResult();
+        }
+
+
+        [HttpGet]
+        public ActionResult interested(int id)
+        {
+            //int eventId = id ?? default(int);
+
+            var userid = User.Identity.GetUserId();
+            var log = db.logboek.Where(l => l.EventID == id && l.UserID == userid).ToList();
+            logboek change = new logboek();
+            if (log.Any())
+            {
+                change = log.First();
+                change.Interested= !change.Interested;
+            }
+            else
+            {
+                change.UserID = userid;
+                change.EventID = id;
+                change.Interested = true;
+            }
+            db.logboek.Add(change);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+            return new EmptyResult();
         }
 
         #region Helpers

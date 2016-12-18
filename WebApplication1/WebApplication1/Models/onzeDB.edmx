@@ -38,9 +38,9 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="char" MaxLength="100" Nullable="false" />
-          <Property Name="Organize" Type="bit" />
-          <Property Name="Interested" Type="bit" />
-          <Property Name="Going" Type="bit" />
+          <Property Name="Organize" Type="bit" Nullable="false" />
+          <Property Name="Interested" Type="bit" Nullable="false" />
+          <Property Name="Going" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -117,9 +117,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
-          <Property Name="Organize" Type="Boolean" />
-          <Property Name="Interested" Type="Boolean" />
-          <Property Name="Going" Type="Boolean" />
+          <Property Name="Organize" Type="Boolean" Nullable="false" />
+          <Property Name="Interested" Type="Boolean" Nullable="false" />
+          <Property Name="Going" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>

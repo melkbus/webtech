@@ -163,10 +163,10 @@ namespace WebApplication1.Controllers
             account user= db.account.Find(idUser);
             ProfileViewModel model = new ProfileViewModel();
             model.account = user;
-
+            model.Owner = idUser == User.Identity.GetUserId();
             List<Event> eventsMade = new List<Event>();
             List<Event> eventsChecked = new List<Event>();
-
+            List<Event> eventsinterested = new List<Event>();
 
             var elements = db.logboek.Where(l => l.UserID == user.UserId && l.Organize == true ).Select(t => t.EventID).ToList();
             eventsMade = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
@@ -175,6 +175,9 @@ namespace WebApplication1.Controllers
             eventsChecked = db.Event.Where(e => elements2.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
 
 
+            var elements3 = db.logboek.Where(l => l.UserID == user.UserId && l.Interested == true).Select(t => t.EventID).ToList();
+            eventsinterested = db.Event.Where(e => elements3.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
+            ViewBag.EventsInterested = eventsinterested;
             ViewBag.EventsMade = eventsMade;
             ViewBag.EventsParticipated = eventsChecked;
             return View(model);

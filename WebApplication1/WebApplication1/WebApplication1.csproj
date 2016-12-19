@@ -469,7 +469,7 @@
     <Content Include="Views\Account\CheckIns.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
     <Content Include="Views\Home\_Event.cshtml" />
-    <Content Include="Views\Event\EventDetails.cshtml" />
+    <Content Include="Views\Event\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

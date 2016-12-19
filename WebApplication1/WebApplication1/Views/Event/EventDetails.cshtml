@@ -32,7 +32,7 @@
                     </div>
                     <div id="countdown" style="margin-top:20px; font-size:40px"></div>
                     <script type="text/javascript">
-                        $('#countdown').countdown(Model.ev.EventBeginDate.ToString("yyyy/dd/MM"), function (event) {
+                        $('#countdown').countdown(Model.ev.EventBeginDate.ToString("yyyy-dd-MM"), function (event) {
                             $(this).html(event.strftime('<span>%w weeks %d days %H:%M:%S</span>'));
                         });
                     </script>
@@ -178,7 +178,7 @@
 
                 jQuery.ajax({
                     url: "/Account/participate",
-                    data: { id: @Model.ev.EventId },
+                    data: { id: Model.ev.EventId },
                     success: function(viewHTML) {
                     }
                 });
@@ -196,7 +196,7 @@
                 }
                 jQuery.ajax({
                     url: "/Account/interested",
-                    data: { id: @Model.ev.EventId },
+                    data: { id: Model.ev.EventId },
                     success: function(viewHTML) {
                     }
                 });

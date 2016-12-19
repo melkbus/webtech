@@ -116,26 +116,29 @@
                         }
                     }, cb);
 
-                    cb(start, end);
-                });
-                var picker = $('#reportrange').daterangepicker();
+                        cb(start, end);
 
-                $(document).ready(function () {
-                    var cityfield = document.getElementById('City');
-                    var namefield = document.getElementById('name');
-                    var date = document.getElementById('reportrange');
-                    var id = $("#city").val();
-                    var data = JSON.stringify({
-                        'id': $("#city").val(),
-                        'name': $("#name").val()
+
                     });
+                    
 
-                    function ajax() {
-                        if ($("#name").val() != "" || $("#City").val() != "") {
-                            if (!$('#content').hasClass("hidden")) {
-                                $('#content').removeClass("visible").addClass("hidden");
-                                $('#viewPlaceHolder2').removeClass("hidden").addClass("visible");
-                            }
+                    $(document).ready(function () {
+                        var picker = $('#reportrange').daterangepicker();
+                        var cityfield = document.getElementById('City');
+                        var namefield = document.getElementById('name');
+                        var date = document.getElementById('reportrange');
+                        var id = $("#city").val();
+                        var data = JSON.stringify({
+                            'id': $("#city").val(),
+                            'name': $("#name").val()
+                        });
+                        
+                        function ajax() {
+                            if ($("#name").val() != "" || $("#City").val() != "") {
+                                if (!$('#content').hasClass("hidden")) {
+                                    $('#content').removeClass("visible").addClass("hidden");
+                                    $('#viewPlaceHolder2').removeClass("hidden").addClass("visible");
+                                }
 
                             jQuery.ajax({
                                 type: "GET",

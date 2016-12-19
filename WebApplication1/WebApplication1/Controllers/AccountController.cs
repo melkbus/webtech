@@ -276,8 +276,11 @@ namespace WebApplication1.Controllers
         //GET: /Account/YourEvents
         public ActionResult YourEvents()
         {
-
-            return View();
+            EventViewModel model = new EventViewModel();
+            account user = db.account.Find(User.Identity.GetUserId());
+            var elements = db.logboek.Where(l => l.UserID == user.UserId && l.Organize == true).Select(t => t.EventID).ToList();
+            model.events = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
+            return View(model);
         }
 
 

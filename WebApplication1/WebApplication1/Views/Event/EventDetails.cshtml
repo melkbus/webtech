@@ -11,8 +11,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        @Styles.Render("~/Content/bootstrapcss")    }
+    @Scripts.Render("~/bundles/jqueryval")
+    @Styles.Render("~/Content/bootstrapcss")    }
     <link rel="stylesheet" type="text/css" href="css/jquery.jdigiclock.css" />
     <script type="text/javascript" src="lib/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="lib/jquery.jdigiclock.js"></script>
@@ -25,12 +25,17 @@
                     <div id="pic">
                         @*scale pic*@
                         @Model.cloudinary.Api.UrlImgUp.Transform(
-                            new Transformation()
-                            .Width(900)
-                            .Height(300)
-                            .Crop("fill")).BuildImageTag(Model.ev.EventPicture)
+                        new Transformation()
+                        .Width(900)
+                        .Height(300)
+                        .Crop("fill")).BuildImageTag(Model.ev.EventPicture)
                     </div>
                     <div id="countdown" style="margin-top:20px; font-size:40px"></div>
+                    <script type="text/javascript">
+                        $('#countdown').countdown(Model.ev.EventBeginDate.ToString("yyyy/dd/MM"), function (event) {
+                            $(this).html(event.strftime('<span>%w weeks %d days %H:%M:%S</span>'));
+                        });
+                    </script>
                 </div>
                 <hr />
                 <div class="panel-body text-center" style="padding-top:0">
@@ -39,26 +44,26 @@
                         @*Organisator + link to profile*@
                         @foreach (var item in Model.tags)
                         {
-                            <button id=@string.Format("t{0}", item.TagId) style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
-                            <script>
-                                $('#@string.Format("t{0}", item.TagId)').click(function () {
-                                    document.getElementById("name").value = "@item.TagName";
-                                    //zoekt nog niet direct
-                                    jQuery.ajax({
-                                        type: "GET",
-                                        url: "/Home/GetView",
-                                        data: { id: $("#City").val(), name: $("#name").val(), start: $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), end: $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD') },
-                                        contentType: 'application/json; charset=utf-8',
-                                        success: function (viewHTML) {
-                                            $("#viewPlaceHolder").html(viewHTML);
-                                        },
-                                        error: function (req, status, error) {
-                                            alert(req.responseText);
-                                        }
-                                    });
-                                }
-                                )
-                            </script>
+                        <button id=@string.Format("t{0}", item.TagId) style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
+                        <script>
+                            $('#@string.Format("t{0}", item.TagId)').click(function () {
+                                document.getElementById("name").value = "@item.TagName";
+                                //zoekt nog niet direct
+                                jQuery.ajax({
+                                    type: "GET",
+                                    url: "/Home/GetView",
+                                    data: { id: $("#City").val(), name: $("#name").val(), start: $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), end: $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD') },
+                                    contentType: 'application/json; charset=utf-8',
+                                    success: function (viewHTML) {
+                                        $("#viewPlaceHolder").html(viewHTML);
+                                    },
+                                    error: function (req, status, error) {
+                                        alert(req.responseText);
+                                    }
+                                });
+                            }
+                            )
+                        </script>
                         }
                     </div>
                     <hr />
@@ -112,22 +117,17 @@
                 <div class="panel-footer text-center">
                     <button type="button" id="participants" class="btn btn-sm" style="border-radius:80%">
                         @{
-                            var going = Model.log.Going;
+                        var going = Model.log.Going;
                         }
-                        <span id="p" class="glyphicon @(going ? "glyphicon-ok" : "glyphicon-plus")" title="Participate" style="color:black"></span>
+                        <span id="p" class="glyphicon @(going ? " glyphicon-ok" : "glyphicon-plus" )" title="Participate" style="color:black"></span>
                     </button>
                     <button type="button" id="intrested" class="btn btn-sm" style="border-radius:80%">
-                        <span id="i" class="glyphicon @(Model.log.Interested ? "glyphicon-star" : "glyphicon-star-empty")" title="Intrested" style="color:black"></span>
+                        <span id="i" class="glyphicon @(Model.log.Interested ? " glyphicon-star" : "glyphicon-star-empty" )" title="Intrested" style="color:black"></span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $('#countdown').countdown(@Model.ev.EventBeginDate.ToString("yyyy/dd/MM"), function (event) {
-            $(this).html(event.strftime('<span>%w weeks %d days %H:%M:%S</span>'));
-        });
-    </script>
     <script>
         function initMap() {
             var mapCanvas = document.getElementById("map");

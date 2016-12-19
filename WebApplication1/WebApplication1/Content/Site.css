@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top:0px;
+    padding-top: 0px;
     padding-bottom: 20px;
 }
 
@@ -35,69 +35,78 @@ textarea {
     }
 }
 
-#login-dp{
+#login-dp {
     min-width: 250px;
     padding: 14px 14px 0;
-    overflow:hidden;
-    background-color:rgba(255,255,255,.8);
+    overflow: hidden;
+    background-color: rgba(255,255,255,.8);
 }
-#login-dp .help-block{
-    font-size:12px    
-}
-#login-dp .bottom{
-    background-color:rgba(255,255,255,.8);
-    border-top:1px solid #ddd;
-    clear:both;
-    padding:14px;
-}
-#login-dp .social-buttons{
-    margin:12px 0    
-}
-#login-dp .social-buttons a{
-    width: 49%;
-}
-#login-dp .form-group {
-    margin-bottom: 10px;
-}
-.btn-fb{
+
+    #login-dp .help-block {
+        font-size: 12px;
+    }
+
+    #login-dp .bottom {
+        background-color: rgba(255,255,255,.8);
+        border-top: 1px solid #ddd;
+        clear: both;
+        padding: 14px;
+    }
+
+    #login-dp .social-buttons {
+        margin: 12px 0;
+    }
+
+        #login-dp .social-buttons a {
+            width: 49%;
+        }
+
+    #login-dp .form-group {
+        margin-bottom: 10px;
+    }
+
+.btn-fb {
     color: #fff;
-    background-color:#3b5998;
+    background-color: #3b5998;
 }
-.btn-fb:hover{
+
+    .btn-fb:hover {
+        color: #fff;
+        background-color: #496ebc;
+    }
+
+.btn-tw {
     color: #fff;
-    background-color:#496ebc 
+    background-color: #55acee;
 }
-.btn-tw{
-    color: #fff;
-    background-color:#55acee;
-}
-.btn-tw:hover{
-    color: #fff;
-    background-color:#59b5fa;
-}
-@media(max-width:768px){
-    #login-dp{
+
+    .btn-tw:hover {
+        color: #fff;
+        background-color: #59b5fa;
+    }
+
+@media(max-width:768px) {
+    #login-dp {
         background-color: inherit;
         color: #fff;
     }
-    #login-dp .bottom{
-        background-color: inherit;
-        border-top:0 none;
-    }
+
+        #login-dp .bottom {
+            background-color: inherit;
+            border-top: 0 none;
+        }
 }
 
 @font-face {
-  font-family: 'Logo';
-
-  src: url('../fonts/._Scriber_Bold_Stencil.otf');
-  src: url('../fonts/Scriber_Bold_Stencil.otf') ;
+    font-family: 'Logo';
+    src: url('../fonts/._Scriber_Bold_Stencil.otf');
+    src: url('../fonts/Scriber_Bold_Stencil.otf');
 }
 
-.navbar-brand
-{
-  font-family: 'Logo';
-  font-size: 50px;
-  color:black;
+.navbar-brand {
+    font-family: 'Logo';
+    font-size: 50px;
+    color: black;
 }
 
 .pac-container {
@@ -105,65 +114,65 @@ textarea {
 }
 
 .demo-card {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto 100px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 100px;
 }
 
-.hidden>div {
-    display:none;
+.hidden > div {
+    display: none;
 }
 
-.visible>div {
-    display:block;
+.visible > div {
+    display: block;
 }
 
-       .profileBody {
-           font: 20px Montserrat, sans-serif;
-            line-height: 1.8;
-           margin-top: 25px;
-            
-        }
+.profileBody {
+    font: 20px Montserrat, sans-serif;
+    line-height: 1.8;
+    margin-top: 25px;
+}
 
-        .myP {
-            font-size: 16px;
-        }
+.myP {
+    font-size: 16px;
+}
 
-        .profileMargin {
-            margin-bottom: 20px;
-        }
+.profileMargin {
+    margin-bottom: 20px;
+}
 
-        .BG-1 {
-            background-color: #1abc9c; 
-            color: #ffffff;
-        }
+.BG-1 {
+    background-color: #1abc9c;
+    color: #ffffff;
+}
 
-        .BG-2 {
-            background-color: #474e5d; 
-            color: #ffffff;
-        }
+.BG-2 {
+    background-color: #474e5d;
+    color: #ffffff;
+}
 
-        .BG-3 {
-            background-color: #2f2f2f; 
-            color: #ffffff;
-        }
+.BG-3 {
+    background-color: #2f2f2f;
+    color: #ffffff;
+}
 
-        .BG-4 {
-            background-color: #2f2f2f; 
-            color: #fff;
-        }
+.BG-4 {
+    background-color: #2f2f2f;
+    color: #fff;
+}
 
-        .myContainer {
-           padding-top: 10px;
-           padding-bottom: 20px;
-        }
+.myContainer {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
 
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-            width: 100%;
-        }
-         td {
-            border: none;
-            text-align: left;
-        }
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+td {
+    border: none;
+    text-align: left;
+}

@@ -454,6 +454,7 @@
     <Content Include="Views\Account\Settings.cshtml" />
     <Content Include="Views\Home\_Event.cshtml" />
     <Content Include="Views\Event\Details.cshtml" />
+    <Content Include="Views\Event\EventDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

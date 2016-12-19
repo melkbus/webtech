@@ -117,3 +117,53 @@ textarea {
 .visible>div {
     display:block;
 }
+
+       .profileBody {
+           font: 20px Montserrat, sans-serif;
+            line-height: 1.8;
+           margin-top: 25px;
+            
+        }
+
+        .myP {
+            font-size: 16px;
+        }
+
+        .profileMargin {
+            margin-bottom: 20px;
+        }
+
+        .BG-1 {
+            background-color: #1abc9c; 
+            color: #ffffff;
+        }
+
+        .BG-2 {
+            background-color: #474e5d; 
+            color: #ffffff;
+        }
+
+        .BG-3 {
+            background-color: #2f2f2f; 
+            color: #ffffff;
+        }
+
+        .BG-4 {
+            background-color: #2f2f2f; 
+            color: #fff;
+        }
+
+        .myContainer {
+           padding-top: 10px;
+           padding-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+        }
+         td {
+            border: none;
+            text-align: left;
+        }

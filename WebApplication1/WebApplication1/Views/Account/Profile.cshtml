@@ -1,86 +1,58 @@
 ﻿@using WebApplication1.Models
-@model WebApplication1.Models.account
+@model WebApplication1.Models.ProfileViewModel
+@using CloudinaryDotNet;
+
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Profile</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+      
+    </style>
 </head>
-<body style="margin-top:50px">
+<body class="profileBody">
 
-
-    <div class="container-fluid" style="margin-top:50px">
-        <ul class="nav nav-tabs">
-            <li><a href="#" class="profileBut">Profile</a></li>
-            <li><a href="#" class="madeBut">Events Made</a></li>
-            <li><a href="#" class="checksBut">Events Checked In</a></li>
-        </ul>
-
-
-        <div class="profileContents collapse in">
-            <dl class="dl-horizontal">
-                <dt></dt>
-                <dd>
-                    <img src="~/images/blankProfile.jpg" width="267" height="238" />
-                </dd>
-                <dt>Firstname:</dt>
-                <dd>@Model.firstname</dd>
-                <dt>Lastname:</dt>
-                <dd>@Model.lastname</dd>
-                <dt>Email:</dt>
-                <dd>@Model.Email</dd>
-                <dt>Brithday:</dt>
-                <dd>@Model.birthday</dd>
-                <dt>Description:</dt>
-                <dd>@Model.description</dd>
-            </dl>
+    <!-- First Container -->
+    <div class="container-fluid  text-center BG-1 myContainer">
+        
+        <div style="margin-top:50px">
+            @Model.cloudinary.Api.UrlImgUp.Transform(
+                        new Transformation()
+                        .Width(250)
+                        .Height(250)
+                        .Radius("max")
+                        .Background("#1abc9c")
+                        .Crop("fill")).BuildImageTag(Model.account.profilePic)
         </div>
-        <div class="eventsMade collapse">
-            <div class="container-fluid">
-                <h2>Log Book - Events Made:</h2>
-                <p>You find here underneath all your history of Events organised by you. Click on the Event name to display the event page.</p>
-                @if (ViewBag.EventsMade == null)
-                    {
-                    <p> No events history to display. Sorry, you have no life.</p>
-                    }
-                    else
-                    {
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Eventname</th>
-                                <th>Date</th>
-                                <th>Participants</th>
-                                <th>Location</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (Event e in ViewBag.EventsMade)
-                                {
-                                <tr class="warning">
-                                    <td>@Html.ActionLink(e.EventName, "ViewEvent", "Event", new { id = e.EventId}, null) </td>
-                                    <td>@e.EventEndDate </td>
-                                    <td>@e.EventParticipants </td>
-                                    <td>@e.EventLocation</td>
-                                </tr>
-                                }
-                        </tbody>
-                    </table>}
-            </div>
-        </div>
-        <div class="eventsChecks collapse">
-            <div class="container-fluid">
-                <h2>Log Book - Your Check Ins:</h2>
-                <p>You find here underneath all your history of Events you participated to. Click on the Event name to display the event page.</p>
-                @if (ViewBag.EventsParticipated == null)
-                    {
-                    <p> No events history to display. Sorry, you have no life.</p>
-                    }
-                    else
-                    {
+        <h3>@Model.account.lastname</h3>
+        <h3>@Model.account.firstname</h3>
+        <h4>@Model.account.birthday</h4>
+        <p class="myP">
+            @Model.account.description
+        </p>
+    </div>
 
+    <div class="btn-group btn-group-justified">
+        <a id="participated" class="btn btn-primary">Participated</a>
+        <a id="organised" class="btn btn-primary">organised</a>
+    </div>
+    <!-- Second Container -->
+    <div id="goingContent" class="hidden">
+        <div class="container-fluid  text-center BG-2 myContainer">
+            <h3 class="profileMargin">Experienced</h3>
+            <p class="myP">You find here underneath all your history of Events you participated to. Click on the Event name to display the event page.</p>
+
+            @if (ViewBag.EventsParticipated == null)
+            {
+                <p class="myP"> No events history to display. Sorry, you have no life.</p>
+            }
+            else
+            {
+
+                <div style="overflow-x:auto;">
                     <table class="table">
                         <thead>
                             <tr>
@@ -92,41 +64,75 @@
                         </thead>
                         <tbody>
                             @foreach (Event e in ViewBag.EventsParticipated)
-                                {
+                            {
                                 <tr class="warning">
-                                    <td>@Html.ActionLink(e.EventName,"ViewEvent", "Event", new { id = e.EventId }, null) </td>
-                                    <td>@e.EventEndDate </td>
-                                    <td>@e.EventParticipants </td>
-                                    <td>@e.EventLocation</td>
+                                    <td>@Html.ActionLink(e.EventName, "ViewEvent", "Event", new { id = e.EventId }, null) </td>
+                                    <td style="color: #555555;">@e.EventEndDate </td>
+                                    <td style="color: #555555;">@e.EventParticipants </td>
+                                    <td style="color: #555555;">@e.EventLocation</td>
                                 </tr>}
                         </tbody>
-                    </table>}
-            </div>
+                    </table>
+                </div>}
+        </div>
+    </div>
+  
+    <!-- Third Container (Grid) -->
+    <div id="partContent" class="visible">
+        <div class="container-fluid  text-center BG-2 myContainer">
+            <h3 class="profileMargin">Contributed</h3><br>
+            <p class="myP">
+               @*You find here underneath all your history of Events organised by you. Click on the Event name to display the event page.*@
+            </p>
+            @if (ViewBag.EventsMade == null)
+            {
+                <p class="myP"> No events history to display. Sorry, you have no life.</p>
+            }
+            else
+            {
+                <div style="overflow-x:auto;">
+                    <table class="table" style="overflow-x:auto;">
+                        <thead>
+                            <tr>
+                                <th>Eventname</th>
+                                <th>Date</th>
+                                <th>Participants</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Event e in ViewBag.EventsMade)
+                            {
+                                <tr class="warning">
+                                    <td>@Html.ActionLink(e.EventName, "ViewEvent", "Event", new { id = e.EventId }, null) </td>
+                                    <td style="color: #555555;">@e.EventEndDate </td>
+                                    <td style="color: #555555;">@e.EventParticipants </td>
+                                    <td style="color: #555555;">@e.EventLocation</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>}
+        </div>
         </div>
 
-    </div>
+        <!-- Footer bg-4-->
 
+        <script>
+            $('#organised').click(function () {
+                if ($('#goingContent').hasClass("hidden")) {
+                    $('#partContent').removeClass("visible").addClass("hidden");
+                    $('#goingContent').removeClass("hidden").addClass("visible");
+                }});
 
-    <script type="text/javascript">
-
-
-        $(document).ready(function () {
-            $(".profileBut").click(function () {
-                $(".eventsMade").collapse('hide');
-                $(".eventsChecks").collapse('hide');
-                $(".profileContents").collapse('show');
+            $('#participated').click(function () {
+                if ($('#partContent').hasClass("hidden")) {
+                    $('#partContent').removeClass("hidden").addClass("visible");
+                    $('#goingContent').removeClass("visible").addClass("hidden");
+            }
             });
-            $(".madeBut").click(function () {
-                $(".eventsChecks").collapse('hide');
-                $(".profileContents").collapse('hide');
-                $(".eventsMade").collapse('show');
-            });
-            $(".checksBut").click(function () {
-                $(".eventsMade").collapse('hide');
-                $(".profileContents").collapse('hide');
-                $(".eventsChecks").collapse('show');
-            });
-        });
-    </script>
+            
+        </script>
+
 </body>
 </html>

@@ -214,7 +214,8 @@
         }
     });
     $.fn.countdown = function () {
-        var argumentsArray = Array.prototype.slice.call(arguments, 0);
+        var argumentsArray = Array.prototype.slice.countdown(arguments, 0);
+        Debug.writeln("arg: " + argumentsArray)
         return this.each(function () {
             var instanceNumber = $(this).data("countdown-instance");
             if (instanceNumber !== undefined) {

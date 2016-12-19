@@ -40,7 +40,8 @@
                                 <div id="reportrange" class="form-control navbar-nav" style="background: #fff; cursor: pointer; border: 1px solid #ccc; width: 40px">
                                     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                                 </div>
-                                
+                                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp5LTsTDiXo_TJtup2jYHnnZmlTF9Btxk&libraries=places"></script>
+
                                 <script type="text/javascript">
 
                                     var input = document.getElementById('City');
@@ -66,6 +67,7 @@
                                         fjs.parentNode.insertBefore(js, fjs);
                                     }(document, 'script', 'facebook-jssdk'));
                                 </script>
+
                             </div>
                         </form>
 
@@ -83,9 +85,6 @@
             <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
             <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
             <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-
-
             @{
                 var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
             }
@@ -98,7 +97,7 @@
                         $('#content').addClass("visible");
                         $('#viewPlaceHolder2').addClass("hidden");
                         var start = moment();
-                        var end = moment().add(1, 'year');
+                        var end = moment().add(100, 'year');
 
                         function cb(start, end) {
                             $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
@@ -107,7 +106,7 @@
                         $('#reportrange').daterangepicker({
                             startDate: start,
                             endDate: end,
-                            dateFormat: 'dd/mm/yyyy',
+                            dateFormat: 'dd/MM/yyyy',
                             opens: 'left',
                             ranges: {
                                 'Future': [moment(), moment().add(100, 'years')],

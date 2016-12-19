@@ -178,13 +178,14 @@ namespace WebApplication1.Models
     public class ProfileViewModel
     {
         public Cloudinary cloudinary { get; set; }
-
+        public bool Owner {get; set;}
         public account account { get; set; }
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageUpload { get; set; }
 
         public ProfileViewModel()
         {
+            
             account = new account();
             ImageUpload = null;
             cloudinary = new CloudinaryAccount().Cloud;

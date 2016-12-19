@@ -10,7 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-
     </style>
 </head>
 <body class="profileBody">
@@ -34,32 +33,28 @@
             @Model.account.description
         </p>
 
-       
+
     </div>
     <div class="btn-group btn-group-justified">
 
         <a id="participated" class="btn btn-primary">Participated</a>
-        <a id="organised" class="btn btn-primary">organised</a>
-        <a id="interested" class="btn btn-primary">interested</a>
+        <a id="organised" class="btn btn-primary">Organised</a>
+        <a id="interested" class="btn btn-primary">Interested</a>
     </div>
-    <!-- Second Container -->
+    <!-- Participated -->
     <div id="goingContent" class="hidden">
         <div class="container-fluid  text-center BG-2 myContainer">
-            <h3 class="profileMargin">Experienced</h3>
-            <p class="myP">You find here underneath all your history of Events you participated to. Click on the Event name to display the event page.</p>
+            <h3 class="profileMargin">experienced and future events</h3>
             @if (Model.Owner)
             {
-
                 @Html.ActionLink("New Event", "CreateEvent", "Event", null, new { @class = "btn btn-lg btn-danger" });
-
             }
             @if (ViewBag.EventsParticipated == null)
             {
-                <p class="myP"> No events history to display. Sorry, you have no life.</p>
+                <p class="myP"> No events history to display </p>
             }
             else
             {
-
                 <div style="overflow-x:auto;">
                     <table class="table">
                         <thead>
@@ -74,7 +69,7 @@
                             @foreach (Event e in ViewBag.EventsParticipated)
                             {
                                 <tr class="warning">
-                                    <td>@Html.ActionLink(e.EventName, "ViewEvent", "Event", new { id = e.EventId }, null) </td>
+                                    <td>@Html.ActionLink(e.EventName, "EventDetails", "Event", new { id = e.EventId }, null) </td>
                                     <td style="color: #555555;">@e.EventEndDate </td>
                                     <td style="color: #555555;">@e.EventParticipants </td>
                                     <td style="color: #555555;">@e.EventLocation</td>
@@ -85,26 +80,20 @@
         </div>
     </div>
 
-    <!-- Third Container (Grid) -->
+    <!--Organised-->
     <div id="partContent" class="visible">
         <div class="container-fluid  text-center BG-2 myContainer">
-            <h3 class="profileMargin">Contributed</h3><br>
+            <h3 class="profileMargin">organised events</h3>
             @if (Model.Owner)
             {
-
                 @Html.ActionLink("New Event", "CreateEvent", "Event", null, new { @class = "btn btn-lg btn-danger" });
-
             }
-            <p class="myP">
-                @*You find here underneath all your history of Events organised by you. Click on the Event name to display the event page.*@
-            </p>
             @if (ViewBag.EventsMade == null)
             {
-                <p class="myP"> No events history to display. Sorry, you have no life.</p>
+                <p class="myP"> No events history to display</p>
             }
             else
             {
-
                 <div style="overflow-x:auto;">
                     <table class="table" style="overflow-x:auto;">
                         <thead>
@@ -119,18 +108,19 @@
                             @foreach (Event e in ViewBag.EventsMade)
                             {
                                 <tr class="warning">
-                                    <td>@Html.ActionLink(e.EventName, "ViewEvent", "Event", new { id = e.EventId }, null) </td>
+                                    <td>@Html.ActionLink(e.EventName, "EventDetails", "Event", new { id = e.EventId }, null) </td>
                                     <td style="color: #555555;">@e.EventEndDate </td>
                                     <td style="color: #555555;">@e.EventParticipants </td>
                                     <td style="color: #555555;">@e.EventLocation</td>
                                     <td style="color: #555555;">
                                         @if (Model.Owner)
                                         {
-                                            @:<td style="color: #555555;">
-                                            @Html.ActionLink("Edit", "EditEvent", "Event", new { id = e.EventId }, null);
-                                            @:</td>
+                                            @:
+                                        <td style="color: #555555;">
+                                            @Html.ActionLink("Edit", "EditEvent", "Event", new { id = e.EventId }, null)
+                                        </td>
                                         }
-                                </tr>
+                                    </tr>
                             }
                         </tbody>
                     </table>
@@ -138,57 +128,42 @@
         </div>
     </div>
 
-
+    <!--interested-->
     <div id="interContent" class="hidden">
         <div class="container-fluid  text-center BG-2 myContainer">
-            <h3 class="profileMargin">Interested</h3><br>
+            <h3 class="profileMargin">Interested</h3>
             @if (Model.Owner)
             {
-
                 @Html.ActionLink("New Event", "CreateEvent", "Event", null, new { @class = "btn btn-lg btn-danger" });
-
             }
-            <p class="myP">
-                @*You find here underneath all your history of Events organised by you. Click on the Event name to display the event page.*@
-            </p>
             @if (ViewBag.EventsMade == null)
             {
                 <p class="myP"> No events history to display. Sorry, you have no life.</p>
             }
             else
-            {
-
-                <div style="overflow-x:auto;">
-                    <table class="table" style="overflow-x:auto;">
-                        <thead>
-                            <tr>
-                                <th>Eventname</th>
-                                <th>Date</th>
-                                <th>Participants</th>
-                                <th>Location</th>
+            {   <div style="overflow-x:auto;">
+                <table class="table" style="overflow-x:auto;">
+                    <thead>
+                        <tr>
+                            <th>Eventname</th>
+                            <th>Date</th>
+                            <th>Participants</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Event e in ViewBag.eventsinterested)
+                        {
+                            <tr class="warning">
+                                <td>@Html.ActionLink(e.EventName, "EventDetails", "Event", new { id = e.EventId }, null) </td>
+                                <td style="color: #555555;">@e.EventEndDate </td>
+                                <td style="color: #555555;">@e.EventParticipants </td>
+                                <td style="color: #555555;">@e.EventLocation</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (Event e in ViewBag.eventsinterested)
-                            {
-                                <tr class="warning">
-                                    <td>@Html.ActionLink(e.EventName, "ViewEvent", "Event", new { id = e.EventId }, null) </td>
-                                    <td style="color: #555555;">@e.EventEndDate </td>
-                                    <td style="color: #555555;">@e.EventParticipants </td>
-                                    <td style="color: #555555;">@e.EventLocation</td>
-                                    <td style="color: #555555;">
-                                        @if (Model.Owner)
-                                        {
-                                            @:<td style="color: #555555;">
-                                            @Html.ActionLink("Edit", "EditEvent", "Event", new { id = e.EventId }, null);
-                                            
-                                        @:</td>
-                                        }
-                                    </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>}
+                        }
+                    </tbody>
+                </table>
+            </div>}
         </div>
     </div>
     <!-- Footer bg-4-->

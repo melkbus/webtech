@@ -112,7 +112,7 @@ namespace WebApplication1.Controllers
                 //Dit is gewoon test code indien het niet werkte
                 return RedirectToAction("Index", "Home");
             }          
-            return RedirectToAction("CreateEvent", "Event");
+            return RedirectToAction("ViewEvent", "Event", new { id = ev.EventId });
             // after successfully uploading redirect the user
         }
 
@@ -153,11 +153,17 @@ namespace WebApplication1.Controllers
             model.ev = db.Event.Find(id);
             string userid = User.Identity.GetUserId();
             model.log = new logboek();
+            
+            ViewBag.isowner = db.logboek.Where(l => l.UserID == userid && l.EventID == id && l.Organize).Select(l => l.UserID == userid).ToList().Count > 0;
+            ViewBag.interestedCount = db.logboek.Where(l => l.EventID == id && l.Interested == true).Count();
             var log = db.logboek.Where(l => l.EventID == id && l.UserID == userid).ToList();
             if (log.Any())
             {
                 model.log = log.First();
             }
+            ViewBag.userName = User.Identity.Name;
+            ViewBag.userId = userid;
+            ViewBag.owner = model.log.Organize;
             model.tags = db.Tag.Where(e => e.EventId == id).ToList();
             return View(model);
         }

@@ -135,6 +135,7 @@
                             'id': $("#city").val(),
                             'name': $("#name").val()
                         });
+                        
                         function ajax() {
                             if ($("#name").val() != "" || $("#City").val() != "") {
                                 if (!$('#content').hasClass("hidden")) {
@@ -162,6 +163,7 @@
                                 }
                             }
                         }
+                        
 
 
                         cityfield.addEventListener('input', ajax);

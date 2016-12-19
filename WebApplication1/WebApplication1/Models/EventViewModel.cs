@@ -25,7 +25,8 @@ namespace WebApplication1.Models
              }
     }
 
-    public class EventCreateViewModel {
+    public class EventCreateViewModel 
+    {
 
         public Cloudinary cloudinary { get; set; }
         public HttpPostedFileBase ImageUpload { get; set; }
@@ -56,18 +57,23 @@ namespace WebApplication1.Models
         [Display(Name = "Price")]
         public int EventPrice { get; set; }
 
+        [Required]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMM ddd d yyyy", ApplyFormatInEditMode = true)]
         [Display(Name = "Begin date")]
         public DateTime EventBeginDate { get; set; }
 
+        [Required]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "End date")]
+        //[GreaterThanOrEqualTo("EventBeginDate", ErrorMessage="Incorrect end date")]
         public DateTime EventEndDate { get; set; }
 
+        [Required]
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Begin time")]
         public Nullable<System.DateTime> EventBeginTime { get; set; }
 
+        [Required]
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "End time")]
         public Nullable<System.DateTime> EventEndTime { get; set; }
@@ -90,6 +96,8 @@ namespace WebApplication1.Models
             tag = new Tag();
 
         }
+
+     
 
     }
 }

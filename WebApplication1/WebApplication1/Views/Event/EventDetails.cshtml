@@ -11,8 +11,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Styles.Render("~/Content/bootstrapcss")    }
+        @Scripts.Render("~/bundles/jqueryval")
+        @Styles.Render("~/Content/bootstrapcss")    }
     <link rel="stylesheet" type="text/css" href="css/jquery.jdigiclock.css" />
 </head>
 <body>
@@ -24,6 +24,7 @@
                         @*scale pic*@
                         @Model.cloudinary.Api.UrlImgUp.Transform(
                         new Transformation()
+                        .Width(900)
                         .Height(300)
                         .Crop("fill")).BuildImageTag(Model.ev.EventPicture)
                     </div>
@@ -37,37 +38,37 @@
                 </div>
                 <div class="panel-body text-center" style="padding-top:10px">
                     <div class="panel-info">
-                        <h2 style="margin-top:5px">@Html.DisplayFor(model => model.ev.EventName)</h2>
-                        <h3 style="margin-top:5px">@ViewBag.user</h3>
                         @foreach (var item in Model.tags)
                         {
-                        <button id=@string.Format("t{0}", item.TagId) style="margin-bottom:5px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
-                        <script>
-                            $('#@string.Format("t{0}", item.TagId)').click(function () {
-                                document.getElementById("name").value = "@item.TagName";
-                                if (!$('#content').hasClass("hidden")) {
-                                    $('#content').removeClass("visible").addClass("hidden");
-                                    $('#viewPlaceHolder2').removeClass("hidden").addClass("visible");
-                                }
-                                jQuery.ajax({
-                                    type: "GET",
-                                    url: "/Home/GetView",
-                                    data: { id: $("#City").val(), name: $("#name").val(), start: $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), end: $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD') },
-                                    contentType: 'application/json; charset=utf-8',
-                                    success: function (viewHTML) {
-                                        $("#viewPlaceHolder2").html(viewHTML);
-                                    },
-                                    error: function (req, status, error) {
-                                        alert(req.responseText);
+                            <button id=@string.Format("t{0}", item.TagId) style="margin-top:15px" type="button" class="btn btn-info btn-xs">@item.TagName</button>
+                            <script>
+                                $('#@string.Format("t{0}", item.TagId)').click(function () {
+                                    document.getElementById("name").value = "@item.TagName";
+                                    if (!$('#content').hasClass("hidden")) {
+                                        $('#content').removeClass("visible").addClass("hidden");
+                                        $('#viewPlaceHolder2').removeClass("hidden").addClass("visible");
                                     }
-                                });
-                            }
-                            )
-
-
-
-                        </script>
+                                    jQuery.ajax({
+                                        type: "GET",
+                                        url: "/Home/GetView",
+                                        data: { id: $("#City").val(), name: $("#name").val(), start: $('#reportrange').data('daterangepicker').startDate.format('YYYY-MM-DD'), end: $('#reportrange').data('daterangepicker').endDate.format('YYYY-MM-DD') },
+                                        contentType: 'application/json; charset=utf-8',
+                                        success: function (viewHTML) {
+                                            $("#viewPlaceHolder2").html(viewHTML);
+                                        },
+                                        error: function (req, status, error) {
+                                            alert(req.responseText);
+                                        }
+                                    });
+                                })
+                            </script>
                         }
+                    </div>
+                    <hr />
+                    <div class="panel-info">
+                        <h2 style="margin-top:15px">@Html.DisplayFor(model => model.ev.EventName)</h2>
+                        <h4 style="margin-top:5px">@Html.ActionLink("Host", "Profile", "Account", new { idUser = @String.Format(ViewBag.userId) }, null)</h4>
+
                     </div>
                     <hr />
                     <div class="panel-info" id="guest">
@@ -108,7 +109,7 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="panel-body">
+                    <div class="panel-info">
                         <h4><a data-toggle="collapse" href="#coll">description</a></h4>
                         <div class="panel-collapse collapsing" id="coll">
                             <p>@Html.DisplayFor(model => model.ev.EventDescription)</p>
@@ -118,7 +119,7 @@
                 <div class="panel-footer text-center">
                     <button type="button" id="participants" class="btn btn-sm" style="border-radius:80%">
                         @{
-                        var going = Model.log.Going;
+                            var going = Model.log.Going;
                         }
                         <span id="p" class="glyphicon @(going ? " glyphicon-ok" : "glyphicon-plus" )" title="Participate" style="color:black"></span>
                     </button>
@@ -144,7 +145,7 @@
             document.getElementById('submit').addEventListener('click', function () {
                 geocodeAddress(geocoder, map);
             });
-            window.onload = function(){
+            window.onload = function () {
                 geocodeAddress(geocoder, map)
             }
         }
@@ -180,7 +181,7 @@
                 jQuery.ajax({
                     url: "/Account/participate",
                     data: { id: Model.ev.EventId },
-                    success: function(viewHTML) {
+                    success: function (viewHTML) {
                     }
                 });
             });
@@ -198,7 +199,7 @@
                 jQuery.ajax({
                     url: "/Account/interested",
                     data: { id: Model.ev.EventId },
-                    success: function(viewHTML) {
+                    success: function (viewHTML) {
                     }
                 });
             })
@@ -206,7 +207,9 @@
     </script>
 
     <div class="card-footer text-muted text-xs-center">
-        @if (ViewBag.isowner) { @Html.ActionLink("Edit", "EditEvent", new { id = Model.ev.EventId }); }  |
+        @if (ViewBag.isowner)
+        { @Html.ActionLink("Edit", "EditEvent", new { id = Model.ev.EventId });
+        }  |
         @Html.ActionLink("Home", "../")
     </div>
 </body>

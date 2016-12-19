@@ -161,7 +161,8 @@ namespace WebApplication1.Controllers
             {
                 model.log = log.First();
             }
-            ViewBag.user = User;
+            ViewBag.userName = User.Identity.Name;
+            ViewBag.userId = userid;
             ViewBag.owner = model.log.Organize;
             model.tags = db.Tag.Where(e => e.EventId == id).ToList();
             return View(model);

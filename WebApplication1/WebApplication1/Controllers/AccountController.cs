@@ -159,7 +159,6 @@ namespace WebApplication1.Controllers
         [AllowAnonymous]
         public ActionResult Profile(string idUser)
         {
-            
             account user= db.account.Find(idUser);
             ProfileViewModel model = new ProfileViewModel();
             model.account = user;
@@ -173,10 +172,10 @@ namespace WebApplication1.Controllers
 
             var elements2 = db.logboek.Where(l => l.UserID == user.UserId &&  l.Going == true  && l.Organize==false).Select(t => t.EventID).ToList();
             eventsChecked = db.Event.Where(e => elements2.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
-
-
+            
             var elements3 = db.logboek.Where(l => l.UserID == user.UserId && l.Interested == true).Select(t => t.EventID).ToList();
             eventsinterested = db.Event.Where(e => elements3.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
+
             ViewBag.EventsInterested = eventsinterested;
             ViewBag.EventsMade = eventsMade;
             ViewBag.EventsParticipated = eventsChecked;

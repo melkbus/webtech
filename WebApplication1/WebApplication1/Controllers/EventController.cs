@@ -112,7 +112,7 @@ namespace WebApplication1.Controllers
                 //Dit is gewoon test code indien het niet werkte
                 return RedirectToAction("Index", "Home");
             }          
-            return RedirectToAction("CreateEvent", "Event");
+            return RedirectToAction("ViewEvent", "Event", new { id = ev.EventId });
             // after successfully uploading redirect the user
         }
 

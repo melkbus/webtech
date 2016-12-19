@@ -273,14 +273,111 @@ namespace WebApplication1.Controllers
 
 
 
+
+
+
+        [HttpGet]
+        public ActionResult participate(int id)
+        {
+            //int eventId = id ?? default(int);
+
+            var userid = User.Identity.GetUserId();
+            var log = db.logboek.Where(l => l.EventID == id && l.UserID == userid).ToList();
+            logboek change = new logboek();
+            if (log.Any())
+            {
+                System.Diagnostics.Debug.WriteLine("lalalallalalal hier geraakt");
+                change = log.First();
+                change.Going = !change.Going;
+            }
+            else
+            {
+                change.UserID = userid;
+                change.EventID = id;
+                change.Going = true;
+
+                db.logboek.Add(change);
+            }
+            Event ev = db.Event.Find(change.EventID);
+            if (change.Going)
+            {
+                ev.EventParticipants++;
+            }
+            else
+            {
+                ev.EventParticipants--;
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+            return new EmptyResult();
+        }
+
+
+        [HttpGet]
+        public ActionResult interested(int id)
+        {
+            //int eventId = id ?? default(int);
+
+            var userid = User.Identity.GetUserId();
+            var log = db.logboek.Where(l => l.EventID == id && l.UserID == userid).ToList();
+            logboek change = new logboek();
+            if (log.Any())
+            {
+                change = log.First();
+                change.Interested = !change.Interested;
+            }
+            else
+            {
+                change.UserID = userid;
+                change.EventID = id;
+                change.Interested = true;
+                db.logboek.Add(change);
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+            return new EmptyResult();
+        }
+
         //GET: /Account/YourEvents
         public ActionResult YourEvents()
         {
             EventViewModel model = new EventViewModel();
-            account user = db.account.Find(User.Identity.GetUserId());
-            var elements = db.logboek.Where(l => l.UserID == user.UserId && l.Organize == true).Select(t => t.EventID).ToList();
+            var userid = User.Identity.GetUserId();
+            var elements = db.logboek.Where(l => l.UserID == userid && l.Organize == true).Select(t => t.EventID).ToList();
             model.events = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
-            return View(model);
+            return View("~/Views/Account/YourEvents.cshtml", model);
         }
 
 
@@ -288,8 +385,13 @@ namespace WebApplication1.Controllers
         public ActionResult CheckIns()
         {
 
-            return View();
+            EventViewModel model = new EventViewModel();
+            var userid = User.Identity.GetUserId();
+            var elements = db.logboek.Where(l => l.UserID == userid && l.Organize == false && l.Going == true).Select(t => t.EventID).ToList();
+            model.events = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
+            return View("~/Views/Account/CheckIns.cshtml", model);
         }
+
 
 
         //GET: /Account/Settings

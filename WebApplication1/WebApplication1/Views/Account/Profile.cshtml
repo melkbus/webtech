@@ -8,16 +8,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <style>
-      
+
     </style>
 </head>
 <body class="profileBody">
 
     <!-- First Container -->
     <div class="container-fluid  text-center BG-1 myContainer">
-        
+
         <div style="margin-top:50px">
             @Model.cloudinary.Api.UrlImgUp.Transform(
                         new Transformation()
@@ -33,18 +33,26 @@
         <p class="myP">
             @Model.account.description
         </p>
-    </div>
 
+       
+    </div>
     <div class="btn-group btn-group-justified">
+
         <a id="participated" class="btn btn-primary">Participated</a>
         <a id="organised" class="btn btn-primary">organised</a>
+        <a id="interested" class="btn btn-primary">interested</a>
     </div>
     <!-- Second Container -->
     <div id="goingContent" class="hidden">
         <div class="container-fluid  text-center BG-2 myContainer">
             <h3 class="profileMargin">Experienced</h3>
             <p class="myP">You find here underneath all your history of Events you participated to. Click on the Event name to display the event page.</p>
+            @if (Model.Owner)
+            {
 
+                @Html.ActionLink("New Event", "CreateEvent", "Event", null, new { @class = "btn btn-lg btn-danger" });
+
+            }
             @if (ViewBag.EventsParticipated == null)
             {
                 <p class="myP"> No events history to display. Sorry, you have no life.</p>
@@ -76,13 +84,19 @@
                 </div>}
         </div>
     </div>
-  
+
     <!-- Third Container (Grid) -->
     <div id="partContent" class="visible">
         <div class="container-fluid  text-center BG-2 myContainer">
             <h3 class="profileMargin">Contributed</h3><br>
+            @if (Model.Owner)
+            {
+
+                @Html.ActionLink("New Event", "CreateEvent", "Event", null, new { @class = "btn btn-lg btn-danger" });
+
+            }
             <p class="myP">
-               @*You find here underneath all your history of Events organised by you. Click on the Event name to display the event page.*@
+                @*You find here underneath all your history of Events organised by you. Click on the Event name to display the event page.*@
             </p>
             @if (ViewBag.EventsMade == null)
             {
@@ -90,6 +104,7 @@
             }
             else
             {
+
                 <div style="overflow-x:auto;">
                     <table class="table" style="overflow-x:auto;">
                         <thead>
@@ -108,31 +123,102 @@
                                     <td style="color: #555555;">@e.EventEndDate </td>
                                     <td style="color: #555555;">@e.EventParticipants </td>
                                     <td style="color: #555555;">@e.EventLocation</td>
+                                    <td style="color: #555555;">
+                                        @if (Model.Owner)
+                                        {
+                                            @:<td style="color: #555555;">
+                                            @Html.ActionLink("Edit", "EditEvent", "Event", new { id = e.EventId }, null);
+                                            @:</td>
+                                        }
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>}
         </div>
-        </div>
+    </div>
 
-        <!-- Footer bg-4-->
 
-        <script>
-            $('#organised').click(function () {
-                if ($('#goingContent').hasClass("hidden")) {
-                    $('#partContent').removeClass("visible").addClass("hidden");
-                    $('#goingContent').removeClass("hidden").addClass("visible");
-                }});
+    <div id="interContent" class="hidden">
+        <div class="container-fluid  text-center BG-2 myContainer">
+            <h3 class="profileMargin">Interested</h3><br>
+            @if (Model.Owner)
+            {
 
-            $('#participated').click(function () {
-                if ($('#partContent').hasClass("hidden")) {
-                    $('#partContent').removeClass("hidden").addClass("visible");
-                    $('#goingContent').removeClass("visible").addClass("hidden");
+                @Html.ActionLink("New Event", "CreateEvent", "Event", null, new { @class = "btn btn-lg btn-danger" });
+
             }
-            });
-            
-        </script>
+            <p class="myP">
+                @*You find here underneath all your history of Events organised by you. Click on the Event name to display the event page.*@
+            </p>
+            @if (ViewBag.EventsMade == null)
+            {
+                <p class="myP"> No events history to display. Sorry, you have no life.</p>
+            }
+            else
+            {
+
+                <div style="overflow-x:auto;">
+                    <table class="table" style="overflow-x:auto;">
+                        <thead>
+                            <tr>
+                                <th>Eventname</th>
+                                <th>Date</th>
+                                <th>Participants</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Event e in ViewBag.eventsinterested)
+                            {
+                                <tr class="warning">
+                                    <td>@Html.ActionLink(e.EventName, "ViewEvent", "Event", new { id = e.EventId }, null) </td>
+                                    <td style="color: #555555;">@e.EventEndDate </td>
+                                    <td style="color: #555555;">@e.EventParticipants </td>
+                                    <td style="color: #555555;">@e.EventLocation</td>
+                                    <td style="color: #555555;">
+                                        @if (Model.Owner)
+                                        {
+                                            @:<td style="color: #555555;">
+                                            @Html.ActionLink("Edit", "EditEvent", "Event", new { id = e.EventId }, null);
+                                            
+                                        @:</td>
+                                        }
+                                    </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>}
+        </div>
+    </div>
+    <!-- Footer bg-4-->
+
+    <script>
+        $('#participated').click(function () {
+            if ($('#goingContent').hasClass("hidden")) {
+                $('#partContent').removeClass("visible").addClass("hidden");
+                $('#goingContent').removeClass("hidden").addClass("visible");
+                $('#interContent').removeClass("visible").addClass("hidden");
+            }
+        });
+
+        $('#organised').click(function () {
+            if ($('#partContent').hasClass("hidden")) {
+                $('#partContent').removeClass("hidden").addClass("visible");
+                $('#goingContent').removeClass("visible").addClass("hidden");
+                $('#interContent').removeClass("visible").addClass("hidden");
+            }
+        });
+
+        $('#interested').click(function () {
+            if ($('#interContent').hasClass("hidden")) {
+                $('#interContent').removeClass("hidden").addClass("visible");
+                $('#goingContent').removeClass("visible").addClass("hidden");
+                $('#partContent').removeClass("visible").addClass("hidden");
+            }
+        });
+
+    </script>
 
 </body>
 </html>

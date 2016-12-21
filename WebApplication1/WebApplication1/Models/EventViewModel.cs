@@ -39,6 +39,7 @@ namespace WebApplication1.Models
 
         [Required]
         [DataType(DataType.Text)]
+        [StringLength(20, ErrorMessage = "max name-length = 20 characters")]
         [Display(Name = "Name")]
         public string EventName { get; set; }
 

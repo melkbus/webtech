@@ -8,12 +8,6 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>ViewEvent</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        @Styles.Render("~/Content/bootstrapcss")    }
-    <link rel="stylesheet" type="text/css" href="css/jquery.jdigiclock.css" />
 </head>
 <body>
     <div class="container" style="width:90%; margin-top:40px">
@@ -28,13 +22,13 @@
                         .Height(300)
                         .Crop("fill")).BuildImageTag(Model.ev.EventPicture)
                     </div>
-                    <div id="countdown" style="margin-top:20px; font-size:40px"></div>
+                    @*<div id="countdown" style="margin-top:20px; font-size:40px"></div>
                     <hr />
                     <script type="text/javascript">
-                        $('#countdown').countdown(Model.ev.EventBeginDate.ToString("yyyy-dd-MM"), function (event) {
+                        $('#countdown').countdown(@Model.ev.EventBeginDate.ToString("yyyy-dd-MM"), function (event) {
                             $(this).html(event.strftime('<span>%w weeks %d days %H:%M:%S</span>'));
                         });
-                    </script>
+                    </script>*@
                 </div>
                 <div class="panel-body text-center" style="padding-top:10px">
                     <div class="panel-info">
@@ -180,7 +174,7 @@
 
                 jQuery.ajax({
                     url: "/Account/participate",
-                    data: { id: Model.ev.EventId },
+                    data: { id: @Model.ev.EventId },
                     success: function (viewHTML) {
                     }
                 });
@@ -198,7 +192,7 @@
                 }
                 jQuery.ajax({
                     url: "/Account/interested",
-                    data: { id: Model.ev.EventId },
+                    data: { id: @Model.ev.EventId },
                     success: function (viewHTML) {
                     }
                 });

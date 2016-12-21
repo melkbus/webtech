@@ -377,7 +377,7 @@ namespace WebApplication1.Controllers
             var userid = User.Identity.GetUserId();
             var elements = db.logboek.Where(l => l.UserID == userid && l.Organize == true).Select(t => t.EventID).ToList();
             model.events = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
-            return View("~/Views/Account/YourEvents.cshtml", model);
+            return View(model);
         }
 
 
@@ -389,7 +389,7 @@ namespace WebApplication1.Controllers
             var userid = User.Identity.GetUserId();
             var elements = db.logboek.Where(l => l.UserID == userid && l.Organize == false && l.Going == true).Select(t => t.EventID).ToList();
             model.events = db.Event.Where(e => elements.Contains(e.EventId)).OrderBy(p => p.EventBeginDate).ToList();
-            return View("~/Views/Account/CheckIns.cshtml", model);
+            return View( model);
         }
 
 

@@ -39,13 +39,13 @@ namespace WebApplication1.Models
 
         [Required]
         [DataType(DataType.Text)]
-        [StringLength(20, ErrorMessage = "max name-length = 20 characters")]
+        [StringLength(maximumLength: 20, MinimumLength = 5, ErrorMessage = "name fault: min-length = 1, max-length = 20")]
         [Display(Name = "Name")]
         public string EventName { get; set; }
 
         [Required]
         [DataType(DataType.MultilineText)]
-        [StringLength(300, ErrorMessage = "max description-length = 300 characters")]
+        [StringLength(maximumLength: 300, MinimumLength = 1, ErrorMessage = "description fault => required: min-length = 1, max-length = 300")]
         [Display(Name = "Description")]
         public string EventDescription { get; set; }
 
@@ -59,12 +59,12 @@ namespace WebApplication1.Models
         public int EventPrice { get; set; }
 
         [Required]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMM ddd d yyyy", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Begin date")]
         public DateTime EventBeginDate { get; set; }
 
         [Required]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "End date")]
         //[GreaterThanOrEqualTo("EventBeginDate", ErrorMessage="Incorrect end date")]
         public DateTime EventEndDate { get; set; }

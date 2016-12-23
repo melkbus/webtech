@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
             "nCU9Op7zsyop4KYoZ44hSMaBM08");
 
         private webtechEntities db = new webtechEntities();
-        
+
         //[HttpPost]
         //public ActionResult Participate(EventCreateViewModel model)
         //{
@@ -45,7 +45,7 @@ namespace WebApplication1.Controllers
             ev.EventBeginDate = model.EventBeginDate;
             ev.EventEndDate = model.EventEndDate;
             ev.EventLocation = model.EventLocation;
-            ev.EventPrice = model.EventPrice;                               
+            ev.EventPrice = model.EventPrice;
             if (model.ImageUpload != null)
             {
                 Cloudinary cloudinary = new CloudinaryAccount().Cloud;
@@ -80,7 +80,7 @@ namespace WebApplication1.Controllers
                             ve.PropertyName, ve.ErrorMessage);
                     }
                 }
-                throw;    
+                throw;
             }
 
             logboek lb = new logboek
@@ -88,8 +88,8 @@ namespace WebApplication1.Controllers
                 UserID = User.Identity.GetUserId(),
                 EventID = db.Event.Where(e => e.EventName == ev.EventName && e.EventDescription == ev.EventDescription && e.EventPicture == ev.EventPicture).Select(t => t.EventId).First(),
                 Organize = true,
-                Interested=false,
-                Going=true
+                Interested = false,
+                Going = true
             };
             //split input tags
             string[] tags = model.TagName.Split(new string[] { ", " }, StringSplitOptions.None);
@@ -104,17 +104,19 @@ namespace WebApplication1.Controllers
             }
 
             db.logboek.Add(lb);
-            try {
+            try
+            {
                 db.SaveChanges();
             }
             catch (DbEntityValidationException e)
             {
                 //Dit is gewoon test code indien het niet werkte
                 return RedirectToAction("Index", "Home");
-            }          
+            }
             return RedirectToAction("EventDetails", "Event", new { id = ev.EventId });
             // after successfully uploading redirect the user
         }
+
 
         [HttpGet]
         public ActionResult FileUpload()
@@ -149,30 +151,32 @@ namespace WebApplication1.Controllers
 
         public ActionResult EventDetails(int id)
         {
+
             EventViewModel model = new EventViewModel();
             model.ev = db.Event.Find(id);
             string userid = User.Identity.GetUserId();
             model.log = new logboek();
-            
-            ViewBag.isowner = db.logboek.Where(l => l.UserID == userid && l.EventID == id && l.Organize).Select(l => l.UserID == userid).ToList().Count > 0;
-            ViewBag.interestedCount = db.logboek.Where(l => l.EventID == id && l.Interested == true).Count();
+            model.tags = db.Tag.Where(e => e.EventId == id).ToList();
+
             var log = db.logboek.Where(l => l.EventID == id && l.UserID == userid).ToList();
             if (log.Any())
             {
                 model.log = log.First();
             }
+
             var host = db.logboek.Where(l => l.EventID == id && l.Organize == true).ToList().First();
-            ViewBag.userName = User.Identity.Name;
             ViewBag.userId = host.UserID;
-            ViewBag.owner = model.log.Organize;
-            model.tags = db.Tag.Where(e => e.EventId == id).ToList();
+            ViewBag.isowner = model.log.Organize;
+            ViewBag.interestedCount = db.logboek.Where(l => l.EventID == id && l.Interested == true).Count();
+            ViewBag.userName = User.Identity.Name;
+
             return View(model);
         }
 
         public ActionResult EditEvent(int? id)
         {
             var userID = User.Identity.GetUserId();
-            var res = db.logboek.Where(l => l.EventID == id && l.UserID == userID && l.Organize == true);
+            var res = db.logboek.Where(l => l.EventID == id && l.UserID == userID && l.Organize);
             if (res.Any())
             {
                 if (id == null)
@@ -185,11 +189,12 @@ namespace WebApplication1.Controllers
                     return HttpNotFound();
                 }
                 return View(ev);
-            }else
+            }
+            else
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
-            
+
         }
 
         [HttpPost]
@@ -200,7 +205,7 @@ namespace WebApplication1.Controllers
             {
                 db.Entry(ev).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(ev);
             }
             return View(ev);
         }

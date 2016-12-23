@@ -1,115 +1,115 @@
 ﻿@model WebApplication1.Models.EventCreateViewModel
- 
+
 @{
     ViewBag.Title = "Create Event";
 }
 
-@using (Html.BeginForm("FileUpload", "Event", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return validateForm()" }))
+@using (Html.BeginForm("FileUpload", "Event", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "validateForm(event)" }))
 {
     <hr />
     <h2 style="margin-top:50px; margin-left:10px">Create your own event!</h2>
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control", @maxlength = "20" } })
+                    @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger", id = "errorEventName" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.EventDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(m => m.EventDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.EventDescription, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventDescription, new { htmlAttributes = new { @class = "form-control", @maxlength = "300" } })
+                    @Html.ValidationMessageFor(m => m.EventDescription, "", new { @class = "text-danger", id = "errorEventDescription" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.TagName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control", @id = "Tags", @style = "width:30%" } })
-                @Html.ValidationMessageFor(m => m.TagName, "", new { @class = "text-danger" })
-                <script>
-                    $(function () {
-                        $('#Tags').tokenfield({
-                            autocomplete: {
-                                source: [   'Sports', 'Food', 'Party', 'Conference', 'Meeting', 'Team Building', 'Trade',
-                                            'Press Conference', 'Buisiness Dinner', 'Opening Ceremonies', 'VIP Events',
-                                            'Wedding', 'BirthDay', 'Family Events'
-                                         ],
-                                delay: 100,
-                                delimiter: ''
-                            },
-                            showAutocompleteOnFocus: true,
-                            limit: 5
+            <div class="form-group">
+                @Html.LabelFor(m => m.TagName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.TagName, new { htmlAttributes = new { @class = "form-control", @id = "Tags", @style = "width:30%" } })
+                    @Html.ValidationMessageFor(m => m.TagName, "", new { @class = "text-danger" })
+                    <script>
+                        $(function () {
+                            $('#Tags').tokenfield({
+                                autocomplete: {
+                                    source: ['Sports', 'Food', 'Party', 'Conference', 'Meeting', 'Team Building', 'Trade',
+                                                'Press Conference', 'Buisiness Dinner', 'Opening Ceremonies', 'VIP Events',
+                                                'Wedding', 'BirthDay', 'Family Events'
+                                    ],
+                                    delay: 100,
+                                    delimiter: ''
+                                },
+                                showAutocompleteOnFocus: true,
+                                limit: 5
+                            });
                         });
-                    });
-                </script>
-                
+                    </script>
+
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.EventBeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div  class="col-md-10">
-                @Html.EditorFor(m => m.EventBeginDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.EventBeginDate, "", new { @class = "text-danger error-msg", id = "errorBeginDate" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventBeginDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventBeginDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventBeginDate, "", new { @class = "text-danger error-msg", id = "errorBeginDate" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.EventBeginTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(m => m.EventBeginTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.EventBeginTime, "", new { @class = "text-danger error-msg", id="errorBeginTime" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventBeginTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventBeginTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventBeginTime, "", new { @class = "text-danger error-msg", id = "errorBeginTime" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.EventEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div  class="col-md-10">
-                @Html.EditorFor(m => m.EventEndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.EventEndDate, "", new { @class = "text-danger error-msg", id="errorEndDate" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventEndDate, "", new { @class = "text-danger error-msg", id = "errorEndDate" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventEndTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.EventEndTime, "", new { @class = "text-danger error-msg", id = "errorEndTime" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventLocation, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventLocation, new { htmlAttributes = new { @class = "form-control", id = "Location" } })
+                    @Html.ValidationMessageFor(m => m.EventLocation, "", new { })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.EventPrice, new { htmlAttributes = new { @class = "form-control", min = "0" } })
+                    @Html.ValidationMessageFor(m => m.EventPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div style="margin-left:135px; margin-bottom:10px" class="form-inline">
+                <span class="form-group"><label>Picture</label></span>
+                <span class="form-group" style="margin-left:40px"><input type="file" accept="image/*" aria-label="photo" name="ImageUpload" id="ImageUpload" /></span>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.EventEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(m => m.EventEndTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.EventEndTime, "", new { @class = "text-danger error-msg", id="errorEndTime" })
-                
-            </div>
+        <div>
+            @Html.ActionLink("Back to Homepage", "Index")
         </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.EventLocation, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.EditorFor(m => m.EventLocation, new { htmlAttributes = new { @class = "form-control", id = "Location" } })
-                @Html.ValidationMessageFor(m => m.EventLocation, "", new { })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.EventPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(m => m.EventPrice, new { htmlAttributes = new { @class = "form-control", min = "0" } })
-                @Html.ValidationMessageFor(m => m.EventPrice, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div style="margin-left:135px; margin-bottom:10px" class="form-inline">
-            <span class="form-group"><label>Picture</label></span>
-            <span class="form-group" style="margin-left:40px"><input type="file" accept="image/*" aria-label="photo" name="ImageUpload" id="ImageUpload" /></span>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-
-    <div>
-        @Html.ActionLink("Back to Homepage", "Index")
-    </div>
 }
 <script type="text/javascript">
 
@@ -125,113 +125,76 @@
     });
 
 
-    function validateForm() {
+    function validateForm(event) {
 
-        
+        //validate EventName
+        event = event || window.event || event.srcElement;
+        var name = document.getElementById("EventName");
+        var errorEventName = document.getElementById("errorEventName");
+        if (name.value.length > 20) {
+            errorEventName.innerHTML = "name fault: min-length = 1, max-length = 20";
+            event.preventDefault();
+        } else { errorEventName.innerHTML = ""; };
+
+        if (name.value.length == 0) {
+            errorEventName.innerHTML = "Name is required";
+            event.preventDefault();
+        } else { errorEventName.innerHTML = ""; };
+
+        //validate EventDescription
+        var description = document.getElementById("EventDescription");
+        var errorEventDescription = document.getElementById("errorEventDescription");
+        if (description.value.length > 300) {
+            errorEventDescription.innerHTML = "description fault: min-length = 1, max-length = 300";
+            event.preventDefault();
+        } else { errorEventDescription.innerHTML = ""; };
+
+        if (description.value.length == 0) {
+            errorEventDescription.innerHTML = "description is required";
+            event.preventDefault();
+        } else { errorEventDescription.innerHTML = ""; };
+
+        //Date
         now = new Date();
-        var startDateElement = document.getElementById("EventBeginDate");
-        var startDate = new Date(startDateElement.value);
-        console.log(startDate.getFullYear());
+        var EventBeginDate = document.getElementById("EventBeginDate");
+        var errorBeginDate = document.getElementById("errorBeginDate");
+        var startDate = EventBeginDate.value;
+        alert("begin: " + startDate)
 
-        var endDateElement = document.getElementById("EventEndDate");
-        console.log(endDateElement.value);
-        var endDate = new Date(endDateElement.value);
+        var EventEndDate = document.getElementById("EventEndDate");
+        var errorEndDate = document.getElementById("errorEndDate");
+        var endDate = EventEndDate.value;
+        
+        //validate EventBeginDate
+        if (startDate < moment.now() || !startDate) {
+            errorBeginDate.innerHTML = "Begin date is required, enter a date in the future";
+            event.preventDefault();
+        } else { errorBeginDate.innerHTML = ""; };
 
-        if (startDate.getFullYear() < now.getFullYear() || startDate.getMonth() < now.getMonth() || startDate.getDate() < now.getDate()) {
+        //validate EventEndDate
+        if (startDate >  endDate || !endDate) {
+            errorEndDate.innerHTML = "End date is required, end-date must be after Begin-date";
+            event.preventDefault();
+        } else { errorEndDate.innerHTML = ""; };
 
-            var error = document.getElementById("errorBeginDate");
-            error.innerHTML = "Wrong begin date";
-            return false;
-        }
-     
-        if (endDate.getFullYear() < startDate.getFullYear()) {
+        //Time
+        var EventBeginTime = document.getElementById("EventBeginTime").value;
+        var errorBeginTime = document.getElementById("errorBeginTime").value;
+        var EventEndTime = document.getElementById("EventEndTime").value;
+        var errorEndTime = document.getElementById("errorEndTime").value;
+        alert("Begintime" + EventBeginTime)
+        if (!EventBeginTime) {
+            errorBeginTime.innerHTML = "Begin time required"
+            event.preventDefault();
+        } else errorBeginTime.innerHTML = "";
 
-            var error = document.getElementById("errorEndDate");
-            error.innerHTML = "Wrong end date";
-            return false;
-        }
+        if (!EventEndTime) {
+            errorEndTime.innerHTML = "End time required"
+            event.preventDefault();
+        } else errorBeginTime.innerHTML = "";
 
-        if (endDate.getFullYear() != startDate.getFullYear()) {
-            
-
-            return false;
-        }
-
-        //Dit geval is het geval wnr de event begin en eindig op dezelfde jaar men moet dus verschil zoeken 
-        //in maand en dag
-        if (endDate.getMonth() < startDate.getMonth()) {
-            var error = document.getElementById("errorEndDate");
-            error.innerHTML = "Wrong end date";
-            return false;
-        }
-
-        if (endDate.getMonth() > startDate.getMonth()) {
-          
-            var elements = document.getElementsByClassName("error-msg");
-            for (i = 0; i < elements.length; i++) {
-                var error = elements[i];
-                error.innerHTML = "";
-
-            }
-            return true;
-        }
-
-        if (endDate.getDate() < startDate.getDate()) {
-
-            var error = document.getElementById("errorEndDate");
-            error.innerHTML = "Wrong end date";
-            return false;
-        }
-
-        if (endDate.getDate() > startDate.getDate()) {
-
-            
-            var elements = document.getElementsByClassName("error-msg");
-            for (i = 0; i < elements.length; i++) {
-                var error = elements[i];
-                error.innerHTML = "";
-                
-            }
-            return true;
-        }
-
-        var beginTimeElement = document.getElementById("EventBeginTime");
-        var endTimeElement = document.getElementById("EventEndTime");
-        var beginTime = beginTimeElement.value;
-        var endTime = endTimeElement.value;
-
-        var hourBegin = beginTime.substring(0, 2);
-        var hourEnd = endTime.substring(0, 2);
-
-        if (parseInt(hourEnd) < parseInt(hourBegin)) {
-
-            var error = document.getElementById("errorEndTime");
-            error.innerHTML = "Wrong time";
-            return false;
-        }
-
-        if (parseInt(hourEnd) > parseInt(hourBegin)) {
-            var elements = document.getElementsByClassName("error-msg");
-            for (i = 0; i < elements.length; i++) {
-                var error = elements[i];
-                error.innerHTML = "";
-
-            }
-            return true;
-        }
-
-        var minBegin = beginTime.substring(3,5);
-        var minEnd = endTime.substring(3,5);
-       
-        if (parseInt(minEnd) < parseInt(minBegin)) {
-            var error = document.getElementById("errorEndTime");
-            error.innerHTML = "Wrong time";
-            return false;
-        }
-
-   
         return true;
     };
 
-   
+
 </script>
